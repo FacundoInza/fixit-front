@@ -3,11 +3,18 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { ThemeProvider } from "@mui/material";
 import GlobantTheme from "./themes/GlobantTheme.js";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store/store.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ThemeProvider theme={GlobantTheme}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </ThemeProvider>
+  <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+        <ThemeProvider theme={GlobantTheme}>
+          <App />
+        </ThemeProvider>
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>
 );
