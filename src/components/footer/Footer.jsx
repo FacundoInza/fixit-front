@@ -15,11 +15,11 @@ const Footer = () => {
         alignItems: "center",
         marginRight: "0px",
         width: "100vw",
-        height: "100px",
+        height: "110px",
         bottom: 0,
         left: 0,
         margin: "0px",
-        position: "fixed",
+        position: "stic",
       }}
     >
       <Box

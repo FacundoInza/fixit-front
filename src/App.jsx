@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router";
 import Home from "./components/pages/Home";
+import Login from "./components/pages/Login";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -12,6 +13,7 @@ function App() {
       ) : (
         <Routes>
           <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       )}
     </>
