@@ -1,0 +1,38 @@
+.container-box {
+  overflow: hidden;
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+  height: "100vh";
+}
+
+.globant-image {
+  overflow: hidden;
+  z-index: 9999;
+  margin: 10px;
+  background-image: url("../../assets/Globant-Original.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 600px) {
+  .globant-image {
+    width: 220px;
+    height: 40px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+  .globant-image {
+    width: 320px;
+    height: 60px;
+  }
+}
+
+@media (min-width: 961px) {
+  .globant-image {
+    width: 520px;
+    height: 100px;
+  }
+}
