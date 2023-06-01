@@ -35,7 +35,8 @@ const Login = () => {
             xs: "none",
             sm: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
           },
-          height: "50%",
+          height: "50vh",
+          overflowY: "auto",
         }}
       >
         <Formik

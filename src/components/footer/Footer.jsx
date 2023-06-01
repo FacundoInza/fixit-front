@@ -19,7 +19,7 @@ const Footer = () => {
         bottom: 0,
         left: 0,
         margin: "0px",
-        position: "stic",
+        position: "fixed",
       }}
     >
       <Box
