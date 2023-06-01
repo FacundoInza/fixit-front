@@ -3,7 +3,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { MainLayout } from "../layout/MainLayout";
 import fullLogo from "../../assets/Globant-Original.png";
-import { Box } from "@mui/material";
+import { Box, Container, Typography, TextField } from "@mui/material";
+import ButtonGlobant from "../commons/ButtonGlobant";
 
 function SignUp() {
   const initialValues = {
@@ -47,53 +48,113 @@ function SignUp() {
         />
       </Box>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+      <Container
+        sx={{
+          width: { xs: "100%", sm: "70%", md: "40%" },
+          marginTop: "20px",
+          boxShadow: {
+            xs: "none",
+            sm: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+          },
+          height: "50vh",
+          overflowY: "auto",
+        }}
       >
-        <Form>
-          <div>
-            <label htmlFor="name">Name:</label>
-            <Field type="text" id="name" name="name" />
-          </div>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <Field type="email" id="email" name="email" />
-            <ErrorMessage name="email" component="div" />
-          </div>
-          <div>
-            <label htmlFor="Phone">Phone:</label>
-            <Field type="text" id="phone" name="phone" />
-            <ErrorMessage name="phone" component="div" />
-          </div>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          <Form>
+            <Typography
+              fontWeight={"bold"}
+              sx={{ textAlign: "center", margin: "15px" }}
+            >
+              Complete de fields to register
+            </Typography>
+            <div style={{ padding: "10px" }}>
+              <Field
+                as={TextField}
+                id="name"
+                name="name"
+                label="Name"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+            </div>
+            <div style={{ padding: "10px" }}>
+              <Field
+                as={TextField}
+                type="email"
+                id="email"
+                name="email"
+                label="Email"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+              <ErrorMessage name="email" component="div" />
+            </div>
+            <div style={{ padding: "10px" }}>
+              <Field
+                as={TextField}
+                id="phone"
+                name="phone"
+                label="Phone"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+              <ErrorMessage name="phone" component="div" />
+            </div>
 
-          <div>
-            <label htmlFor="password">Password:</label>
-            <Field type="password" id="password" name="password" />
-            <ErrorMessage name="password" component="div" />
-          </div>
+            <div style={{ padding: "10px" }}>
+              <Field
+                as={TextField}
+                id="password"
+                name="password"
+                type="password"
+                label="Password"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+              <ErrorMessage name="password" component="div" />
+            </div>
 
-          <div>
-            <label htmlFor="address">Address:</label>
-            <Field type="text" id="address" name="address" />
-            <ErrorMessage name="address" component="div" />
-          </div>
+            <div style={{ padding: "10px" }}>
+              <Field
+                as={TextField}
+                id="address"
+                name="address"
+                label="Address"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+              <ErrorMessage name="address" component="div" />
+            </div>
 
-          <div>
-            <label htmlFor="preferredOffice">Preferred Office:</label>
-            <Field type="text" id="preferredOffice" name="preferredOffice" />
-            <ErrorMessage name="preferredOffice" component="div" />
-          </div>
-          <div>
-            <label htmlFor="role">Role:</label>
-            <Field type="text" id="role" name="role" />
-            <ErrorMessage name="role" component="div" />
-          </div>
+            <div style={{ padding: "10px" }}>
+              <Field
+                as={TextField}
+                id="role"
+                name="role"
+                label="Role"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+              <ErrorMessage name="role" component="div" />
+            </div>
 
-          <button type="submit">Regirter</button>
-        </Form>
-      </Formik>
+            <Box display={"flex"} justifyContent={"center"} width={"100%"}>
+              <ButtonGlobant>Register</ButtonGlobant>
+            </Box>
+          </Form>
+        </Formik>
+      </Container>
     </MainLayout>
   );
 }
