@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { MainLayout } from "../layout/MainLayout";
 import VectorHome from "../commons/VectorHome";
 import style from "./Home.module.css";
+import ButtonGlobant from "../commons/ButtonGlobant";
 
 const Home = () => {
   return (
@@ -30,6 +31,15 @@ const Home = () => {
           sx={{ fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" } }}
         >
           Fix It: Empower Your Workspace, Solve with Ease!
+        </Typography>
+        <Typography
+          sx={{ fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" } }}
+        >
+          If you want repor your issue, you must be logged !
+        </Typography>
+        <ButtonGlobant>Log in</ButtonGlobant>
+        <Typography sx={{ color: (theme) => theme.palette.primary.main }}>
+          Register !
         </Typography>
       </Box>
     </MainLayout>
