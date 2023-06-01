@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-
+import "./MainLayout.module.css";
 export const MainLayout = ({ title = "FixIt", children }) => {
   return (
     <>
