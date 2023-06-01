@@ -3,6 +3,7 @@ import { MainLayout } from "../layout/MainLayout";
 import VectorHome from "../commons/VectorHome";
 import style from "./Home.module.css";
 import ButtonGlobant from "../commons/ButtonGlobant";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -38,9 +39,11 @@ const Home = () => {
           If you want repor your issue, you must be logged !
         </Typography>
         <ButtonGlobant>Log in</ButtonGlobant>
-        <Typography sx={{ color: (theme) => theme.palette.primary.main }}>
-          Register !
-        </Typography>
+        <Link to="/signUp">
+          <Typography sx={{ color: (theme) => theme.palette.primary.main }}>
+            Register !
+          </Typography>
+        </Link>
       </Box>
     </MainLayout>
   );
