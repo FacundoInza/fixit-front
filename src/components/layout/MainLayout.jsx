@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import "./MainLayout.module.css";
+import Footer from "../footer/Footer";
 export const MainLayout = ({ title = "FixIt", children }) => {
   return (
     <>
@@ -9,7 +10,7 @@ export const MainLayout = ({ title = "FixIt", children }) => {
       {/* Navbar */}
       {/* Sidebar */}
       {children}
-      {/* Footer */}
+      <Footer />
     </>
   );
 };
