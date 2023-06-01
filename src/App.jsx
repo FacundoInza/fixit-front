@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router";
 import Home from "./components/pages/Home";
-import SignUp from "./components/signUp/SignUp";
+import SignUp from "./components/pages/SignUp";
 import Login from "./components/pages/Login";
 
 function App() {
@@ -14,6 +14,8 @@ function App() {
       ) : (
         <Routes>
           <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signUp" element={<SignUp />} />
         </Routes>
       )}
     </>
