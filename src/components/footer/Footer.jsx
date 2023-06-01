@@ -1,7 +1,7 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import style from "./Footer.module.css";
-import ButtonGlobant from "../commons/ButtonGlobant";
+import fullLogo from "../../assets/Globant-Original.png";
 
 const Footer = () => {
   const user = useSelector((state) => state.user);
@@ -11,7 +11,7 @@ const Footer = () => {
       sx={{
         backgroundColor: (theme) => theme.palette.primary.dark,
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "left",
         alignItems: "center",
         marginRight: "0px",
         width: "100vw",
@@ -22,13 +22,29 @@ const Footer = () => {
         position: "fixed",
       }}
     >
-      <Box width={"100%"} sx={{ flexGrow: 1, justifyContent: "center" }}>
-        <Stack direction="column" spacing={1} alignItems="center">
-          <ButtonGlobant>Log in</ButtonGlobant>
-          <Typography sx={{ color: (theme) => theme.palette.primary.main }}>
-            Register !
+      <Box
+        width={"100%"}
+        sx={{
+          display: "inline-flex",
+          justifyContent: "left",
+        }}
+      >
+        <img
+          src={fullLogo}
+          alt="Logo"
+          style={{ height: "30px", marginLeft: "20px", marginTop: "15px" }}
+        />
+        <Box flexDirection={"column"} marginLeft={"20px"}>
+          <Typography fontSize={"12px"} color={"white"}>
+            Contáctanos
           </Typography>
-        </Stack>
+          <Typography fontSize={"12px"} color={"white"}>
+            Escríbenos{" "}
+          </Typography>
+          <Typography fontSize={"12px"} color={"white"}>
+            hi@globant.com
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
