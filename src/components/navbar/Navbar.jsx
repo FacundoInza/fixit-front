@@ -3,11 +3,9 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   IconButton,
   Drawer,
   List,
-  ListItem,
   ListItemText,
   Avatar,
   Divider,
@@ -15,6 +13,8 @@ import {
   Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import logo from "../../assets/Short-White-Green.png";
+import fullLogo from "../../assets/Globant-Original.png";
 
 function Navbar() {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -23,17 +23,32 @@ function Navbar() {
     setDrawerOpen(!isDrawerOpen);
   };
   return (
-    <nav>
-      <AppBar position="static">
+    <Box>
+      <AppBar
+        position="static"
+        sx={{
+          background:
+            "linear-gradient(85.8deg, #A6CE39 -12.56%, #39B54A 75.83%)",
+        }}
+      >
         <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={toggleDrawer}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100vw",
+            }}
           >
-            <MenuIcon />
-          </IconButton>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer}
+            >
+              <MenuIcon style={{ color: "white" }} />
+            </IconButton>
+            <img src={logo} alt="Logo" style={{ height: "40px" }} />
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -64,15 +79,29 @@ function Navbar() {
             p: 2,
           }}
         >
-          <Avatar
-            alt="Profile Picture"
-            src="/ruta/a/la/foto-de-perfil.jpg"
-            sx={{ width: 64, height: 64, marginBottom: 2 }}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src={fullLogo}
+              alt="Logo"
+              style={{ height: "30px", marginRight: "5vw" }}
+            />
+            <Avatar
+              alt="Profile Picture"
+              src="/ruta/a/la/foto-de-perfil.jpg"
+              sx={{ width: 64, height: 64, marginBottom: 2 }}
+            />
+          </Box>
           <Typography variant="h6" component="div" sx={{ color: "white" }}>
             Nombre de Usuario
           </Typography>
         </Box>
+
         <List>
           <ListItemButton onClick={toggleDrawer}>
             <ListItemText primary="My Profile" />
@@ -88,7 +117,7 @@ function Navbar() {
           <Divider />
         </List>
       </Drawer>
-    </nav>
+    </Box>
   );
 }
 

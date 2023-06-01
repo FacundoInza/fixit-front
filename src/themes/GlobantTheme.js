@@ -3,6 +3,9 @@ import { createTheme } from "@mui/material";
 const GlobantTheme = createTheme({
   palette: {
     mode: "light",
+    typography: {
+      fontFamily: "Heebo, sans-serif",
+    },
     primary: {
       main: "#BFD732", // Color primario
       light: "#FFFFFF", // Tono claro del color primario
