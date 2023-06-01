@@ -11,46 +11,57 @@ import {
   Divider,
   ListItemButton,
   Box,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../../assets/Short-White-Green.png";
 import fullLogo from "../../assets/Globant-Original.png";
+import { useSelector } from "react-redux";
 
 function Navbar() {
+  const actualUser = useSelector((state) => state.user);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
   };
   return (
-    <Box>
-      <AppBar
-        position="static"
-        sx={{
-          background:
-            "linear-gradient(85.8deg, #A6CE39 -12.56%, #39B54A 75.83%)",
-        }}
-      >
-        <Toolbar>
-          <Box
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar
+          position="static"
+          sx={{
+            background:
+              "linear-gradient(85.8deg, #A6CE39 -12.56%, #39B54A 75.83%)",
+          }}
+        >
+          <Toolbar
             sx={{
-              display: "flex",
               justifyContent: "space-between",
-              width: "100vw",
+              padding: "15px",
             }}
           >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              onClick={toggleDrawer}
-            >
-              <MenuIcon style={{ color: "white" }} />
-            </IconButton>
-            <img src={logo} alt="Logo" style={{ height: "40px" }} />
-          </Box>
-        </Toolbar>
-      </AppBar>
+            {!isDrawerOpen && ( // Mostrar el icono del menú solo si el Drawer está cerrado
+              <>
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  sx={{ mr: 2 }}
+                  onClick={toggleDrawer}
+                >
+                  <MenuIcon sx={{ color: "white" }} />
+                </IconButton>
+
+                <Button color="inherit">
+                  <img src={logo} alt="logo" />
+                </Button>
+              </>
+            )}
+          </Toolbar>
+        </AppBar>
+      </Box>
       <Drawer
         anchor="left"
         open={isDrawerOpen}
@@ -69,13 +80,14 @@ function Navbar() {
           "& .MuiDivider-root": {
             backgroundColor: "white",
           },
+          zIndex: 9999,
         }}
       >
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "flex-end",
+            alignItems: "center",
             p: 2,
           }}
         >
@@ -84,22 +96,31 @@ function Navbar() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              flexDirection: "column",
             }}
           >
             <img
               src={fullLogo}
               alt="Logo"
-              style={{ height: "30px", marginRight: "5vw" }}
+              style={{ height: "30px", marginBottom: "10px" }}
             />
-            <Avatar
-              alt="Profile Picture"
-              src="/ruta/a/la/foto-de-perfil.jpg"
-              sx={{ width: 64, height: 64, marginBottom: 2 }}
-            />
+            {actualUser.email && (
+              <>
+                <Avatar
+                  alt="Profile Picture"
+                  src="/ruta/a/la/foto-de-perfil.jpg"
+                  sx={{ width: 64, height: 64 }}
+                />
+                <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{ color: "white" }}
+                >
+                  Nombre de Usuario
+                </Typography>
+              </>
+            )}
           </Box>
-          <Typography variant="h6" component="div" sx={{ color: "white" }}>
-            Nombre de Usuario
-          </Typography>
         </Box>
 
         <List>
@@ -117,7 +138,7 @@ function Navbar() {
           <Divider />
         </List>
       </Drawer>
-    </Box>
+    </>
   );
 }
 
