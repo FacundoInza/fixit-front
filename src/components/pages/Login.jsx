@@ -81,7 +81,7 @@ const Login = () => {
               <ButtonGlobant>Log In</ButtonGlobant>
             </Box>
             <Box display={"flex"} justifyContent={"flex-end"} width={"100%"}>
-              <Button href="/register">Sing Up</Button>
+              <Button href="/signUp">Sing Up</Button>
             </Box>
           </Form>
         </Formik>
