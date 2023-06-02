@@ -38,12 +38,14 @@ const Home = () => {
         >
           If you want repor your issue, you must be logged !
         </Typography>
-        <ButtonGlobant>Log in</ButtonGlobant>
-        <Link to="/signUp">
-          <Typography sx={{ color: (theme) => theme.palette.primary.main }}>
-            Register !
-          </Typography>
-        </Link>
+        <Box width={"20%"} padding={"50px"}>
+          <Link to="/login">
+            <ButtonGlobant>Log in</ButtonGlobant>
+          </Link>
+          <Link to="/signUp">
+            <ButtonGlobant>Register</ButtonGlobant>
+          </Link>
+        </Box>
       </Box>
     </MainLayout>
   );

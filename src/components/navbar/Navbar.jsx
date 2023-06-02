@@ -17,6 +17,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../../assets/Short-White-Green.png";
 import fullLogo from "../../assets/Globant-Original.png";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const actualUser = useSelector((state) => state.user);
@@ -53,10 +54,11 @@ function Navbar() {
                 >
                   <MenuIcon sx={{ color: "white" }} />
                 </IconButton>
-
-                <Button color="inherit">
-                  <img src={logo} alt="logo" />
-                </Button>
+                <Link to={"/home"}>
+                  <Button color="inherit">
+                    <img src={logo} alt="logo" />
+                  </Button>
+                </Link>
               </>
             )}
           </Toolbar>
