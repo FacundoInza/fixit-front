@@ -14,7 +14,7 @@ const ButtonGlobant = ({ children, props }) => {
         borderRadius: "20px",
         border: `solid 0.1rem ${colorButton}`,
         width: "100%",
-        margin: "15px",
+
         "&:hover": {
           color: "white",
           backgroundColor: colorButton,
