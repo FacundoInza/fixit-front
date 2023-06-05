@@ -28,7 +28,7 @@ function Navbar() {
   };
   return (
     <>
-      <Box sx={{ height: "100px" }}>
+      <Box sx={{ height: "88px" }}>
         <AppBar
           position="static"
           sx={{

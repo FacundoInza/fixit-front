@@ -20,14 +20,7 @@ export const MainLayout = ({
       <Box display="flex" flexDirection="column" minHeight="100vh">
         {inLoginOrRegister && <Navbar />}
 
-        <Box
-          flexGrow={1}
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
-          {children}
-        </Box>
+        <Box flexGrow={1}>{children}</Box>
 
         <Footer />
       </Box>
