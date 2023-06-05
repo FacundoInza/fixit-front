@@ -6,17 +6,26 @@ const initialState = {
   id: null,
   name: null,
   email: null,
-  phoneNumber: null,
-  adress: null,
+  cellphone: null,
+  address: null,
   image: null,
-  favoriteOffice: null,
-  locationWithAddress: null,
-  locationWithCoordinates: null,
-  rol: null,
-  isAdmin: null,
-  record: [],
+  location: null,
+  role: null,
+  is_admin: null,
 };
 
 export const userReducer = createReducer(initialState, {
-  [setUser]: (state, action) => action.payload,
+  [setUser]: (state, action) => {
+    if (action.payload !== state) {
+      state.id = action.payload.id;
+      state.name = action.payload.name;
+      state.email = action.payload.email;
+      state.cellphone = action.payload.cellphone;
+      state.address = action.payload.address;
+      state.image = action.payload.image;
+      state.location = action.payload.location;
+      state.role = action.payload.role;
+      state.is_admin = action.payload.is_admin;
+    }
+  },
 });
