@@ -1,5 +1,5 @@
 .coontainer-footer {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   margin-right: 0px;
@@ -7,5 +7,4 @@
   bottom: 0;
   left: 0;
   margin: 0px;
-  position: fixed;
 }

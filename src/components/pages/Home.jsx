@@ -8,18 +8,18 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <MainLayout title="Home Page">
-      <VectorHome />
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          height: "100%",
           zIndex: 9999,
           overflow: "hidden",
         }}
       >
+        <VectorHome />
         <div className={`${style["globant-image"]}`}></div>
         <Typography
           margin={2}
@@ -38,7 +38,7 @@ const Home = () => {
         >
           If you want repor your issue, you must be logged !
         </Typography>
-        <Box width={"20%"} padding={"50px"}>
+        <Box width={"30%"} padding={"50px"}>
           <Link to="/login">
             <ButtonGlobant>Log in</ButtonGlobant>
           </Link>

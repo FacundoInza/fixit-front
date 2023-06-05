@@ -14,12 +14,11 @@ const Footer = () => {
         justifyContent: "left",
         alignItems: "center",
         marginRight: "0px",
+        zIndex: "1",
         width: "100vw",
         height: "110px",
-        bottom: 0,
-        left: 0,
         margin: "0px",
-        position: "fixed",
+        bottom: "0",
       }}
     >
       <Box
