@@ -5,15 +5,18 @@ import { MainLayout } from "../layout/MainLayout";
 import fullLogo from "../../assets/Globant-Original.png";
 import { Box, Container, Typography, TextField } from "@mui/material";
 import ButtonGlobant from "../commons/ButtonGlobant";
+import { axiosSignUp } from "../../services/api";
+import { useNavigate } from "react-router";
 
 function SignUp() {
+  const navigate = useNavigate();
+
   const initialValues = {
     name: "",
     email: "",
-    phone: "",
+    cellphone: "",
     password: "",
     address: "",
-    preferredOffice: "",
     role: "",
   };
 
@@ -22,20 +25,19 @@ function SignUp() {
     email: Yup.string()
       .email("El correo electronico no es valido")
       .required("El correo electronico es obligatorio"),
-    phone: Yup.string().required("El numero es obligatorio"),
+    cellphone: Yup.number().required("El numero es obligatorio"),
     password: Yup.string()
       .min(6, "La contraseña debe tener al menos 6 caracteres")
       .required("La contraseña es obligatoria"),
     address: Yup.string().required("La direccion es obligatorio"),
-    preferredOffice: Yup.string().required(
-      "La oficina preferida es obligatoria"
-    ),
     role: Yup.string().required("El rol es obligatorio"),
   });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (value) => {
     //Aqui dentro se escribe la logica para enviar los datode el formulario
-    console.log(values);
+    const axios = await axiosSignUp(value);
+    navigate("/");
+    console.log(axios);
   };
 
   return (
@@ -43,7 +45,6 @@ function SignUp() {
       <Container
         sx={{
           width: { xs: "100%", sm: "70%", md: "40%" },
-          marginTop: "20px",
           boxShadow: {
             xs: "none",
             sm: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
@@ -69,7 +70,7 @@ function SignUp() {
               fontWeight={"bold"}
               sx={{ textAlign: "center", margin: "15px" }}
             >
-              Complete de fields to register
+              Complete the fields to register
             </Typography>
             <div style={{ padding: "10px" }}>
               <Field
@@ -81,6 +82,7 @@ function SignUp() {
                 fullWidth
                 margin="normal"
               />
+              <ErrorMessage name="name" component="div" />
             </div>
             <div style={{ padding: "10px" }}>
               <Field
@@ -98,14 +100,14 @@ function SignUp() {
             <div style={{ padding: "10px" }}>
               <Field
                 as={TextField}
-                id="phone"
-                name="phone"
-                label="Phone"
+                id="cellphone"
+                name="cellphone"
+                label="Cellphone"
                 variant="outlined"
                 fullWidth
                 margin="normal"
               />
-              <ErrorMessage name="phone" component="div" />
+              <ErrorMessage name="cellphone" component="div" />
             </div>
 
             <div style={{ padding: "10px" }}>
@@ -149,7 +151,7 @@ function SignUp() {
             </div>
 
             <Box display={"flex"} justifyContent={"center"} width={"100%"}>
-              <ButtonGlobant>Register</ButtonGlobant>
+              <ButtonGlobant props={{ type: "submit" }}>Register</ButtonGlobant>
             </Box>
           </Form>
         </Formik>
