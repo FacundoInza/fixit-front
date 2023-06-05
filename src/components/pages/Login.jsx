@@ -40,6 +40,7 @@ const Login = () => {
       setMessage(message);
       setOpenSnackbar(true);
     }
+    navigate("/");
   };
 
   const handleClose = () => {
