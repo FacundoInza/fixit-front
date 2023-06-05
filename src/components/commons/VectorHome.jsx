@@ -1,9 +1,13 @@
+import { useMediaQuery } from "@mui/material";
 import style from "./VectorHome.module.css";
 
 const VectorHome = () => {
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const viewBox = isSmallScreen ? "0 0 394 192" : "90 60 250 192";
+
   return (
     <div class={style["svg-container"]}>
-      <svg viewBox="0 0 394 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox={viewBox} fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           fill-rule="evenodd"
           clip-rule="evenodd"

@@ -40,14 +40,6 @@ function SignUp() {
 
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
-      <Box display={"flex"} justifyContent={"center"} margin={"40px"}>
-        <img
-          src={fullLogo}
-          alt="Logo"
-          style={{ height: "30px", marginLeft: "20px", marginTop: "15px" }}
-        />
-      </Box>
-
       <Container
         sx={{
           width: { xs: "100%", sm: "70%", md: "40%" },
@@ -60,6 +52,13 @@ function SignUp() {
           overflowY: "auto",
         }}
       >
+        <Box display={"flex"} justifyContent={"center"} margin={"40px"}>
+          <img
+            src={fullLogo}
+            alt="Logo"
+            style={{ height: "30px", marginLeft: "20px", marginTop: "15px" }}
+          />
+        </Box>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}

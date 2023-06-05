@@ -3,7 +3,7 @@ import "./MainLayout.module.css";
 import Footer from "../footer/Footer";
 import Navbar from "../navbar/Navbar";
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 export const MainLayout = ({
   title = "FixIt",
@@ -16,10 +16,21 @@ export const MainLayout = ({
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      {inLoginOrRegister && <Navbar />}
-      <Box height={"80vh"}>{children}</Box>
 
-      <Footer />
+      <Box display="flex" flexDirection="column" minHeight="100vh">
+        {inLoginOrRegister && <Navbar />}
+
+        <Box
+          flexGrow={1}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          {children}
+        </Box>
+
+        <Footer />
+      </Box>
     </>
   );
 };
