@@ -12,39 +12,50 @@ const Home = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          justifyContent: "center", // Cambiar "justifyItems" por "justifyContent"
           alignItems: "center",
-          height: "100%",
+          height: "80vh", // Cambiar "height: '100%'" por "height: '100vh'"
           zIndex: 9999,
           overflow: "hidden",
         }}
       >
         <VectorHome />
-        <div className={`${style["globant-image"]}`}></div>
-        <Typography
-          margin={2}
-          variant="h5"
-          sx={{ fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" } }}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center", // Cambiar "alignItems: 'home'" por "alignItems: 'center'"
+            flexDirection: "column",
+          }}
         >
-          Welcome to Fix It
-        </Typography>
-        <Typography
-          sx={{ fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" } }}
-        >
-          Fix It: Empower Your Workspace, Solve with Ease!
-        </Typography>
-        <Typography
-          sx={{ fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" } }}
-        >
-          If you want repor your issue, you must be logged !
-        </Typography>
-        <Box width={"30%"} padding={"50px"}>
-          <Link to="/login">
-            <ButtonGlobant>Log in</ButtonGlobant>
-          </Link>
-          <Link to="/signUp">
-            <ButtonGlobant>Register</ButtonGlobant>
-          </Link>
+          <div className={`${style["globant-image"]}`}></div>
+          <Typography
+            margin={2}
+            variant="h5"
+            sx={{ fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" } }}
+          >
+            Welcome to Fix It
+          </Typography>
+          <Typography
+            sx={{ fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" } }}
+          >
+            Fix It: Empower Your Workspace, Solve with Ease!
+          </Typography>
+          <Typography
+            sx={{ fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" } }}
+          >
+            If you want to report your issue, you must be logged in!
+          </Typography>
+          <Box width={"100%"} padding={"20px"} marginTop={"20px"}>
+            <Link to="/login">
+              <ButtonGlobant>Log in</ButtonGlobant>
+            </Link>
+          </Box>
+          <Box width={"100%"} padding={"10px"}>
+            <Link to="/signUp">
+              <ButtonGlobant>Register</ButtonGlobant>
+            </Link>
+          </Box>
         </Box>
       </Box>
     </MainLayout>
