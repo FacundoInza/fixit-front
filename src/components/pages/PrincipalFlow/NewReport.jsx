@@ -1,9 +1,9 @@
 import React from "react";
-import { MainLayout } from "../layout/MainLayout";
-import ButtonGlobant from "../commons/ButtonGlobant";
+import { MainLayout } from "../../layout/MainLayout";
+import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
-import newReportImg from "../../assets/newReportImg.png";
+import newReportImg from "../../../assets/newReportImg.png";
 
 function NewReport() {
   const user = useSelector((state) => state.user);

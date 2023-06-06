@@ -18,6 +18,8 @@ import { MainLayout } from "../layout/MainLayout";
 import ButtonGlobant from "../commons/ButtonGlobant";
 import fullLogo from "../../assets/Globant-Original.png";
 import { axiosLogin } from "../../services/api";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/users";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -30,15 +32,18 @@ const LoginSchema = Yup.object().shape({
 const Login = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (value) => {
     // Lógica para enviar los datos del formulario al servidor
-    const { error, message } = await axiosLogin(value);
+    const { error, message, data } = await axiosLogin(value);
     if (error) {
       console.log(message);
       setMessage(message);
       setOpenSnackbar(true);
+    } else {
+      dispatch(setUser(data));
     }
     navigate("/");
   };
