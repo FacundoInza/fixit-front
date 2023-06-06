@@ -5,12 +5,10 @@ import Home from "./components/pages/Home";
 import SignUp from "./components/pages/SignUp";
 import Login from "./components/pages/Login";
 import Profile from "./components/pages/Profile/Profile";
+import UserReports from "./components/pages/Profile/UserReports";
 import { useEffect } from "react";
 import { axiosSecret } from "./services/api";
 import { setUser } from "./store/users";
-import NewReport from "./components/newReport/NewReport";
-import WorkOpions from "./components/pages/WorkOptions";
-import Location from "./components/pages/Location";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -30,6 +28,7 @@ function App() {
       {actualUser.email ? (
         <Routes>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/reports" element={<UserReports />} />
         </Routes>
       ) : (
         <Routes>
