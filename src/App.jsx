@@ -10,6 +10,7 @@ import { axiosSecret } from "./services/api";
 import { setUser } from "./store/users";
 import NewReport from "./components/newReport/NewReport";
 import WorkOpions from "./components/pages/WorkOptions";
+import Location from "./components/pages/Location";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -37,6 +38,7 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/new-report" element={<NewReport />} />
           <Route path="/work-options" element={<WorkOpions />} />
+          <Route path="/location" element={<Location />} />
         </Routes>
       )}
     </>
