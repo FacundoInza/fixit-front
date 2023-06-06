@@ -1,8 +1,8 @@
 import React from "react";
-import { MainLayout } from "../layout/MainLayout";
-import ButtonGlobant from "../commons/ButtonGlobant";
+import { MainLayout } from "../../layout/MainLayout";
+import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Box, Card, CardContent, Typography } from "@mui/material";
-import mapImg from "../../assets/mapImg.png";
+import mapImg from "../../../assets/mapImg.png";
 
 function Location() {
   return (

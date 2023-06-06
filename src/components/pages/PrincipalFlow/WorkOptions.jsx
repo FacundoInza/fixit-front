@@ -1,10 +1,10 @@
 import React from "react";
-import { MainLayout } from "../layout/MainLayout";
+import { MainLayout } from "../../layout/MainLayout";
 import { Box, Typography, IconButton, useMediaQuery } from "@mui/material";
 import { styled } from "@mui/system";
-import inGlobantOffice from "../../assets/inGlobantOffice.png";
-import workFromHome from "../../assets/workFromHome.png";
-import logo from "../../assets/Short-White-Green.png";
+import inGlobantOffice from "../../../assets/inGlobantOffice.png";
+import workFromHome from "../../../assets/workFromHome.png";
+import logo from "../../../assets/Short-White-Green.png";
 
 const MobileButtonContainer = styled(Box)({
   display: "flex",
