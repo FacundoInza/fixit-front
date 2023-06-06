@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { axiosSecret } from "./services/api";
 import { setUser } from "./store/users";
 import NewReport from "./components/newReport/NewReport";
+import WorkOpions from "./components/pages/WorkOptions";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -35,6 +36,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/new-report" element={<NewReport />} />
+          <Route path="/work-options" element={<WorkOpions />} />
         </Routes>
       )}
     </>
