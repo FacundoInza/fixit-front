@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router";
 
 import Home from "./components/pages/Home";
@@ -6,9 +6,22 @@ import SignUp from "./components/pages/SignUp";
 import Login from "./components/pages/Login";
 import Profile from "./components/pages/Profile/Profile";
 import UserReports from "./components/pages/Profile/UserReports";
+import { useEffect } from "react";
+import { axiosSecret } from "./services/api";
+import { setUser } from "./store/users";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  console.log(actualUser);
+  useEffect(() => {
+    const persintence = async () => {
+      const data = await axiosSecret();
+      dispatch(setUser(data));
+    };
+    persintence();
+  }, []);
 
   return (
     <>
@@ -22,6 +35,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
+          <Route path="/new-report" element={<NewReport />} />
+          <Route path="/work-options" element={<WorkOpions />} />
+          <Route path="/location" element={<Location />} />
         </Routes>
       )}
     </>
