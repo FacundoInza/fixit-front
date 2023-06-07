@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MainLayout } from "../../layout/MainLayout";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import mapImg from "../../../assets/mapImg.png";
+import { getLocation } from "../../../utils";
 
 function Location() {
+  useEffect(() => {
+    const { error, data } = getLocation();
+    console.log(data);
+  }, []);
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
       <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
