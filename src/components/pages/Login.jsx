@@ -44,8 +44,8 @@ const Login = () => {
       setOpenSnackbar(true);
     } else {
       dispatch(setUser(data));
+      navigate("/");
     }
-    navigate("/");
   };
 
   const handleClose = () => {
@@ -61,7 +61,7 @@ const Login = () => {
             xs: "none",
             sm: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
           },
-          height: "50%",
+          height: "calc(100vh - 200px)",
           overflowY: "auto",
         }}
       >
@@ -118,25 +118,24 @@ const Login = () => {
             </Box>
           </Form>
         </Formik>
-
-        {openSnackbar && (
-          <Snackbar
-            sx={{ zIndex: 999999 }}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            open={openSnackbar}
-            autoHideDuration={6000}
-            onClose={handleClose}
-          >
-            <Alert
-              onClose={handleClose}
-              severity="warning"
-              sx={{ width: "100%" }}
-            >
-              {message}
-            </Alert>
-          </Snackbar>
-        )}
       </Container>
+      {openSnackbar && (
+        <Snackbar
+          sx={{ zIndex: 999999 }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="warning"
+            sx={{ width: "100%" }}
+          >
+            {message}
+          </Alert>
+        </Snackbar>
+      )}
     </MainLayout>
   );
 };

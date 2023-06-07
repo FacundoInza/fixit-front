@@ -4,11 +4,11 @@ export const setUser = createAction("SET_USER");
 
 const initialState = {
   id: null,
-  name: null,
-  email: null,
+  name: "",
+  email: "",
   cellphone: null,
   address: null,
-  image: null,
+  image: "",
   location: null,
   role: null,
   is_admin: null,
