@@ -54,7 +54,7 @@ function Navbar() {
                 >
                   <MenuIcon sx={{ color: "white" }} />
                 </IconButton>
-                <Link to={"/home"}>
+                <Link to={"/"}>
                   <Button color="inherit">
                     <img src={logo} alt="logo" />
                   </Button>
@@ -106,20 +106,23 @@ function Navbar() {
               alt="Logo"
               style={{ height: "30px", marginBottom: "10px" }}
             />
+            <Divider />
             {actualUser.email && (
               <>
-                <Avatar
-                  alt="Profile Picture"
-                  src="/ruta/a/la/foto-de-perfil.jpg"
-                  sx={{ width: 64, height: 64 }}
-                />
-                <Typography
-                  variant="h6"
-                  component="div"
-                  sx={{ color: "white" }}
-                >
-                  Nombre de Usuario
-                </Typography>
+                <Box sx={{ padding: "20px" }}>
+                  <Avatar
+                    alt="Profile Picture"
+                    src={actualUser.image}
+                    sx={{ width: 64, height: 64 }}
+                  />
+                  <Typography
+                    variant="h6"
+                    component="div"
+                    sx={{ color: "white", marginTop: "10px" }}
+                  >
+                    {actualUser.name}
+                  </Typography>
+                </Box>
               </>
             )}
           </Box>
@@ -127,15 +130,21 @@ function Navbar() {
 
         <List>
           <ListItemButton onClick={toggleDrawer}>
-            <ListItemText primary="My Profile" />
+            <Link to={"/profile"}>
+              <ListItemText primary="My Profile" />
+            </Link>
           </ListItemButton>
           <Divider />
           <ListItemButton onClick={toggleDrawer}>
-            <ListItemText primary="My own report" />
+            <Link>
+              <ListItemText primary="My own report" />
+            </Link>
           </ListItemButton>
           <Divider />
           <ListItemButton onClick={toggleDrawer}>
-            <ListItemText primary="Contact with support" />
+            <Link>
+              <ListItemText primary="Contact with support" />
+            </Link>
           </ListItemButton>
           <Divider />
         </List>

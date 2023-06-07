@@ -1,5 +1,5 @@
 import React from "react";
-import CardReport from "../Cards/CardReport";
+import CardReport from "../Cards/CardReportList";
 import { Grid } from "@mui/material";
 
 const ReportList = ({ filterAds }) => {

@@ -12,6 +12,7 @@ import UserReports from "./components/pages/Profile/UserReports";
 import NewReport from "./components/pages/PrincipalFlow/NewReport";
 import Location from "./components/pages/PrincipalFlow/Location";
 import WorkOptions from "./components/pages/PrincipalFlow/WorkOptions";
+import IndividualReport from "./components/pages/Profile/IndividualReport";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -23,7 +24,9 @@ function App() {
       const data = await axiosSecret();
       dispatch(setUser(data));
     };
-    persintence();
+    if (document.cookie) {
+      persintence();
+    }
   }, []);
 
   return (
@@ -35,10 +38,11 @@ function App() {
           <Route path="/" element={<NewReport />} />
           <Route path="/work-options" element={<WorkOptions />} />
           <Route path="/location" element={<Location />} />
+          <Route path="/report" element={<IndividualReport />} />
         </Routes>
       ) : (
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
         </Routes>

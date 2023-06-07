@@ -4,9 +4,10 @@ import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
 import newReportImg from "../../../assets/newReportImg.png";
+import { Link } from "react-router-dom";
 
 function NewReport() {
-  const user = useSelector((state) => state.user);
+  const actualUser = useSelector((state) => state.user);
 
   return (
     <MainLayout title="newReport" inLoginOrRegister={true}>
@@ -19,7 +20,7 @@ function NewReport() {
           overflow="overflow"
         >
           <Typography variant="body1" sx={{ mb: 2 }}>
-            ¡Hola, {user.name}! Bienvenido/a.
+            ¡Hola, {actualUser.name}! Bienvenido/a.
           </Typography>
           <Typography variant="body1" sx={{ mb: 1 }}>
             Have a problem with your kit?
@@ -32,13 +33,21 @@ function NewReport() {
             <img src={newReportImg} alt="Imagen" style={{ maxWidth: "100%" }} />
           </Box>
           <Box width="50%" mb={1}>
-            <ButtonGlobant>Report an issue</ButtonGlobant>
+            <Link to={"/work-options"}>
+              <ButtonGlobant>Report an issue</ButtonGlobant>
+            </Link>
           </Box>
           <Box width="50%" mb={1}>
-            <ButtonGlobant>My Profile</ButtonGlobant>
+            <Link to={"/profile"}>
+              <ButtonGlobant>My Profile</ButtonGlobant>
+            </Link>
           </Box>
           <Box width="50%" mb={3}>
-            <ButtonGlobant>Admin View</ButtonGlobant>
+            {actualUser.is_admin && (
+              <Link to>
+                <ButtonGlobant>Admin View</ButtonGlobant>
+              </Link>
+            )}
           </Box>
         </Box>
       </div>

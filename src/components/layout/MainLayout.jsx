@@ -1,9 +1,9 @@
 import { Helmet } from "react-helmet";
 import "./MainLayout.module.css";
-import Footer from "../footer/Footer";
-import Navbar from "../navbar/Navbar";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 import { useSelector } from "react-redux";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 
 export const MainLayout = ({
   title = "FixIt",
