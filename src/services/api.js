@@ -47,3 +47,13 @@ export const axiosCasesUser = async (id, filterAds) => {
     console.log(error);
   }
 };
+
+export const axiosUpdateUser = async (update, id) => {
+  try {
+    console.log(update);
+    const { data } = await axios.put(`${apiUrl}users/update/:${id}`, update);
+    return { message: data };
+  } catch (error) {
+    throw new Error({ message: "The user was not updated" });
+  }
+};
