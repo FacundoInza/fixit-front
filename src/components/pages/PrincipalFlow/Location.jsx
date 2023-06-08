@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MainLayout } from "../../layout/MainLayout";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 
-import mapImg from "../../../assets/mapImg.png";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 import { useDispatch, useSelector } from "react-redux";
 import { axiosUpdateUser } from "../../../services/api";
@@ -13,6 +13,7 @@ import { updateUser } from "../../../store/users";
 function Location() {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.user);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
     const locationUpdate = async () => {
@@ -27,6 +28,16 @@ function Location() {
     locationUpdate();
   }, []);
 
+  const containerStyle = {
+    width: "400px",
+    height: "300px",
+  };
+
+  const center = {
+    lat: -34.609875,
+    lng: -58.442497,
+  };
+
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
       <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
@@ -35,7 +46,6 @@ function Location() {
           justifyContent="center"
           alignItems="center"
           flexDirection="column"
-          overflow="overflow"
         >
           <Typography variant="body1" sx={{ mb: 2 }}>
             Report Issue
@@ -48,7 +58,15 @@ function Location() {
           </Typography>
 
           <Box mb={3}>
-            <img src={mapImg} alt="Imagen" style={{ maxWidth: "100%" }} />
+            <LoadScript googleMapsApiKey="AIzaSyBk7HcRvPnJ1jDgWzRvlcdpCui4MlHpRl4">
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={15}
+              >
+                <Marker position={center} />
+              </GoogleMap>
+            </LoadScript>
           </Box>
 
           <Card
