@@ -5,12 +5,27 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 
 import mapImg from "../../../assets/mapImg.png";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { axiosUpdateUser } from "../../../services/api";
+import { getLocation } from "../../../utils";
+import { updateUser } from "../../../store/users";
 
 function Location() {
   const dispatch = useDispatch();
+  const { id } = useSelector((state) => state.user);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const locationUpdate = async () => {
+      const { error, data } = await getLocation();
+
+      const lat = String(data.coords.latitude);
+      const lng = String(data.coords.longitude);
+
+      const { message } = await axiosUpdateUser({ location: [lat, lng] }, id);
+      dispatch(updateUser({ location: [lat, lng] }));
+    };
+    locationUpdate();
+  }, []);
 
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
