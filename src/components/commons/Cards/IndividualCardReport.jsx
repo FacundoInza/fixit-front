@@ -3,24 +3,20 @@ import React from "react";
 import style from "./IndividualCardReport.module.css";
 import image from "../../../assets/indivvidualReport.png";
 
-const IndividualCardReport = () => {
+const IndividualCardReport = ({ individualReport }) => {
   return (
-    <div class={style["card-container"]}>
-      <div class={style.card}>
-        <div class={style.card}>
+    <div className={style["card-container"]}>
+      <div className={style.card}>
+        <div className={style.card}>
           <img
             src={image}
             alt="report"
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </div>
-        <div class={style.content}>
-          <p class={style.heading}>Card Hover</p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipii voluptas ten mollitia
-            pariatur odit, ab minus ratione adipisci accusamus vel est excepturi
-            laboriosam magnam necessitatibus dignissimos molestias.
-          </p>
+        <div className={style.content}>
+          <p className={style.heading}>Description of issue</p>
+          <p>{individualReport.description}</p>
         </div>
       </div>
     </div>
