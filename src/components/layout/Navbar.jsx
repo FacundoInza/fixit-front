@@ -17,15 +17,25 @@ import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../../assets/Short-White-Green.png";
 import fullLogo from "../../assets/Globant-Original.png";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { axiosLogout } from "../../services/api";
 
 function Navbar() {
   const actualUser = useSelector((state) => state.user);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
   };
+
+  const handleLogout = () => {
+    axiosLogout();
+    setDrawerOpen(!isDrawerOpen);
+    navigate("/");
+    window.location.reload();
+  };
+
   return (
     <>
       <Box sx={{ height: "88px" }}>
@@ -93,6 +103,7 @@ function Navbar() {
             p: 2,
           }}
         >
+          <img src={fullLogo} alt="Logo" style={{ height: "30px" }} />
           <Box
             sx={{
               display: "flex",
@@ -101,28 +112,30 @@ function Navbar() {
               flexDirection: "column",
             }}
           >
-            <img
-              src={fullLogo}
-              alt="Logo"
-              style={{ height: "30px", marginBottom: "10px" }}
-            />
             <Divider />
             {actualUser.email && (
               <>
-                <Box sx={{ padding: "20px" }}>
+                <Box sx={{ padding: "20px", display: "flex" }}>
                   <Avatar
                     alt="Profile Picture"
                     src={actualUser.image}
-                    sx={{ width: 64, height: 64 }}
+                    sx={{ width: 35, height: 35, margin: "10px" }}
                   />
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ color: "white", marginTop: "10px" }}
+                    sx={{ color: "white", margin: "auto" }}
                   >
                     {actualUser.name}
                   </Typography>
                 </Box>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
               </>
             )}
           </Box>
@@ -136,12 +149,12 @@ function Navbar() {
           </ListItemButton>
           <Divider />
           <ListItemButton onClick={toggleDrawer}>
-            <Link>
-              <ListItemText primary="My own report" />
+            <Link to={`/reports`}>
+              <ListItemText primary="My owns report" />
             </Link>
           </ListItemButton>
           <Divider />
-          <ListItemButton onClick={toggleDrawer}>
+          <ListItemButton onClick={toggleDrawer} sx={{ display: "none" }}>
             <Link>
               <ListItemText primary="Contact with support" />
             </Link>
