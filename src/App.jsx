@@ -18,7 +18,6 @@ function App() {
   const actualUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  console.log(actualUser);
   useEffect(() => {
     const persintence = async () => {
       const data = await axiosSecret();

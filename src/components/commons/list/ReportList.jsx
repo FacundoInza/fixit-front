@@ -1,10 +1,20 @@
-import React from "react";
-import CardReport from "../Cards/CardReportList";
+import React, { useEffect, useMemo } from "react";
+import axios from "axios";
+
 import { Grid } from "@mui/material";
 
+import CardReport from "../Cards/CardReportList";
+import { axiosCasesUser } from "../../../services/api";
+
 const ReportList = ({ filterAds }) => {
-  //{status: "pending" , period: "15_days" , device: "laptop"} // 15_days 1_month 6_moths // url : /cases/filter?status=pending&period=15_days&device=laptop
-  console.log(filterAds);
+  const actualUser = useSelector((state) => state.user);
+
+  // const casesList = useMemo((user.id,filterAds) => {
+  //   return axiosCasesUser();
+  // });
+
+  console.log(casesList);
+
   return (
     <div
       style={{

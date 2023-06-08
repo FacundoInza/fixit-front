@@ -2,14 +2,34 @@ import React, { useEffect } from "react";
 import { MainLayout } from "../../layout/MainLayout";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Box, Card, CardContent, Typography } from "@mui/material";
+
 import mapImg from "../../../assets/mapImg.png";
 import { getLocation } from "../../../utils";
+import { getLocationNearbyOffice } from "../../../services/apiGoogle";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../../store/users";
 
 function Location() {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    const { error, data } = getLocation();
-    console.log(data);
+    const getOfficeLocation = async () => {
+      const { data, error } = await getLocation();
+      const userLocation = data.coords;
+
+      const latitude = String(data.coords.latitude);
+      const longitude = String(data.coords.longitude);
+      dispatch(updateUser({ location: [latitude, longitude] }));
+      console.log("user location:", userLocation);
+      const officeLocation = await getLocationNearbyOffice({
+        latitude,
+        longitude,
+      });
+      console.log(officeLocation);
+    };
+    getOfficeLocation();
   }, []);
+
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
       <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>

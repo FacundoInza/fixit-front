@@ -21,15 +21,15 @@ const getUserLocation = () => {
     }
   });
 };
+
 // Uso de la función en un componente o en cualquier otro lugar
 export async function getLocation() {
   try {
     const position = await getUserLocation();
-    console.log("Location:", position);
     return { error: false, data: position };
   } catch (error) {
     console.log("Error:", error.message);
-    return { error: true, message: error.message };
+    return { error: true, data: error.message };
     // Maneja el error según corresponda
   }
 }
