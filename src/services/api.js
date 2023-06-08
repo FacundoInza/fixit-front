@@ -82,3 +82,11 @@ export const axiosAllDevices = async () => {
     console.log(error);
   }
 };
+
+export const axiosLogout = async () => {
+  try {
+    await axios.get(`${apiUrl}users/logout`, { withCredentials: true });
+  } catch (error) {
+    console.log(error);
+  }
+};
