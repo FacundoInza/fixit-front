@@ -1,6 +1,7 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
 export const setUser = createAction("SET_USER");
+export const updateUser = createAction("UPDATE_USER");
 
 const initialState = {
   id: null,
@@ -27,5 +28,9 @@ export const userReducer = createReducer(initialState, {
       state.role = action.payload.role;
       state.is_admin = action.payload.is_admin;
     }
+  },
+  [updateUser]: (state, action) => {
+    const updates = Object.keys(action.payload);
+    updates.map((key) => (state[key] = action.payload[key]));
   },
 });
