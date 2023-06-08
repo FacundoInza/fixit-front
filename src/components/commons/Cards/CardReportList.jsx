@@ -4,15 +4,15 @@ import {
   Button,
   Card,
   CardActions,
-  CardContent,
   CardMedia,
   Grid,
   Typography,
 } from "@mui/material";
 
 import image from "../../../assets/Rectangle 40.jpg";
+import { Link } from "react-router-dom";
 
-const CardReport = () => {
+const CardReportList = ({ info }) => {
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
       <Card
@@ -23,7 +23,6 @@ const CardReport = () => {
           display: "flex",
           flexDirection: "row",
           margin: "0px",
-
           background: "#F5F6F8",
           borderRadius: "0px",
           boxShadow: "0px -3px 20px 1px rgba(0, 0, 0, 0.15)",
@@ -36,15 +35,19 @@ const CardReport = () => {
         />
         <Box sx={{ maxWidth: "55%", maxHeight: 200, padding: "10px" }}>
           <Typography gutterBottom variant="h5" component="div">
-            Lizard
+            Report #{info._id.slice(22)}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species.
+            {info.description.length > 80
+              ? info.description.slice(0, 80 - 3) + "..."
+              : info.description}
           </Typography>
           <CardActions>
-            <Button size="small">Details</Button>
-            <Button size="small">State</Button>
+            <Link to={`/report/${info._id}`}>
+              <Button size="small">Details</Button>
+            </Link>
+
+            <Button size="small">{info.status}</Button>
           </CardActions>
         </Box>
       </Card>
@@ -52,4 +55,4 @@ const CardReport = () => {
   );
 };
 
-export default CardReport;
+export default CardReportList;

@@ -37,7 +37,7 @@ function App() {
           <Route path="/" element={<NewReport />} />
           <Route path="/work-options" element={<WorkOptions />} />
           <Route path="/location" element={<Location />} />
-          <Route path="/report" element={<IndividualReport />} />
+          <Route path="/report/:id" element={<IndividualReport />} />
         </Routes>
       ) : (
         <Routes>

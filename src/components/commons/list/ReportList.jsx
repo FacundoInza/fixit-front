@@ -1,19 +1,25 @@
 import React, { useEffect, useMemo } from "react";
-import axios from "axios";
 
 import { Grid } from "@mui/material";
 
-import CardReport from "../Cards/CardReportList";
 import { axiosCasesUser } from "../../../services/api";
+import { useDispatch, useSelector } from "react-redux";
+import { setAllReports } from "../../../store/Reports";
+import CardReportList from "../Cards/CardReportList";
 
 const ReportList = ({ filterAds }) => {
-  const actualUser = useSelector((state) => state.user);
+  const { id } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { reports } = useSelector((state) => state.reports);
 
-  // const casesList = useMemo((user.id,filterAds) => {
-  //   return axiosCasesUser();
-  // });
-
-  console.log(casesList);
+  useEffect(() => {
+    const updateListCases = async () => {
+      const data = await axiosCasesUser(id, filterAds);
+      console.log("data", data);
+      dispatch(setAllReports(data));
+    };
+    updateListCases();
+  }, [filterAds]);
 
   return (
     <div
@@ -24,12 +30,8 @@ const ReportList = ({ filterAds }) => {
       }}
     >
       <Grid container spacing={2} margin={"5px 5px 0px 5px"}>
-        <CardReport />
-        <CardReport />
-        <CardReport />
-        <CardReport />
-        <CardReport />
-        <CardReport />
+        {reports &&
+          reports.map((report, i) => <CardReportList key={i} info={report} />)}
       </Grid>
     </div>
   );

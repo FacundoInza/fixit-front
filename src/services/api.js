@@ -38,9 +38,15 @@ export const axiosSecret = async () => {
 
 export const axiosCasesUser = async (id, filterAds) => {
   try {
-    const query = qs.stringify(filterAds);
+    const { status, period, device } = filterAds;
+    let query = qs.stringify(filterAds);
+    console.log(query);
+
     const { data } = await axios.get(
-      `${apiUrl}users/filterGlober/:${id}?${query}`
+      `${apiUrl}cases/filterGlober/${id}?${query}`,
+      {
+        withCredentials: true,
+      }
     );
     return data;
   } catch (error) {
@@ -51,9 +57,28 @@ export const axiosCasesUser = async (id, filterAds) => {
 export const axiosUpdateUser = async (update, id) => {
   try {
     console.log(update);
-    const { data } = await axios.put(`${apiUrl}users/update/:${id}`, update);
+    const { data } = await axios.put(`${apiUrl}users/update/${id}`, update);
     return { message: data };
   } catch (error) {
     throw new Error({ message: "The user was not updated" });
+  }
+};
+
+export const axiosIndividualCase = async (id) => {
+  try {
+    const { data } = await axios.get(`${apiUrl}cases/${id}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const axiosAllDevices = async () => {
+  try {
+    const { data } = await axios.get(`${apiUrl}devices/all`);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
   }
 };
