@@ -72,7 +72,7 @@ function Location() {
           <Box width="50%" mb={1}>
             <ButtonGlobant>Confirm Office</ButtonGlobant>
           </Box>
-          <Box width="50%" mb={3}>
+          <Box width="50%" mb={3} display={"none"}>
             <ButtonGlobant>Choose Another Office</ButtonGlobant>
           </Box>
         </Box>

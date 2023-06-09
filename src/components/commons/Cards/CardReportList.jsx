@@ -11,13 +11,15 @@ import {
 
 import image from "../../../assets/Rectangle 40.jpg";
 import { Link } from "react-router-dom";
+import { formatDate } from "../../../utils";
 
 const CardReportList = ({ info }) => {
+  console.log(info.starting_date);
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
       <Card
         sx={{
-          maxWidth: { xs: "380px" },
+          maxWidth: { xs: "400px" },
           maxHeight: { xs: "200px" },
           padding: "0px",
           display: "flex",
@@ -35,20 +37,41 @@ const CardReportList = ({ info }) => {
         />
         <Box sx={{ maxWidth: "55%", maxHeight: 200, padding: "10px" }}>
           <Typography gutterBottom variant="h5" component="div">
-            Report #{info._id.slice(22)}
+            Report #{info._id.slice(20)}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {info.description.length > 80
               ? info.description.slice(0, 80 - 3) + "..."
               : info.description}
           </Typography>
-          <Typography gutterBottom component="div"></Typography>
+          <Typography gutterBottom component="div">
+            {formatDate(info.starting_date)} - {info.damaged_equipment.name}
+          </Typography>
+
           <CardActions>
             <Link to={`/report/${info._id}`}>
-              <Button size="small">Details</Button>
+              <Button
+                size="small"
+                variant="outlined"
+                sx={{
+                  color: (theme) => theme.palette.primary.dark,
+                  margin: "3px",
+                }}
+              >
+                Details
+              </Button>
             </Link>
 
-            <Button size="small">{info.status}</Button>
+            <Button
+              size="small"
+              variant="outlined"
+              sx={{
+                color: (theme) => theme.palette.primary.dark,
+                margin: "3px",
+              }}
+            >
+              {info.status}
+            </Button>
           </CardActions>
         </Box>
       </Card>
