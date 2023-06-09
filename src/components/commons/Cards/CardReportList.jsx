@@ -61,8 +61,7 @@ const CardReportList = ({ info }) => {
                 Details
               </Button>
             </Link>
-
-            <Button
+            <Typography
               size="small"
               variant="outlined"
               sx={{
@@ -70,8 +69,8 @@ const CardReportList = ({ info }) => {
                 margin: "3px",
               }}
             >
-              {info.status}
-            </Button>
+              {info.status.toUpperCase()}
+            </Typography>
           </CardActions>
         </Box>
       </Card>
