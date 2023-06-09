@@ -90,3 +90,16 @@ export const axiosLogout = async () => {
     console.log(error);
   }
 };
+
+export const axiosGetNearbyOffice = async (locationUser) => {
+  const query = qs.stringify(locationUser);
+
+  try {
+    const { data } = await axios.get(
+      `${apiUrl}maps/places/findNearbyOffice?${query}`
+    );
+    return data.data.candidates;
+  } catch (error) {
+    console.log(error);
+  }
+};
