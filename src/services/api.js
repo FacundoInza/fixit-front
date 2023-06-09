@@ -56,7 +56,6 @@ export const axiosCasesUser = async (id, filterAds) => {
 
 export const axiosUpdateUser = async (update, id) => {
   try {
-    console.log(update);
     const { data } = await axios.put(`${apiUrl}users/update/${id}`, update);
     return { message: data };
   } catch (error) {

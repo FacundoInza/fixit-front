@@ -15,7 +15,8 @@ import CardOffice from "../../commons/Cards/CardOffice";
 function Location() {
   const dispatch = useDispatch();
   const [nearbyOffices, setNearbyOffices] = useState([]);
-  const { id } = useSelector((state) => state.user);
+  const { id, location } = useSelector((state) => state.user);
+  const [markers, setMarkers] = useState("");
 
   useEffect(() => {
     const locationUpdate = async () => {
@@ -27,6 +28,15 @@ function Location() {
       const { message } = await axiosUpdateUser({ location: [lat, lng] }, id);
       dispatch(updateUser({ location: [lat, lng] }));
       const offices = await axiosGetNearbyOffice({ lat, lng });
+
+      const stringMarkers = offices
+        .map(
+          (office) =>
+            `${office.geometry.location.lat},${office.geometry.location.lng}`
+        )
+        .join("|");
+      console.log("hola", stringMarkers);
+      setMarkers(stringMarkers);
       console.log(offices);
       setNearbyOffices(offices);
     };
@@ -35,7 +45,7 @@ function Location() {
 
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
-      <div style={{ maxHeight: "calc(100vh - 250px)" }}>
+      <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
         <Box
           display="flex"
           justifyContent="center"
@@ -53,7 +63,9 @@ function Location() {
             We identified you are near office tandil
           </Typography>
 
-          <MapContainer />
+          <img
+            src={`https://maps.googleapis.com/maps/api/staticmap?center=${location[0]},${location[1]}&zoom=13&size=400x400&markers=color:red|${markers}&key=AIzaSyBk7HcRvPnJ1jDgWzRvlcdpCui4MlHpRl4`}
+          />
 
           {nearbyOffices &&
             nearbyOffices.map((office, i) => (
