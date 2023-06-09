@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MainLayout } from "../../layout/MainLayout";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Box, Card, CardContent, Typography } from "@mui/material";
@@ -6,12 +6,15 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 import mapImg from "../../../assets/mapImg.png";
 
 import { useDispatch, useSelector } from "react-redux";
-import { axiosUpdateUser } from "../../../services/api";
+import { axiosGetNearbyOffice, axiosUpdateUser } from "../../../services/api";
 import { getLocation } from "../../../utils";
 import { updateUser } from "../../../store/users";
+import MapContainer from "../../commons/Map";
+import CardOffice from "../../commons/Cards/CardOffice";
 
 function Location() {
   const dispatch = useDispatch();
+  const [nearbyOffices, setNearbyOffices] = useState([]);
   const { id } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -23,13 +26,16 @@ function Location() {
 
       const { message } = await axiosUpdateUser({ location: [lat, lng] }, id);
       dispatch(updateUser({ location: [lat, lng] }));
+      const offices = await axiosGetNearbyOffice({ lat, lng });
+      console.log(offices);
+      setNearbyOffices(offices);
     };
     locationUpdate();
   }, []);
 
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
-      <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
+      <div style={{ maxHeight: "calc(100vh - 250px)" }}>
         <Box
           display="flex"
           justifyContent="center"
@@ -47,24 +53,12 @@ function Location() {
             We identified you are near office tandil
           </Typography>
 
-          <Box mb={3}>
-            <img src={mapImg} alt="Imagen" style={{ maxWidth: "100%" }} />
-          </Box>
+          <MapContainer />
 
-          <Card
-            sx={{
-              backgroundColor: "#F5F6F7",
-              maxWidth: "50%",
-              width: "100%",
-              mb: 2,
-            }}
-          >
-            <CardContent>
-              <Typography variant="body1">Country-City</Typography>
-              <Typography variant="body2">Address: 123 Street, CP</Typography>
-              <Typography variant="body2">City-Province</Typography>
-            </CardContent>
-          </Card>
+          {nearbyOffices &&
+            nearbyOffices.map((office, i) => (
+              <CardOffice key={i} office={office} />
+            ))}
 
           <Box width="50%" mb={1}>
             <ButtonGlobant>Confirm Office</ButtonGlobant>
