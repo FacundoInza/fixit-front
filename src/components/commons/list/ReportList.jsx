@@ -24,7 +24,7 @@ const ReportList = ({ filterAds }) => {
   return (
     <div
       style={{
-        maxHeight: "calc(100vh - 250px)",
+        maxHeight: "calc(100vh - 300px)",
         overflowY: "auto",
         margin: "0px",
       }}

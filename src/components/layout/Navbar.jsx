@@ -103,7 +103,9 @@ function Navbar() {
             p: 2,
           }}
         >
-          <img src={fullLogo} alt="Logo" style={{ height: "30px" }} />
+          <Link to={"/"} style={{ textDecoration: "none" }}>
+            <img src={fullLogo} alt="Logo" style={{ height: "30px" }} />
+          </Link>
           <Box
             sx={{
               display: "flex",
@@ -115,20 +117,23 @@ function Navbar() {
             <Divider />
             {actualUser.email && (
               <>
-                <Box sx={{ padding: "20px", display: "flex" }}>
-                  <Avatar
-                    alt="Profile Picture"
-                    src={actualUser.image}
-                    sx={{ width: 35, height: 35, margin: "10px" }}
-                  />
-                  <Typography
-                    variant="h6"
-                    component="div"
-                    sx={{ color: "white", margin: "auto" }}
-                  >
-                    {actualUser.name}
-                  </Typography>
-                </Box>
+                <Link to={"/profile"} style={{ textDecoration: "none" }}>
+                  <Box sx={{ padding: "20px", display: "flex" }}>
+                    <Avatar
+                      alt="Profile Picture"
+                      src={actualUser.image}
+                      sx={{ width: 35, height: 35, margin: "10px" }}
+                    />
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{ color: "white", margin: "auto" }}
+                    >
+                      {actualUser.name}
+                    </Typography>
+                  </Box>
+                </Link>
+
                 <Button
                   variant="contained"
                   color="primary"
@@ -151,6 +156,9 @@ function Navbar() {
               <ListItemText primary="My Reports" />
             </ListItemButton>
             <Divider />
+            <ListItemButton href="/" onClick={toggleDrawer}>
+              <ListItemText primary="Create Report" />
+            </ListItemButton>
           </List>
         ) : (
           <List>
