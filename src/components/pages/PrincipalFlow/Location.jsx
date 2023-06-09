@@ -63,9 +63,11 @@ function Location() {
             We identified you are near office tandil
           </Typography>
 
+
           <img
             src={`https://maps.googleapis.com/maps/api/staticmap?center=${location[0]},${location[1]}&zoom=13&size=400x400&markers=color:red|${markers}&key=AIzaSyBk7HcRvPnJ1jDgWzRvlcdpCui4MlHpRl4`}
-          />
+
+
 
           {nearbyOffices &&
             nearbyOffices.map((office, i) => (

@@ -141,26 +141,30 @@ function Navbar() {
           </Box>
         </Box>
 
-        <List>
-          <ListItemButton onClick={toggleDrawer}>
-            <Link to={"/profile"}>
+        {actualUser.email ? (
+          <List>
+            <ListItemButton href="/profile" onClick={toggleDrawer}>
               <ListItemText primary="My Profile" />
-            </Link>
-          </ListItemButton>
-          <Divider />
-          <ListItemButton onClick={toggleDrawer}>
-            <Link to={`/reports`}>
+            </ListItemButton>
+            <Divider />
+            <ListItemButton href="/reports" onClick={toggleDrawer}>
               <ListItemText primary="My owns report" />
-            </Link>
-          </ListItemButton>
-          <Divider />
-          <ListItemButton onClick={toggleDrawer} sx={{ display: "none" }}>
-            <Link>
-              <ListItemText primary="Contact with support" />
-            </Link>
-          </ListItemButton>
-          <Divider />
-        </List>
+            </ListItemButton>
+            <Divider />
+          </List>
+        ) : (
+          <List>
+            <Divider />
+            <ListItemButton href="/login" onClick={toggleDrawer}>
+              <ListItemText primary="Login" />
+            </ListItemButton>
+            <Divider />
+            <ListItemButton href="signUp" onClick={toggleDrawer}>
+              <ListItemText primary="Sign Up" />
+            </ListItemButton>
+            <Divider />
+          </List>
+        )}
       </Drawer>
     </>
   );
