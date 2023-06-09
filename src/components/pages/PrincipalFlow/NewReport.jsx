@@ -3,7 +3,7 @@ import { MainLayout } from "../../layout/MainLayout";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
-import newReportImg from "../../../assets/newReportImg.png";
+import newReportImg from "../../../assets/newReport.png";
 import { Link } from "react-router-dom";
 
 function NewReport() {
@@ -20,13 +20,13 @@ function NewReport() {
           overflow="overflow"
         >
           <Typography variant="body1" sx={{ mb: 2 }}>
-            ¡Hola, {actualUser.name}! Bienvenido/a.
+            Welcome {actualUser.name}!
           </Typography>
-          <Typography variant="body1" sx={{ mb: 1 }}>
-            Have a problem with your kit?
+          <Typography variant="body1" sx={{ mb: 1 }} fontWeight="bold">
+            Do you have a problem with a device?
           </Typography>
           <Typography variant="body1" sx={{ mb: 3 }}>
-            Report your problem with help desk.
+            Report it so Service Desk can FIX IT
           </Typography>
 
           <Box mb={3}>

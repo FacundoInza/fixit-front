@@ -53,14 +53,11 @@ function Location() {
           flexDirection="column"
           overflow="overflow"
         >
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            Report Issue
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 1 }}>
+          <Typography variant="body1" sx={{ mb: 1 }} fontWeight="bold">
             Location:
           </Typography>
           <Typography variant="body1" sx={{ mb: 3 }}>
-            We identified you are near office tandil
+            We identified you are near the following office
           </Typography>
 
           <img
