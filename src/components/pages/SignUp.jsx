@@ -23,24 +23,24 @@ function SignUp() {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("El nombre es obligatorio"),
+    name: Yup.string().required("Obligatory Field"),
     email: Yup.string()
-      .email("El correo electrónico no es válido")
-      .required("El correo electrónico es obligatorio"),
+      .email("The email address is not valid")
+      .required("Obligatory Field"),
     cellphone: Yup.number()
-      .typeError("Este campo debe ser un número")
-      .required("El número es obligatorio"),
+      .typeError("This field must be a number")
+      .required("Obligatory Field"),
     password: Yup.string()
-      .min(8, "La contraseña debe tener al menos 8 caracteres")
-      .max(18, "La contraseña no debe tener más de 18 caracteres")
+      .min(8, "The password must have at least 8 characters")
+      .max(18, "The password can´t have more than 8 characters")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+$/,
-        "La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número"
+        "The password must have at least 1 uppercase, 1 lowercase and 1 number"
       )
-      .matches(/^\S*$/, "La contraseña no debe contener espacios")
-      .required("La contraseña es obligatoria"),
-    address: Yup.string().required("La dirección es obligatoria"),
-    role: Yup.string().required("El rol es obligatorio"),
+      .matches(/^\S*$/, "The password can´t have spaces")
+      .required("Obligatory Field"),
+    address: Yup.string().required("Obligatory Field"),
+    role: Yup.string().required("Obligatory Field"),
   });
 
   const ErrorMessageContainer = styled("div")({
@@ -101,7 +101,7 @@ function SignUp() {
                 fontWeight={"bold"}
                 sx={{ textAlign: "center", margin: "15px" }}
               >
-                Complete the fields to register
+                Complete the fields to Sign Up
               </Typography>
               <div style={{ padding: "10px" }}>
                 <Field
@@ -225,7 +225,7 @@ function SignUp() {
 
               <Box display={"flex"} justifyContent={"center"} width={"100%"}>
                 <ButtonGlobant props={{ type: "submit" }}>
-                  Register
+                  Sign Up
                 </ButtonGlobant>
               </Box>
             </Form>

@@ -44,7 +44,7 @@ const Home = () => {
           <Typography
             sx={{ fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" } }}
           >
-            If you want to report your issue, you must be logged in!
+            If you want to report your issue, please log in below
           </Typography>
           <Box width={"100%"} padding={"20px"} marginTop={"20px"}>
             <Link to="/login">
@@ -53,7 +53,7 @@ const Home = () => {
           </Box>
           <Box width={"100%"} padding={"10px"}>
             <Link to="/signUp">
-              <ButtonGlobant>Register</ButtonGlobant>
+              <ButtonGlobant>Sign Up</ButtonGlobant>
             </Link>
           </Box>
         </Box>

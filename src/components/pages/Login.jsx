@@ -109,7 +109,7 @@ const Login = () => {
               fontWeight={"bold"}
               sx={{ textAlign: "center", margin: "15px" }}
             >
-              Login in to your account
+              Log in to your account
             </Typography>
             <div style={{ padding: "10px" }}>
               <Field
@@ -133,7 +133,7 @@ const Login = () => {
               <Field
                 as={TextField}
                 name="password"
-                label="Contraseña"
+                label="Password"
                 type="password"
                 variant="outlined"
                 fullWidth
@@ -152,7 +152,7 @@ const Login = () => {
               <ButtonGlobant props={{ type: "submit" }}>Log In</ButtonGlobant>
             </Box>
             <Box display={"flex"} justifyContent={"flex-end"} width={"100%"}>
-              <Button href="/signUp">Sing Up</Button>
+              <Button href="/signUp">Sign Up</Button>
             </Box>
           </Form>
         </Formik>

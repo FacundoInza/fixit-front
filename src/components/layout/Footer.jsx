@@ -35,10 +35,7 @@ const Footer = () => {
         />
         <Box flexDirection={"column"} marginLeft={"20px"}>
           <Typography fontSize={"12px"} color={"white"}>
-            Contáctanos
-          </Typography>
-          <Typography fontSize={"12px"} color={"white"}>
-            Escríbenos{" "}
+            Contact Us
           </Typography>
           <Typography fontSize={"12px"} color={"white"}>
             hi@globant.com

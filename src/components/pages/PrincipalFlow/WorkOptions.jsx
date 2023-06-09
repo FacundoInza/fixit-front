@@ -66,7 +66,7 @@ function WorkOptions() {
                       height="100%"
                     >
                       <Typography variant="body2" color="white">
-                        In Globant office
+                        Globant office
                       </Typography>
                       <img
                         src={logo}
@@ -109,68 +109,67 @@ function WorkOptions() {
               </MobileButtonContainer>
             ) : (
               <DesktopButtonContainer>
-                <Link to="/location">
-                  <IconButton
-                    variant="contained"
-                    size="large"
-                    sx={{
-                      width: "200px",
-                      height: "200px",
-                      backgroundColor: "#999999",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "column",
-                      borderRadius: "20%",
-                    }}
+                <IconButton
+                  href="/location"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    width: "200px",
+                    height: "200px",
+                    backgroundColor: "#999999",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    borderRadius: "20%",
+                  }}
+                >
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    flexDirection="column"
+                    height="100%"
                   >
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      flexDirection="column"
-                      height="100%"
-                    >
-                      <Typography variant="body2" color="white">
-                        In Globant office
-                      </Typography>
-                      <img
-                        src={logo}
-                        style={{ maxWidth: "20%", maxHeight: "20%" }}
-                        alt="Image 1"
-                      />
-                      <img src={inGlobantOffice} alt="Image 1" />
-                    </Box>
-                  </IconButton>
-                </Link>
-                <Link to={"/location"}>
-                  <IconButton
-                    variant="contained"
-                    size="large"
-                    sx={{
-                      width: "200px",
-                      height: "200px",
-                      backgroundColor: "#999999",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: "20%",
-                    }}
+                    <Typography variant="body2" color="white">
+                      Globant office
+                    </Typography>
+                    <img
+                      src={logo}
+                      style={{ maxWidth: "20%", maxHeight: "20%" }}
+                      alt="Image 1"
+                    />
+                    <img src={inGlobantOffice} alt="Image 1" />
+                  </Box>
+                </IconButton>
+
+                <IconButton
+                  href="/location"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    width: "200px",
+                    height: "200px",
+                    backgroundColor: "#999999",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "20%",
+                  }}
+                >
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    flexDirection="column"
+                    height="100%"
                   >
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      flexDirection="column"
-                      height="100%"
-                    >
-                      <Typography variant="body2" color="white">
-                        Working from home
-                      </Typography>
-                      <img src={workFromHome} alt="Image 2" />
-                    </Box>
-                  </IconButton>
-                </Link>
+                    <Typography variant="body2" color="white">
+                      Working from home
+                    </Typography>
+                    <img src={workFromHome} alt="Image 2" />
+                  </Box>
+                </IconButton>
               </DesktopButtonContainer>
             )}
           </Box>
