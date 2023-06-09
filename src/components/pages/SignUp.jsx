@@ -68,7 +68,7 @@ function SignUp() {
   const handleSubmit = async (value) => {
     //Aqui dentro se escribe la logica para enviar los datode el formulario
     const axios = await axiosSignUp(value);
-    navigate("/");
+    navigate("/login");
     console.log(axios);
   };
 

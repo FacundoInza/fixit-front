@@ -156,7 +156,7 @@ function Navbar() {
               <ListItemText primary="My Reports" />
             </ListItemButton>
             <Divider />
-            <ListItemButton href="/" onClick={toggleDrawer}>
+            <ListItemButton href="/work-options" onClick={toggleDrawer}>
               <ListItemText primary="Create Report" />
             </ListItemButton>
           </List>

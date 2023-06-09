@@ -10,7 +10,7 @@ import { setIndividualReport } from "../../../store/Reports";
 import { useDispatch, useSelector } from "react-redux";
 import { axiosIndividualCase } from "../../../services/api";
 
-const steps = ["Open", "Assigned", "Sent", "Solved", "Closed"];
+const steps = ["Open", "In Progress", "Partially Solved", "Solved"];
 
 const IndividualReport = () => {
   const { individualReport } = useSelector((state) => state.reports);
