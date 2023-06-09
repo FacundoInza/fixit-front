@@ -20,6 +20,8 @@ import fullLogo from "../../assets/Globant-Original.png";
 import { axiosLogin } from "../../services/api";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/users";
+import { styled } from "@mui/system";
+import { Close } from "@mui/icons-material";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -51,6 +53,28 @@ const Login = () => {
   const handleClose = () => {
     setOpenSnackbar(false);
   };
+
+  const ErrorMessageContainer = styled("div")({
+    position: "relative",
+    backgroundColor: "#f8d7da",
+    padding: "10px",
+    marginBottom: "10px",
+    borderRadius: "4px",
+    border: "1px solid red",
+  });
+
+  const ErrorMessageText = styled("div")({
+    color: "red",
+    marginLeft: "10px",
+  });
+
+  const CloseIcon = styled(Close)({
+    position: "absolute",
+    top: "5px",
+    right: "5px",
+    cursor: "pointer",
+    color: "red",
+  });
 
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
@@ -96,7 +120,14 @@ const Login = () => {
                 fullWidth
                 margin="normal"
               />
-              <ErrorMessage name="email" component="div" />
+              <ErrorMessage name="email">
+                {(errorMsg) => (
+                  <ErrorMessageContainer>
+                    <CloseIcon onClick={() => setErrorMsg(null)} />
+                    <ErrorMessageText>{errorMsg}</ErrorMessageText>
+                  </ErrorMessageContainer>
+                )}
+              </ErrorMessage>
             </div>
             <div style={{ padding: "10px" }}>
               <Field
@@ -108,7 +139,14 @@ const Login = () => {
                 fullWidth
                 margin="normal"
               />
-              <ErrorMessage name="password" component="div" />
+              <ErrorMessage name="password">
+                {(errorMsg) => (
+                  <ErrorMessageContainer>
+                    <CloseIcon onClick={() => setErrorMsg(null)} />
+                    <ErrorMessageText>{errorMsg}</ErrorMessageText>
+                  </ErrorMessageContainer>
+                )}
+              </ErrorMessage>
             </div>
             <Box display={"flex"} justifyContent={"center"} width={"100%"} onC>
               <ButtonGlobant props={{ type: "submit" }}>Log In</ButtonGlobant>
