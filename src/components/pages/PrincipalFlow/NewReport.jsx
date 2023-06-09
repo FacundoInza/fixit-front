@@ -3,7 +3,7 @@ import { MainLayout } from "../../layout/MainLayout";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
-import newReportImg from "../../../assets/newReportImg.png";
+import newReportImg from "../../../assets/newReport.png";
 import { Link } from "react-router-dom";
 
 function NewReport() {
@@ -22,7 +22,7 @@ function NewReport() {
           <Typography variant="body1" sx={{ mb: 2 }}>
             Welcome {actualUser.name}!
           </Typography>
-          <Typography variant="body1" sx={{ mb: 1 }}>
+          <Typography variant="body1" sx={{ mb: 1 }} fontWeight="bold">
             Do you have a problem with a device?
           </Typography>
           <Typography variant="body1" sx={{ mb: 3 }}>

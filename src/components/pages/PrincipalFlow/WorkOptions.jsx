@@ -33,7 +33,7 @@ function WorkOptions() {
           flexDirection="column"
           height="100%"
         >
-          <Typography variant="body1" sx={{ mb: 2 }}>
+          <Typography variant="body1" sx={{ mb: 2 }} fontWeight="bold">
             Where are you working from?
           </Typography>
           <Typography variant="body1" sx={{ mb: 2 }}>

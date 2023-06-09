@@ -42,6 +42,7 @@ const CardReportList = ({ info }) => {
               ? info.description.slice(0, 80 - 3) + "..."
               : info.description}
           </Typography>
+          <Typography gutterBottom component="div"></Typography>
           <CardActions>
             <Link to={`/report/${info._id}`}>
               <Button size="small">Details</Button>

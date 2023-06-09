@@ -148,7 +148,7 @@ function Navbar() {
             </ListItemButton>
             <Divider />
             <ListItemButton href="/reports" onClick={toggleDrawer}>
-              <ListItemText primary="My Own Report" />
+              <ListItemText primary="My Reports" />
             </ListItemButton>
             <Divider />
           </List>
