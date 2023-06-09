@@ -53,7 +53,7 @@ function Location() {
             We identified you are near office tandil
           </Typography>
 
-          <MapContainer />
+          {/*           <MapContainer /> */}
 
           {nearbyOffices &&
             nearbyOffices.map((office, i) => (
