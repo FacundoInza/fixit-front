@@ -3,12 +3,17 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { MainLayout } from "../layout/MainLayout";
 import fullLogo from "../../assets/Globant-Original.png";
-import { Box, Container, Typography, TextField } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  TextField,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import ButtonGlobant from "../commons/ButtonGlobant";
 import { axiosSignUp } from "../../services/api";
 import { useNavigate } from "react-router";
-import { styled } from "@mui/system";
-import { Close } from "@mui/icons-material";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -41,28 +46,6 @@ function SignUp() {
       .required("Obligatory Field"),
     address: Yup.string().required("Obligatory Field"),
     role: Yup.string().required("Obligatory Field"),
-  });
-
-  const ErrorMessageContainer = styled("div")({
-    position: "relative",
-    backgroundColor: "#f8d7da",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "4px",
-    border: "1px solid red",
-  });
-
-  const ErrorMessageText = styled("div")({
-    color: "red",
-    marginLeft: "10px",
-  });
-
-  const CloseIcon = styled(Close)({
-    position: "absolute",
-    top: "5px",
-    right: "5px",
-    cursor: "pointer",
-    color: "red",
   });
 
   const handleSubmit = async (value) => {
@@ -115,10 +98,10 @@ function SignUp() {
                 />
                 <ErrorMessage name="name">
                   {(errorMsg) => (
-                    <ErrorMessageContainer>
-                      <CloseIcon onClick={() => setErrorMsg(null)} />
-                      <ErrorMessageText>{errorMsg}</ErrorMessageText>
-                    </ErrorMessageContainer>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      {errorMsg}
+                    </Alert>
                   )}
                 </ErrorMessage>
               </div>
@@ -135,10 +118,10 @@ function SignUp() {
                 />
                 <ErrorMessage name="email">
                   {(errorMsg) => (
-                    <ErrorMessageContainer>
-                      <CloseIcon onClick={() => setErrorMsg(null)} />
-                      <ErrorMessageText>{errorMsg}</ErrorMessageText>
-                    </ErrorMessageContainer>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      {errorMsg}
+                    </Alert>
                   )}
                 </ErrorMessage>
               </div>
@@ -154,10 +137,10 @@ function SignUp() {
                 />
                 <ErrorMessage name="cellphone">
                   {(errorMsg) => (
-                    <ErrorMessageContainer>
-                      <CloseIcon onClick={() => setErrorMsg(null)} />
-                      <ErrorMessageText>{errorMsg}</ErrorMessageText>
-                    </ErrorMessageContainer>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      {errorMsg}
+                    </Alert>
                   )}
                 </ErrorMessage>
               </div>
@@ -175,10 +158,10 @@ function SignUp() {
                 />
                 <ErrorMessage name="password">
                   {(errorMsg) => (
-                    <ErrorMessageContainer>
-                      <CloseIcon onClick={() => setErrorMsg(null)} />
-                      <ErrorMessageText>{errorMsg}</ErrorMessageText>
-                    </ErrorMessageContainer>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      {errorMsg}
+                    </Alert>
                   )}
                 </ErrorMessage>
               </div>
@@ -195,10 +178,10 @@ function SignUp() {
                 />
                 <ErrorMessage name="address">
                   {(errorMsg) => (
-                    <ErrorMessageContainer>
-                      <CloseIcon onClick={() => setErrorMsg(null)} />
-                      <ErrorMessageText>{errorMsg}</ErrorMessageText>
-                    </ErrorMessageContainer>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      {errorMsg}
+                    </Alert>
                   )}
                 </ErrorMessage>
               </div>
@@ -215,10 +198,10 @@ function SignUp() {
                 />
                 <ErrorMessage name="role">
                   {(errorMsg) => (
-                    <ErrorMessageContainer>
-                      <CloseIcon onClick={() => setErrorMsg(null)} />
-                      <ErrorMessageText>{errorMsg}</ErrorMessageText>
-                    </ErrorMessageContainer>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      {errorMsg}
+                    </Alert>
                   )}
                 </ErrorMessage>
               </div>

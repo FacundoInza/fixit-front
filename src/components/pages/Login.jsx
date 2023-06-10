@@ -9,6 +9,7 @@ import {
   Button,
   Alert,
   Snackbar,
+  AlertTitle,
 } from "@mui/material";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -122,10 +123,10 @@ const Login = () => {
               />
               <ErrorMessage name="email">
                 {(errorMsg) => (
-                  <ErrorMessageContainer>
-                    <CloseIcon onClick={() => setErrorMsg(null)} />
-                    <ErrorMessageText>{errorMsg}</ErrorMessageText>
-                  </ErrorMessageContainer>
+                  <Alert severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                    {errorMsg}
+                  </Alert>
                 )}
               </ErrorMessage>
             </div>
@@ -141,10 +142,10 @@ const Login = () => {
               />
               <ErrorMessage name="password">
                 {(errorMsg) => (
-                  <ErrorMessageContainer>
-                    <CloseIcon onClick={() => setErrorMsg(null)} />
-                    <ErrorMessageText>{errorMsg}</ErrorMessageText>
-                  </ErrorMessageContainer>
+                  <Alert severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                    {errorMsg}
+                  </Alert>
                 )}
               </ErrorMessage>
             </div>
