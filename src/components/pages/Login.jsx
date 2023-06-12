@@ -105,57 +105,66 @@ const Login = () => {
           validationSchema={LoginSchema}
           onSubmit={handleSubmit}
         >
-          <Form>
-            <Typography
-              fontWeight={"bold"}
-              sx={{ textAlign: "center", margin: "15px" }}
-            >
-              Log in to your account
-            </Typography>
-            <div style={{ padding: "10px" }}>
-              <Field
-                as={TextField}
-                name="email"
-                label="Email"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-              />
-              <ErrorMessage name="email">
-                {(errorMsg) => (
-                  <Alert severity="error">
-                    <AlertTitle>Error</AlertTitle>
-                    {errorMsg}
-                  </Alert>
-                )}
-              </ErrorMessage>
-            </div>
-            <div style={{ padding: "10px" }}>
-              <Field
-                as={TextField}
-                name="password"
-                label="Password"
-                type="password"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-              />
-              <ErrorMessage name="password">
-                {(errorMsg) => (
-                  <Alert severity="error">
-                    <AlertTitle>Error</AlertTitle>
-                    {errorMsg}
-                  </Alert>
-                )}
-              </ErrorMessage>
-            </div>
-            <Box display={"flex"} justifyContent={"center"} width={"100%"} onC>
-              <ButtonGlobant props={{ type: "submit" }}>Log In</ButtonGlobant>
-            </Box>
-            <Box display={"flex"} justifyContent={"flex-end"} width={"100%"}>
-              <Button href="/signUp">Sign Up</Button>
-            </Box>
-          </Form>
+          {({ errors, touched }) => (
+            <Form>
+              <Typography
+                fontWeight={"bold"}
+                sx={{ textAlign: "center", margin: "15px" }}
+              >
+                Log in to your account
+              </Typography>
+              <div style={{ padding: "10px" }}>
+                <Field
+                  as={TextField}
+                  name="email"
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  error={touched.email && !!errors.email}
+                />
+                <ErrorMessage name="email">
+                  {(errorMsg) => (
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      {errorMsg}
+                    </Alert>
+                  )}
+                </ErrorMessage>
+              </div>
+              <div style={{ padding: "10px" }}>
+                <Field
+                  as={TextField}
+                  name="password"
+                  label="Password"
+                  type="password"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  error={touched.password && !!errors.password}
+                />
+                <ErrorMessage name="password">
+                  {(errorMsg) => (
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      {errorMsg}
+                    </Alert>
+                  )}
+                </ErrorMessage>
+              </div>
+              <Box
+                display={"flex"}
+                justifyContent={"center"}
+                width={"100%"}
+                onC
+              >
+                <ButtonGlobant props={{ type: "submit" }}>Log In</ButtonGlobant>
+              </Box>
+              <Box display={"flex"} justifyContent={"flex-end"} width={"100%"}>
+                <Button href="/signUp">Sign Up</Button>
+              </Box>
+            </Form>
+          )}
         </Formik>
       </Container>
       {openSnackbar && (
