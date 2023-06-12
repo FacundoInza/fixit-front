@@ -13,6 +13,7 @@ import NewReport from "./components/pages/PrincipalFlow/NewReport";
 import Location from "./components/pages/PrincipalFlow/Location";
 import WorkOptions from "./components/pages/PrincipalFlow/WorkOptions";
 import IndividualReport from "./components/pages/Profile/IndividualReport";
+import OfficeMap from "./components/pages/PrincipalFlow/OfficeMap";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -36,6 +37,8 @@ function App() {
           <Route path="/reports" element={<UserReports />} />
           <Route path="/" element={<NewReport />} />
           <Route path="/work-options" element={<WorkOptions />} />
+          <Route path="/map-selection" element={<OfficeMap />} />
+
           <Route path="/location" element={<Location />} />
           <Route path="/report/:id" element={<IndividualReport />} />
         </Routes>
