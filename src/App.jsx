@@ -15,6 +15,8 @@ import WorkOptions from "./components/pages/PrincipalFlow/WorkOptions";
 import IndividualReport from "./components/pages/Profile/IndividualReport";
 import OfficeMap from "./components/pages/PrincipalFlow/OfficeMap";
 import ObjectDetectionComponent from "./components/pages/PrincipalFlow/ObjectDetectionComponent";
+import StartScan from "./components/pages/PrincipalFlow/StartScan";
+import DeviceList from "./components/pages/PrincipalFlow/DeviceList";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -42,7 +44,9 @@ function App() {
 
           <Route path="/location" element={<Location />} />
           <Route path="/report/:id" element={<IndividualReport />} />
+          <Route path="/start-scan" element={<StartScan />} />
           <Route path="/scanner" element={<ObjectDetectionComponent />} />
+          <Route path="/device-list" element={<DeviceList />} />
         </Routes>
       ) : (
         <Routes>
