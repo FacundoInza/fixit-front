@@ -16,6 +16,8 @@
     "@mui/material": "^5.13.3",
     "@mui/system": "^5.13.2",
     "@reduxjs/toolkit": "^1.9.5",
+    "@tensorflow-models/coco-ssd": "^2.2.2",
+    "@tensorflow/tfjs": "^4.7.0",
     "antd": "^4.12.3",
     "axios": "^0.21.4",
     "dotenv": "^10.0.0",
