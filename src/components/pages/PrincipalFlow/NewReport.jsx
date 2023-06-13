@@ -32,22 +32,17 @@ function NewReport() {
           <Box mb={3}>
             <img src={newReportImg} alt="Imagen" style={{ maxWidth: "100%" }} />
           </Box>
-          <Box width="50%" mb={1}>
-            <Link to={"/work-options"}>
-              <ButtonGlobant>Report an issue</ButtonGlobant>
-            </Link>
-          </Box>
-          <Box width="50%" mb={1}>
-            <Link to={"/profile"}>
-              <ButtonGlobant>My Profile</ButtonGlobant>
-            </Link>
-          </Box>
           <Box width="50%" mb={3}>
             {actualUser.is_admin && (
               <Link to>
                 <ButtonGlobant>Admin View</ButtonGlobant>
               </Link>
             )}
+          </Box>
+          <Box width="50%" mb={1}>
+            <Link to={"/work-options"}>
+              <ButtonGlobant>Create A Report</ButtonGlobant>
+            </Link>
           </Box>
         </Box>
       </div>
