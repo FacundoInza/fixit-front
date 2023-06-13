@@ -1,23 +1,21 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import React, { useState } from "react";
 
-const CardOffice = ({ office }) => {
-  const [isSelected, setIsSelected] = useState(false);
-
+const CardOffice = ({ office, setSelectedOffice, selectedOffice }) => {
   const handleClick = () => {
-    setIsSelected(!isSelected);
+    setSelectedOffice(office);
   };
 
   return (
     <Card
       sx={{
-        scale: isSelected ? "1.1" : "1",
-        border: isSelected && "1px solid #ddd",
-        borderRadius: isSelected && "10px",
-        boxShadow: isSelected && "0 2px 4px rgba(0, 0, 0, 0.1)",
+        scale: office == selectedOffice ? "1.1" : "1",
+        border: office == selectedOffice && "1px solid #ddd",
+        borderRadius: office == selectedOffice && "10px",
+        boxShadow: office == selectedOffice && "0 2px 4px rgba(0, 0, 0, 0.1)",
         backgroundColor: "#F5F6F7",
-        maxWidth: "50%",
-        width: "100%",
+        maxWidth: "300px",
+
         margin: "20px",
         mb: 2,
       }}

@@ -24,7 +24,7 @@ const CardReportList = ({ info }) => {
           padding: "0px",
           display: "flex",
           flexDirection: "row",
-          margin: "0px",
+          margin: "20px",
           background: "#F5F6F8",
           borderRadius: "0px",
           boxShadow: "0px -3px 20px 1px rgba(0, 0, 0, 0.15)",

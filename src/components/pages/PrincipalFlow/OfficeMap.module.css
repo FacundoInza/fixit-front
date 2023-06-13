@@ -1,0 +1,14 @@
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  svg {
+    width: 100%;
+  }
+}
+
+.userSelected {
+  fill: #bfd732;
+}
