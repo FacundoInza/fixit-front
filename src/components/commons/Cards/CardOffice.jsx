@@ -15,7 +15,6 @@ const CardOffice = ({ office, setSelectedOffice, selectedOffice }) => {
         boxShadow: office == selectedOffice && "0 2px 4px rgba(0, 0, 0, 0.1)",
         backgroundColor: "#F5F6F7",
         maxWidth: "300px",
-
         margin: "20px",
         mb: 2,
       }}
