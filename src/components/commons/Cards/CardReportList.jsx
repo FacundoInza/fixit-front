@@ -6,6 +6,7 @@ import {
   CardActions,
   CardMedia,
   Grid,
+  Popover,
   Typography,
 } from "@mui/material";
 
@@ -14,36 +15,45 @@ import { Link } from "react-router-dom";
 import { formatDate } from "../../../utils";
 
 const CardReportList = ({ info }) => {
-  console.log(info.starting_date);
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
+    <Grid item xs={12} sm={12} md={6} lg={3}>
       <Card
         sx={{
-          maxWidth: { xs: "400px" },
-          maxHeight: { xs: "200px" },
+          maxWidth: { xs: "375px", sm: "450px" },
+          maxHeight: { xs: "250px", sm: "280px" },
           padding: "0px",
           display: "flex",
           flexDirection: "row",
-          margin: "20px",
           background: "#F5F6F8",
           borderRadius: "0px",
-          boxShadow: "0px -3px 20px 1px rgba(0, 0, 0, 0.15)",
+          boxShadow: "0px -3px 20px 1px rgba(0, 0, 0, 0.2)",
+          transition: "transform 0.1s ease-in-out",
+          "&:hover": {
+            transform: "scale(1.05)",
+          },
         }}
       >
-        <CardMedia
-          sx={{ height: "200px", width: "190px" }}
-          image={image}
-          title="green iguana"
-        />
+        <Link to={`/report/${info._id}`}>
+          <CardMedia
+            sx={{ height: "200px", width: "160px" }}
+            image={image}
+            title="green iguana"
+          />
+        </Link>
+
         <Box sx={{ maxWidth: "55%", maxHeight: 200, padding: "10px" }}>
-          <Typography gutterBottom variant="h5" component="div">
-            Report #{info._id.slice(20)}
-          </Typography>
+          <Link
+            to={`/report/${info._id}`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <Typography gutterBottom variant="h5" component="div">
+              Report #{info._id.slice(20)}
+            </Typography>
+          </Link>
           <Typography variant="body2" color="text.secondary">
-            {info.description.length > 80
-              ? info.description.slice(0, 80 - 3) + "..."
-              : info.description}
+            {info.description.slice(0, 80 - 3) + "..."}
           </Typography>
+
           <Typography gutterBottom component="div">
             {formatDate(info.starting_date)} - {info.damaged_equipment.name}
           </Typography>
@@ -64,9 +74,10 @@ const CardReportList = ({ info }) => {
             <Typography
               size="small"
               variant="outlined"
+              textAlign={"center"}
               sx={{
                 color: (theme) => theme.palette.primary.dark,
-                margin: "3px",
+                margin: "10px",
               }}
             >
               {info.status.toUpperCase()}

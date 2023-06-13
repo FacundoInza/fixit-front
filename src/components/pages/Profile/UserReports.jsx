@@ -4,32 +4,34 @@ import { Box, FormControl, InputLabel, NativeSelect } from "@mui/material";
 
 import ReportList from "../../commons/list/ReportList";
 import { axiosAllDevices } from "../../../services/api";
+import { useDispatch, useSelector } from "react-redux";
+import { updateFilter } from "../../../store/ui/filter";
 
 const UserReports = () => {
-  const [status, setStatus] = useState("");
-  const [selectedDevice, setSelectedDevice] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-
+  const filter = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
   const [allDevices, setallDevices] = useState([]);
 
   useEffect(() => {
-    const fetchDataDevices = async () => {
-      const data = await axiosAllDevices();
-      console.log(data);
-      setallDevices(data);
-    };
     fetchDataDevices();
-  }, []);
+  }, [filter]);
+
+  const fetchDataDevices = async () => {
+    const data = await axiosAllDevices();
+
+    setallDevices(data);
+  };
+
   const handleStatus = (event) => {
-    setStatus(event.target.value);
+    dispatch(updateFilter({ status: event.target.value }));
   };
 
-  const handleDeviceChange = (event) => {
-    setSelectedDevice(event.target.value);
+  const handlePeriod = (event) => {
+    dispatch(updateFilter({ period: event.target.value }));
   };
 
-  const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
+  const handleDevice = (event) => {
+    dispatch(updateFilter({ device: event.target.value }));
   };
 
   return (
@@ -65,7 +67,7 @@ const UserReports = () => {
                 name: "date",
                 id: "uncontrolled-native",
               }}
-              onChange={handleDateChange}
+              onChange={handlePeriod}
             >
               <option value={"all"}>All time</option>
               <option value={"15_days"}>Last 15 days</option>
@@ -85,7 +87,7 @@ const UserReports = () => {
                 name: "device",
                 id: "uncontrolled-native",
               }}
-              onChange={handleDeviceChange}
+              onChange={handleDevice}
             >
               <option value="all">All devices</option>
               {allDevices &&
@@ -99,28 +101,9 @@ const UserReports = () => {
         </Box>
       </Box>
 
-      <ReportList
-        filterAds={{
-          status: status,
-          period: selectedDate,
-          device: selectedDevice,
-        }}
-      />
+      <ReportList filterAds={filter} />
     </MainLayout>
   );
 };
 
 export default UserReports;
-
-// modem
-// cable hdmi
-// monitor
-// celular
-// notebook
-// headset (auricular + microfono)
-// mouse
-// silla
-// teclado
-// cargador de notebook
-// cargador de celu
-// adaptador de puertos

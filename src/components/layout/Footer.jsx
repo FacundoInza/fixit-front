@@ -15,10 +15,9 @@ const Footer = () => {
         alignItems: "center",
         marginRight: "0px",
         zIndex: "1",
-        width: "100vw",
+        width: "100%",
         height: "110px",
         margin: "0px",
-        bottom: "0",
       }}
     >
       <Box
