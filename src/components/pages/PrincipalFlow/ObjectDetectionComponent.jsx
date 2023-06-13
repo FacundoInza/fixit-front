@@ -2,12 +2,15 @@ import React, { useRef, useEffect, useState } from "react";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import "@tensorflow/tfjs";
 import { MainLayout } from "../../layout/MainLayout";
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ButtonGlobant from "../../commons/ButtonGlobant";
+import { updateIssue } from "../../../store/issue";
+import { useDispatch } from "react-redux";
 
 const ObjectDetectionComponent = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const dispatch = useDispatch();
   const [detectedObject, setDetectedObject] = useState(null);
   const [capturedImage, setCapturedImage] = useState(null);
 
@@ -33,7 +36,8 @@ const ObjectDetectionComponent = () => {
 
           if (detectedOfficeObject) {
             setDetectedObject(detectedOfficeObject);
-            console.log("Objeto detectado:", detectedOfficeObject);
+
+            console.log("Objeto detectado:", detectedOfficeObject.class);
 
             captureImage();
           }
@@ -72,7 +76,28 @@ const ObjectDetectionComponent = () => {
     const image = new Image();
     image.src = canvas.toDataURL();
     setCapturedImage(image);
+
     console.log("URL de la imagen capturada:", image.src);
+
+    // Actualizar el estado del objeto en Redux
+    if (detectedObject) {
+      dispatch(
+        updateIssue({
+          damaged_equipment: {
+            name: detectedObject.class,
+            image: image.src,
+            location: "",
+          },
+        })
+      );
+    }
+  };
+  const handleSelectFromList = () => {
+    console.log("hola");
+  };
+
+  const handleScanAgain = () => {
+    console.log("hola");
   };
 
   const handleConfirmObject = () => {
@@ -156,14 +181,14 @@ const ObjectDetectionComponent = () => {
               padding={2}
             >
               <ButtonGlobant
-                onClick={handleConfirmObject}
+                onClick={handleScanAgain}
                 marginBottom={0}
                 width="100%"
               >
                 No, scan again
               </ButtonGlobant>
               <ButtonGlobant
-                onClick={handleConfirmObject}
+                onClick={handleSelectFromList}
                 marginBottom={1}
                 width="100%"
               >
