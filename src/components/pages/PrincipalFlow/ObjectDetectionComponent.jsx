@@ -2,12 +2,18 @@ import React, { useRef, useEffect, useState } from "react";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import "@tensorflow/tfjs";
 import { MainLayout } from "../../layout/MainLayout";
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ButtonGlobant from "../../commons/ButtonGlobant";
+import { updateIssue } from "../../../store/issue";
+import { useDispatch } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ObjectDetectionComponent = () => {
+  const navigate = useNavigate();
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const dispatch = useDispatch();
   const [detectedObject, setDetectedObject] = useState(null);
   const [capturedImage, setCapturedImage] = useState(null);
 
@@ -33,7 +39,8 @@ const ObjectDetectionComponent = () => {
 
           if (detectedOfficeObject) {
             setDetectedObject(detectedOfficeObject);
-            console.log("Objeto detectado:", detectedOfficeObject);
+
+            console.log("Objeto detectado:", detectedOfficeObject.class);
 
             captureImage();
           }
@@ -72,60 +79,82 @@ const ObjectDetectionComponent = () => {
     const image = new Image();
     image.src = canvas.toDataURL();
     setCapturedImage(image);
+
     console.log("URL de la imagen capturada:", image.src);
+
+    // Actualizar el estado del objeto en Redux
+    if (detectedObject) {
+    }
+  };
+  const handleSelectFromList = () => {
+    console.log("hola");
+  };
+
+  const handleScanAgain = () => {
+    console.log("hola");
   };
 
   const handleConfirmObject = () => {
-    if (detectedObject) {
-      console.log("Objeto detectado:", detectedObject);
-    } else {
-      console.log("Ningún objeto detectado");
-    }
+    console.log("Objeto detectado:", detectedObject);
+    dispatch(
+      updateIssue({
+        damaged_equipment: {
+          name: detectedObject.class,
+          image: "image.test",
+          location: "",
+        },
+      })
+    );
+    navigate("/description");
   };
 
   return (
     <MainLayout title="Scanner" inLoginOrRegister={true}>
       <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
         <Box
-          position="relative"
-          minHeight="100vh"
-          textAlign="center"
-          paddingTop={0}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+          overflow="overflow"
+          mt={-5}
         >
-          {capturedImage ? (
-            <img
-              src={capturedImage.src}
-              alt="Captured"
-              style={{ maxWidth: "100%", maxHeight: "100%" }}
-            />
-          ) : (
-            <video
-              ref={videoRef}
-              style={{ maxWidth: "100%", maxHeight: "100%" }}
-              autoPlay
-            ></video>
-          )}
-          <canvas
-            ref={canvasRef}
-            style={{ display: "none" }}
-            width={videoRef.current ? videoRef.current.videoWidth : 640}
-            height={videoRef.current ? videoRef.current.videoHeight : 480}
-          ></canvas>
-          <Box
-            position="relative"
-            top={5}
-            left={0}
-            right={0}
-            textAlign="center"
-            margin="0 auto"
-            paddingTop={2}
-            width="75%"
-          >
-            {!detectedObject && (
-              <Typography variant="body1" marginBottom={2} fontWeight="bold">
-                scaning on course...
-              </Typography>
+          <Box>
+            {capturedImage ? (
+              <img
+                src={capturedImage.src}
+                alt="Captured"
+                style={{ maxWidth: "100%", maxHeight: "100%" }}
+              />
+            ) : (
+              <video
+                ref={videoRef}
+                style={{ maxWidth: "100%", maxHeight: "100%" }}
+                autoPlay
+              ></video>
             )}
+            <canvas
+              ref={canvasRef}
+              style={{ display: "none" }}
+              width={videoRef.current ? videoRef.current.videoWidth : 640}
+              height={videoRef.current ? videoRef.current.videoHeight : 480}
+            ></canvas>
+            <Box
+              position="relative"
+              top={5}
+              left={0}
+              right={0}
+              textAlign="center"
+              margin="0 auto"
+              paddingTop={2}
+              width="75%"
+            >
+              {!detectedObject && (
+                <Typography variant="body1" marginBottom={2} fontWeight="bold">
+                  scaning on course...
+                </Typography>
+              )}
+            </Box>
           </Box>
 
           {detectedObject && (
@@ -144,6 +173,7 @@ const ObjectDetectionComponent = () => {
               </Typography>
             </Box>
           )}
+
           {detectedObject && (
             <Box
               position="relative"
@@ -151,27 +181,30 @@ const ObjectDetectionComponent = () => {
               flexDirection="column"
               alignItems="center"
               margin={"0 auto"}
-              marginTop={5}
+              marginTop={3}
               width="75%"
-              padding={2}
             >
-              <ButtonGlobant
-                onClick={handleConfirmObject}
-                marginBottom={0}
-                width="100%"
-              >
-                No, scan again
-              </ButtonGlobant>
-              <ButtonGlobant
-                onClick={handleConfirmObject}
-                marginBottom={1}
-                width="100%"
-              >
-                No, select item from a list
-              </ButtonGlobant>
-              <ButtonGlobant onClick={handleConfirmObject} width="100%">
-                Confirm
-              </ButtonGlobant>
+              <Box width="100%" mb={1}>
+                <ButtonGlobant onClick={handleScanAgain} width="100%">
+                  No, scan again
+                </ButtonGlobant>
+              </Box>
+              <Box width="100%" mb={1}>
+                <ButtonGlobant
+                  onClick={handleSelectFromList}
+                  marginTop="5px"
+                  width="100%"
+                >
+                  No, select item from a list
+                </ButtonGlobant>
+              </Box>
+              <Box width="100%" mb={1}>
+                <ButtonGlobant
+                  props={{ onClick: handleConfirmObject, width: "100%" }}
+                >
+                  Confirm
+                </ButtonGlobant>
+              </Box>
             </Box>
           )}
         </Box>

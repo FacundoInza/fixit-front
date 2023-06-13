@@ -75,7 +75,6 @@ export const axiosIndividualCase = async (id) => {
 export const axiosAllDevices = async () => {
   try {
     const { data } = await axios.get(`${apiUrl}devices/all`);
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);

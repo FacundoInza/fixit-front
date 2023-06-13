@@ -1,39 +1,83 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
-import { Grid } from "@mui/material";
+import { Box, Button, Divider, Grid, Pagination } from "@mui/material";
 
 import { axiosCasesUser } from "../../../services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllReports } from "../../../store/Reports";
 import CardReportList from "../Cards/CardReportList";
+import { updateFilter } from "../../../store/ui/filter";
 
 const ReportList = ({ filterAds }) => {
   const { id } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const [countPages, setCountPages] = useState(0);
+
   const { reports } = useSelector((state) => state.reports);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const updateListCases = async () => {
-      const data = await axiosCasesUser(id, filterAds);
-      console.log("data", data);
-      dispatch(setAllReports(data));
-    };
-    updateListCases();
-  }, [filterAds]);
+    updateListCases({ status: "", period: "", device: "" });
+  }, []);
+
+  const updateListCases = async (filter) => {
+    const { data, countPages } = await axiosCasesUser(id, filter);
+    setCountPages(countPages);
+    dispatch(setAllReports(data));
+  };
+
+  const handleClickAplyFilter = () => {
+    updateListCases(filterAds);
+  };
+
+  const handleClickRemoveFilter = () => {
+    updateListCases({ status: "", period: "", device: "" });
+    dispatch(updateFilter({ status: "", period: "", device: "" }));
+  };
+
+  const handleChangePage = (event, value) => {
+    updateListCases({ ...filterAds, p: value - 1 });
+    window.scrollTo(0, 0);
+  };
 
   return (
-    <div
-      style={{
-        maxHeight: "calc(100vh - 300px)",
-        overflowY: "auto",
-        margin: "0px",
-      }}
-    >
-      <Grid container spacing={2} margin={"5px 5px 0px 5px"}>
-        {reports &&
-          reports.map((report, i) => <CardReportList key={i} info={report} />)}
-      </Grid>
-    </div>
+    <>
+      <Box display={"flex"} justifyContent={"center"} padding={"5px"}>
+        <Box padding={1}>
+          <Button variant="contained" onClick={handleClickAplyFilter}>
+            Aply filter
+          </Button>
+        </Box>
+        <Box padding={1}>
+          <Button variant="contained" onClick={handleClickRemoveFilter}>
+            Remove Filter
+          </Button>
+        </Box>
+      </Box>
+      <Divider />
+      <div
+        style={{
+          width: "100%",
+          margin: "0px",
+        }}
+      >
+        <Grid
+          container
+          spacing={2}
+          height={"100%"}
+          padding={{ xs: "1.8rem", sm: "1rem", md: "1.2rem" }}
+        >
+          {reports &&
+            reports.map((report, i) => (
+              <CardReportList key={i} info={report} />
+            ))}
+        </Grid>
+        {countPages !== 1 && (
+          <Box display={"flex"} justifyContent={"center"} margin={5}>
+            <Pagination count={countPages} onChange={handleChangePage} />
+          </Box>
+        )}
+      </div>
+    </>
   );
 };
 
