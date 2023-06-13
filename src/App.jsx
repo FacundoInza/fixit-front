@@ -15,7 +15,7 @@ import WorkOptions from "./components/pages/PrincipalFlow/WorkOptions";
 import IndividualReport from "./components/pages/Profile/IndividualReport";
 import OfficeMap from "./components/pages/PrincipalFlow/OfficeMap";
 import ObjectDetectionComponent from "./components/pages/PrincipalFlow/ObjectDetectionComponent";
-import StartScan from "./components/pages/PrincipalFlow/startScan";
+import StartScan from "./components/pages/PrincipalFlow/StartScan";
 import DeviceList from "./components/pages/PrincipalFlow/DeviceList";
 
 function App() {
