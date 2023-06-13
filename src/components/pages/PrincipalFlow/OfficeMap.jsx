@@ -1,17 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { MainLayout } from "../../layout/MainLayout";
-import { Box, Typography, IconButton, useMediaQuery } from "@mui/material";
-import { styled } from "@mui/system";
+import { Box, Typography, useMediaQuery, Snackbar, Alert } from "@mui/material";
 import style from "./OfficeMap.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { updateIssue } from "../../../store/issue";
 
-import inGlobantOffice from "../../../assets/inGlobantOffice.png";
-import workFromHome from "../../../assets/workFromHome.png";
-import logo from "../../../assets/Short-White-Green.png";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 
 function OfficeMap() {
+  const selectedOfficeMap = useSelector(
+    (state) => state.issue.closest_office.map
+  );
+  const { damaged_equipment } = useSelector((state) => state.issue);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [desk, setDesk] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   var rects = document.querySelectorAll("rect");
@@ -21,7 +30,7 @@ function OfficeMap() {
     rects.forEach(function (rect) {
       if (rect.id != "Rectangle Main") {
         rect.addEventListener("click", function (evt) {
-          console.log("e", evt.target.id.split(" ")[1]);
+          setDesk(evt.target.id.split(" ")[1]);
           clearAll();
           evt.currentTarget.classList.add(style.userSelected);
         });
@@ -30,7 +39,8 @@ function OfficeMap() {
 
     ellipses.forEach(function (ellipse) {
       ellipse.addEventListener("click", function (evt) {
-        console.log("e", evt.target.id.split(" ")[1]);
+        setDesk(evt.target.id.split(" ")[1]);
+
         clearAll();
         evt.currentTarget.classList.add(style.userSelected);
       });
@@ -47,6 +57,22 @@ function OfficeMap() {
   };
 
   setListeners();
+
+  const handleClick = () => {
+    if (!desk) setOpenSnackbar(true);
+    else {
+      dispatch(
+        updateIssue({
+          damaged_equipment: { ...damaged_equipment, location: desk },
+        })
+      );
+      navigate("/scanner");
+    }
+  };
+
+  const handleClose = () => {
+    setOpenSnackbar(false);
+  };
 
   const mapOffice = `<svg
   width="1110"
@@ -732,20 +758,44 @@ function OfficeMap() {
           flexDirection="column"
           height="100%"
         >
-          <Typography variant="body1" sx={{ mb: 2 }} fontWeight="bold">
-            Please select your desk from the map below:
-          </Typography>
-
+          {desk ? (
+            <Typography variant="body1" sx={{ mb: 2 }} fontWeight="bold">
+              You selected the desk number: {desk}{" "}
+            </Typography>
+          ) : (
+            <Typography variant="body1" sx={{ mb: 2 }} fontWeight="bold">
+              Please select your desk from the map below:
+            </Typography>
+          )}
           <Box display="flex" flexDirection="column" gap={2}>
             <div dangerouslySetInnerHTML={{ __html: mapOffice }} />
           </Box>
         </Box>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <Box width="25%" mb={1}>
-            <ButtonGlobant>Confirm Office</ButtonGlobant>
+          <Box width="50%" mb={1}>
+            <ButtonGlobant props={{ onClick: handleClick }}>
+              Confirm Desk
+            </ButtonGlobant>
           </Box>
         </div>
       </div>
+      {openSnackbar && (
+        <Snackbar
+          sx={{ zIndex: 999999 }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="warning"
+            sx={{ width: "100%" }}
+          >
+            You must select a desk in the office in order to proceed.
+          </Alert>
+        </Snackbar>
+      )}
     </MainLayout>
   );
 }

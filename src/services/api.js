@@ -102,3 +102,12 @@ export const axiosGetNearbyOffice = async (locationUser) => {
     console.log(error);
   }
 };
+
+export const axiosIssue = async (issue) => {
+  try {
+    const { data } = await axios.post(`${apiUrl}cases/newCase`, issue);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

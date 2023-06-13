@@ -15,6 +15,7 @@ import WorkOptions from "./components/pages/PrincipalFlow/WorkOptions";
 import IndividualReport from "./components/pages/Profile/IndividualReport";
 import OfficeMap from "./components/pages/PrincipalFlow/OfficeMap";
 import ObjectDetectionComponent from "./components/pages/PrincipalFlow/ObjectDetectionComponent";
+import Description from "./components/pages/PrincipalFlow/Description";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -39,7 +40,7 @@ function App() {
           <Route path="/" element={<NewReport />} />
           <Route path="/work-options" element={<WorkOptions />} />
           <Route path="/map-selection" element={<OfficeMap />} />
-
+          <Route path="/description" element={<Description />} />
           <Route path="/location" element={<Location />} />
           <Route path="/report/:id" element={<IndividualReport />} />
           <Route path="/scanner" element={<ObjectDetectionComponent />} />

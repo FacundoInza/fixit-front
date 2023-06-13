@@ -69,8 +69,8 @@ const UserReports = () => {
             >
               <option value={"all"}>All time</option>
               <option value={"15_days"}>Last 15 days</option>
-              <option value={"1_month"}>One Month later</option>
-              <option value={"6_month"}>Six Months later</option>
+              <option value={"1_month"}>Last month</option>
+              <option value={"6_month"}>Last 6 months</option>
             </NativeSelect>
           </FormControl>
         </Box>
