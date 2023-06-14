@@ -31,6 +31,12 @@ export const userReducer = createReducer(initialState, {
   },
   [updateUser]: (state, action) => {
     const updates = Object.keys(action.payload);
-    updates.map((key) => (state[key] = action.payload[key]));
+    updates.map((key) => {
+      state[key] = action.payload[key];
+      console.log("state en reducer 1", state.name);
+
+      return state;
+    });
+    console.log("state en reducer 2", state.name);
   },
 });
