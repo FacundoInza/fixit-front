@@ -26,8 +26,6 @@ function App() {
   useEffect(() => {
     const persintence = async () => {
       const data = await axiosSecret();
-
-      console.log("data en use effect", data);
       dispatch(setUser(data));
     };
     if (document.cookie) {
