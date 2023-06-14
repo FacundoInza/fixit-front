@@ -8,15 +8,19 @@ import {
   Alert,
   AlertTitle,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import FunctionalAvatar from "./FunctionalAvatar";
+import { axiosUpdateUser } from "../../../services/api";
+import { updateUser } from "../../../store/users";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
+
   const [editMode, setEditMode] = useState(true);
+  const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
     name: !editMode ? Yup.string().required("Obligatory Field") : Yup.string(),
@@ -30,17 +34,6 @@ const Profile = () => {
           .typeError("This field must be a number")
           .required("Obligatory Field")
       : Yup.number(),
-    password: !editMode
-      ? Yup.string()
-          .min(8, "The password must have at least 8 characters")
-          .max(18, "The password can't have more than 18 characters")
-          .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+$/,
-            "The password must have at least 1 uppercase, 1 lowercase, and 1 number"
-          )
-          .matches(/^\S*$/, "The password can't have spaces")
-          .required("Obligatory Field")
-      : Yup.string(),
     address: !editMode
       ? Yup.string().required("Obligatory Field")
       : Yup.string(),
@@ -51,7 +44,6 @@ const Profile = () => {
     name: user.name,
     email: user.email,
     cellphone: user.cellphone,
-    password: user.password,
     address: user.address,
     role: user.role,
   };
@@ -60,9 +52,14 @@ const Profile = () => {
     setEditMode(!editMode);
   };
 
-  const handleSubmit = () => {
-    //axios para guardar la data
-    setEditMode(!editMode);
+  const handleSubmit = async (values) => {
+    try {
+      const axiosResult = await axiosUpdateUser(values, user.id);
+
+      dispatch(updateUser(values));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -177,25 +174,7 @@ const Profile = () => {
                   )}
                 </ErrorMessage>
               </div>
-              <div style={{ padding: "10px", width: "100%" }}>
-                <Field
-                  as={TextField}
-                  type="password"
-                  name="password"
-                  label="Password"
-                  margin="normal"
-                  disabled={editMode}
-                  style={{ width: "100%" }}
-                />
-                <ErrorMessage name="password">
-                  {(errorMsg) => (
-                    <Alert severity="error">
-                      <AlertTitle>Error</AlertTitle>
-                      {errorMsg}
-                    </Alert>
-                  )}
-                </ErrorMessage>
-              </div>
+
               <div style={{ padding: "10px", width: "100%" }}>
                 <Field
                   as={TextField}
@@ -242,7 +221,7 @@ const Profile = () => {
                 Edit Profile
               </ButtonGlobant>
             ) : (
-              <ButtonGlobant props={{ type: "submit", onClick: handleSubmit }}>
+              <ButtonGlobant props={{ type: "submit" }}>
                 Send Changes
               </ButtonGlobant>
             )}
