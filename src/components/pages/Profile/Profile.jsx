@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { MainLayout } from "../../layout/MainLayout";
 import {
   Avatar,
@@ -10,34 +11,48 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonGlobant from "../../commons/ButtonGlobant";
+=======
+import { useSelector, useDispatch } from "react-redux";
+>>>>>>> develop
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { Box, Typography, TextField, Alert, AlertTitle } from "@mui/material";
+import { MainLayout } from "../../layout/MainLayout";
+import ButtonGlobant from "../../commons/ButtonGlobant";
 import FunctionalAvatar from "./FunctionalAvatar";
 import { axiosUpdateUser } from "../../../services/api";
 import { updateUser } from "../../../store/users";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
+<<<<<<< HEAD
 
   const [editMode, setEditMode] = useState(true);
+=======
+  const [editMode, setEditMode] = useState(false);
+>>>>>>> develop
   const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
-    name: !editMode ? Yup.string().required("Obligatory Field") : Yup.string(),
-    email: !editMode
+    name: editMode ? Yup.string().required("Obligatory Field") : Yup.string(),
+    email: editMode
       ? Yup.string()
           .email("The email address is not valid")
           .required("Obligatory Field")
       : Yup.string(),
-    cellphone: !editMode
+    cellphone: editMode
       ? Yup.number()
           .typeError("This field must be a number")
           .required("Obligatory Field")
       : Yup.number(),
+<<<<<<< HEAD
     address: !editMode
+=======
+    address: editMode
+>>>>>>> develop
       ? Yup.string().required("Obligatory Field")
       : Yup.string(),
-    role: !editMode ? Yup.string().required("Obligatory Field") : Yup.string(),
+    role: editMode ? Yup.string().required("Obligatory Field") : Yup.string(),
   });
 
   const initialValues = {
@@ -54,8 +69,12 @@ const Profile = () => {
 
   const handleSubmit = async (values) => {
     try {
+<<<<<<< HEAD
       const axiosResult = await axiosUpdateUser(values, user.id);
 
+=======
+      await axiosUpdateUser(values, user.id);
+>>>>>>> develop
       dispatch(updateUser(values));
     } catch (error) {
       console.log(error);
@@ -63,7 +82,7 @@ const Profile = () => {
   };
 
   return (
-    <MainLayout title="Profile" inLoginOrRegister={true}>
+    <MainLayout title="Profile" inLoginOrRegister>
       <Box
         sx={{
           display: "flex",
@@ -76,17 +95,13 @@ const Profile = () => {
           px: 6,
         }}
       >
-        <Typography
-          margin={2}
-          color={"white"}
-          sx={{ fontSize: { xs: "2rem" } }}
-        >
+        <Typography margin={2} color="white" sx={{ fontSize: { xs: "2rem" } }}>
           {user.name}
         </Typography>
         <FunctionalAvatar />
         <Typography
           margin={2}
-          color={"white"}
+          color="white"
           sx={{ fontSize: { xs: "0.9rem", sm: "1rem", md: "1.2rem" } }}
         >
           Glober
@@ -97,24 +112,18 @@ const Profile = () => {
           initialValues={initialValues}
           onSubmit={handleSubmit}
         >
-          <Form
-            className="form-container"
-            style={{
-              backgroundColor: "white",
-              margin: "10px",
-              width: "50vw",
-              padding: "10px",
-              borderRadius: "2em",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                textAlign: "center",
+          {({ errors }) => (
+            <Form
+              className="form-container"
+              style={{
+                backgroundColor: "white",
+                margin: "10px",
+                width: "50vw",
+                padding: "10px",
+                borderRadius: "2em",
               }}
             >
+<<<<<<< HEAD
               <div style={{ padding: "10px", width: "100%" }}>
                 <Field
                   as={TextField}
@@ -217,15 +226,131 @@ const Profile = () => {
             {editMode ? (
               <ButtonGlobant
                 props={{ type: "button", onClick: handleEditMode }}
+=======
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+>>>>>>> develop
               >
-                Edit Profile
+                <div style={{ padding: "10px", width: "100%" }}>
+                  <Field
+                    as={TextField}
+                    type="text"
+                    name="name"
+                    label="Name"
+                    margin="normal"
+                    disabled={!editMode}
+                    style={{ width: "100%" }}
+                  />
+
+                  <ErrorMessage name="name">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+                <div style={{ padding: "10px", width: "100%" }}>
+                  <Field
+                    as={TextField}
+                    type="email"
+                    name="email"
+                    label="Email"
+                    margin="normal"
+                    disabled={!editMode}
+                    style={{ width: "100%" }}
+                  />
+                  <ErrorMessage name="email">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+
+                <div style={{ padding: "10px", width: "100%" }}>
+                  <Field
+                    as={TextField}
+                    type="text"
+                    name="cellphone"
+                    label="Cellphone"
+                    margin="normal"
+                    disabled={!editMode}
+                    style={{ width: "100%" }}
+                  />
+                  <ErrorMessage name="cellphone">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+
+                <div style={{ padding: "10px", width: "100%" }}>
+                  <Field
+                    as={TextField}
+                    type="text"
+                    name="address"
+                    label="Address"
+                    margin="normal"
+                    disabled={!editMode}
+                    style={{ width: "100%" }}
+                  />
+                  <ErrorMessage name="address">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+                <div style={{ padding: "10px", width: "100%" }}>
+                  <Field
+                    as={TextField}
+                    type="text"
+                    name="role"
+                    label="Role"
+                    margin="normal"
+                    disabled={!editMode}
+                    style={{ width: "100%" }}
+                  />
+                  <ErrorMessage name="role">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+              </Box>
+              <ButtonGlobant
+                props={{ type: "submit", onClick: handleEditMode }}
+              >
+                {!editMode ? "Edit Profile" : "Send Changes"}
               </ButtonGlobant>
+<<<<<<< HEAD
             ) : (
               <ButtonGlobant props={{ type: "submit" }}>
                 Send Changes
               </ButtonGlobant>
             )}
           </Form>
+=======
+            </Form>
+          )}
+>>>>>>> develop
         </Formik>
       </Box>
     </MainLayout>
