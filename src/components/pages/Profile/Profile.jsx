@@ -1,57 +1,41 @@
 import React, { useState } from "react";
-import { MainLayout } from "../../layout/MainLayout";
-import {
-  Avatar,
-  Box,
-  Typography,
-  TextField,
-  Alert,
-  AlertTitle,
-} from "@mui/material";
-import { useSelector } from "react-redux";
-import ButtonGlobant from "../../commons/ButtonGlobant";
+import { useSelector, useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { Box, Typography, TextField, Alert, AlertTitle } from "@mui/material";
+import { MainLayout } from "../../layout/MainLayout";
+import ButtonGlobant from "../../commons/ButtonGlobant";
 import FunctionalAvatar from "./FunctionalAvatar";
+import { axiosUpdateUser } from "../../../services/api";
+import { updateUser } from "../../../store/users";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
-    name: !editMode ? Yup.string().required("Obligatory Field") : Yup.string(),
-    email: !editMode
+    name: editMode ? Yup.string().required("Obligatory Field") : Yup.string(),
+    email: editMode
       ? Yup.string()
           .email("The email address is not valid")
           .required("Obligatory Field")
       : Yup.string(),
-    cellphone: !editMode
+    cellphone: editMode
       ? Yup.number()
           .typeError("This field must be a number")
           .required("Obligatory Field")
       : Yup.number(),
-    password: !editMode
-      ? Yup.string()
-          .min(8, "The password must have at least 8 characters")
-          .max(18, "The password can't have more than 18 characters")
-          .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+$/,
-            "The password must have at least 1 uppercase, 1 lowercase, and 1 number"
-          )
-          .matches(/^\S*$/, "The password can't have spaces")
-          .required("Obligatory Field")
-      : Yup.string(),
-    address: !editMode
+    address: editMode
       ? Yup.string().required("Obligatory Field")
       : Yup.string(),
-    role: !editMode ? Yup.string().required("Obligatory Field") : Yup.string(),
+    role: editMode ? Yup.string().required("Obligatory Field") : Yup.string(),
   });
 
   const initialValues = {
     name: user.name,
     email: user.email,
     cellphone: user.cellphone,
-    password: user.password,
     address: user.address,
     role: user.role,
   };
@@ -60,13 +44,17 @@ const Profile = () => {
     setEditMode(!editMode);
   };
 
-  const handleSubmit = () => {
-    //axios para guardar la data
-    setEditMode(!editMode);
+  const handleSubmit = async (values) => {
+    try {
+      await axiosUpdateUser(values, user.id);
+      dispatch(updateUser(values));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <MainLayout title="Profile" inLoginOrRegister={true}>
+    <MainLayout title="Profile" inLoginOrRegister>
       <Box
         sx={{
           display: "flex",
@@ -79,17 +67,13 @@ const Profile = () => {
           px: 6,
         }}
       >
-        <Typography
-          margin={2}
-          color={"white"}
-          sx={{ fontSize: { xs: "2rem" } }}
-        >
+        <Typography margin={2} color="white" sx={{ fontSize: { xs: "2rem" } }}>
           {user.name}
         </Typography>
         <FunctionalAvatar />
         <Typography
           margin={2}
-          color={"white"}
+          color="white"
           sx={{ fontSize: { xs: "0.9rem", sm: "1rem", md: "1.2rem" } }}
         >
           Glober
@@ -100,153 +84,131 @@ const Profile = () => {
           initialValues={initialValues}
           onSubmit={handleSubmit}
         >
-          <Form
-            className="form-container"
-            style={{
-              backgroundColor: "white",
-              margin: "10px",
-              width: "50vw",
-              padding: "10px",
-              borderRadius: "2em",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                textAlign: "center",
+          {({ errors }) => (
+            <Form
+              className="form-container"
+              style={{
+                backgroundColor: "white",
+                margin: "10px",
+                width: "50vw",
+                padding: "10px",
+                borderRadius: "2em",
               }}
             >
-              <div style={{ padding: "10px", width: "100%" }}>
-                <Field
-                  as={TextField}
-                  type="text"
-                  name="name"
-                  label="Name"
-                  margin="normal"
-                  disabled={editMode}
-                  style={{ width: "100%" }}
-                />
-
-                <ErrorMessage name="name">
-                  {(errorMsg) => (
-                    <Alert severity="error">
-                      <AlertTitle>Error</AlertTitle>
-                      {errorMsg}
-                    </Alert>
-                  )}
-                </ErrorMessage>
-              </div>
-              <div style={{ padding: "10px", width: "100%" }}>
-                <Field
-                  as={TextField}
-                  type="email"
-                  name="email"
-                  label="Email"
-                  margin="normal"
-                  disabled={editMode}
-                  style={{ width: "100%" }}
-                />
-                <ErrorMessage name="email">
-                  {(errorMsg) => (
-                    <Alert severity="error">
-                      <AlertTitle>Error</AlertTitle>
-                      {errorMsg}
-                    </Alert>
-                  )}
-                </ErrorMessage>
-              </div>
-
-              <div style={{ padding: "10px", width: "100%" }}>
-                <Field
-                  as={TextField}
-                  type="text"
-                  name="cellphone"
-                  label="Cellphone"
-                  margin="normal"
-                  disabled={editMode}
-                  style={{ width: "100%" }}
-                />
-                <ErrorMessage name="cellphone">
-                  {(errorMsg) => (
-                    <Alert severity="error">
-                      <AlertTitle>Error</AlertTitle>
-                      {errorMsg}
-                    </Alert>
-                  )}
-                </ErrorMessage>
-              </div>
-              <div style={{ padding: "10px", width: "100%" }}>
-                <Field
-                  as={TextField}
-                  type="password"
-                  name="password"
-                  label="Password"
-                  margin="normal"
-                  disabled={editMode}
-                  style={{ width: "100%" }}
-                />
-                <ErrorMessage name="password">
-                  {(errorMsg) => (
-                    <Alert severity="error">
-                      <AlertTitle>Error</AlertTitle>
-                      {errorMsg}
-                    </Alert>
-                  )}
-                </ErrorMessage>
-              </div>
-              <div style={{ padding: "10px", width: "100%" }}>
-                <Field
-                  as={TextField}
-                  type="text"
-                  name="address"
-                  label="Address"
-                  margin="normal"
-                  disabled={editMode}
-                  style={{ width: "100%" }}
-                />
-                <ErrorMessage name="address">
-                  {(errorMsg) => (
-                    <Alert severity="error">
-                      <AlertTitle>Error</AlertTitle>
-                      {errorMsg}
-                    </Alert>
-                  )}
-                </ErrorMessage>
-              </div>
-              <div style={{ padding: "10px", width: "100%" }}>
-                <Field
-                  as={TextField}
-                  type="text"
-                  name="role"
-                  label="Role"
-                  margin="normal"
-                  disabled={editMode}
-                  style={{ width: "100%" }}
-                />
-                <ErrorMessage name="role">
-                  {(errorMsg) => (
-                    <Alert severity="error">
-                      <AlertTitle>Error</AlertTitle>
-                      {errorMsg}
-                    </Alert>
-                  )}
-                </ErrorMessage>
-              </div>
-            </Box>
-            {editMode ? (
-              <ButtonGlobant
-                props={{ type: "button", onClick: handleEditMode }}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
               >
-                Edit Profile
+                <div style={{ padding: "10px", width: "100%" }}>
+                  <Field
+                    as={TextField}
+                    type="text"
+                    name="name"
+                    label="Name"
+                    margin="normal"
+                    disabled={!editMode}
+                    style={{ width: "100%" }}
+                  />
+
+                  <ErrorMessage name="name">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+                <div style={{ padding: "10px", width: "100%" }}>
+                  <Field
+                    as={TextField}
+                    type="email"
+                    name="email"
+                    label="Email"
+                    margin="normal"
+                    disabled={!editMode}
+                    style={{ width: "100%" }}
+                  />
+                  <ErrorMessage name="email">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+
+                <div style={{ padding: "10px", width: "100%" }}>
+                  <Field
+                    as={TextField}
+                    type="text"
+                    name="cellphone"
+                    label="Cellphone"
+                    margin="normal"
+                    disabled={!editMode}
+                    style={{ width: "100%" }}
+                  />
+                  <ErrorMessage name="cellphone">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+
+                <div style={{ padding: "10px", width: "100%" }}>
+                  <Field
+                    as={TextField}
+                    type="text"
+                    name="address"
+                    label="Address"
+                    margin="normal"
+                    disabled={!editMode}
+                    style={{ width: "100%" }}
+                  />
+                  <ErrorMessage name="address">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+                <div style={{ padding: "10px", width: "100%" }}>
+                  <Field
+                    as={TextField}
+                    type="text"
+                    name="role"
+                    label="Role"
+                    margin="normal"
+                    disabled={!editMode}
+                    style={{ width: "100%" }}
+                  />
+                  <ErrorMessage name="role">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+              </Box>
+              <ButtonGlobant
+                props={{ type: "submit", onClick: handleEditMode }}
+              >
+                {!editMode ? "Edit Profile" : "Send Changes"}
               </ButtonGlobant>
-            ) : (
-              <ButtonGlobant props={{ type: "submit", onClick: handleSubmit }}>
-                Send Changes
-              </ButtonGlobant>
-            )}
-          </Form>
+            </Form>
+          )}
         </Formik>
       </Box>
     </MainLayout>
