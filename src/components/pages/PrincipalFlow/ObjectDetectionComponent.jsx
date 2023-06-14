@@ -79,12 +79,30 @@ const ObjectDetectionComponent = () => {
     const image = new Image();
     image.src = canvas.toDataURL();
     setCapturedImage(image);
+    //buffer
 
-    console.log("URL de la imagen capturada:", image.src);
+    const base64Data = image.src;
+    const base64WithoutPrefix = base64Data.replace(
+      /^data:image\/\w+;base64,/,
+      ""
+    );
 
-    // Actualizar el estado del objeto en Redux
-    if (detectedObject) {
-    }
+    const downloadImage = async (url, fileName) => {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const objectURL = URL.createObjectURL(blob);
+      console.log("URL de la imagen capturada:", response);
+      const link = document.createElement("a");
+      link.href = objectURL;
+      link.download = fileName;
+
+      link.click();
+
+      URL.revokeObjectURL(objectURL);
+    };
+
+    downloadImage(`data:image/png;base64,${base64WithoutPrefix}`, "imagen.png");
+    console.log("URL de la imagen capturada:", blob);
   };
   const handleSelectFromList = () => {
     console.log("hola");
@@ -100,7 +118,7 @@ const ObjectDetectionComponent = () => {
       updateIssue({
         damaged_equipment: {
           name: detectedObject.class,
-          image: "image.test",
+          image: image.src,
           location: "",
         },
       })
