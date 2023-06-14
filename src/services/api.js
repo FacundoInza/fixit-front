@@ -110,3 +110,24 @@ export const axiosIssue = async (issue) => {
     console.log(error);
   }
 };
+
+export const axiosAllOffices = async () => {
+  try {
+    const { data } = await axios.get(`${apiUrl}offices/all`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const axiosSendNewOffices = async (offices) => {
+  try {
+    for (let i = 0; i < offices.length; i++) {
+      const { data } = await axios.post(`${apiUrl}offices/create`, offices[i]);
+
+      console.log("sds", data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

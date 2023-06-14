@@ -11,7 +11,11 @@ import ButtonGlobant from "../../commons/ButtonGlobant";
 import CardOffice from "../../commons/Cards/CardOffice";
 
 //AXIOS
-import { axiosGetNearbyOffice, axiosUpdateUser } from "../../../services/api";
+import {
+  axiosGetNearbyOffice,
+  axiosSendNewOffices,
+  axiosUpdateUser,
+} from "../../../services/api";
 import { getLocation } from "../../../utils";
 //ACTIONS
 import { updateUser } from "../../../store/users";
@@ -22,8 +26,6 @@ function Location() {
 
   const [nearbyOffices, setNearbyOffices] = useState("");
   const [selectedOffice, setSelectedOffice] = useState("");
-
-  console.log("office", selectedOffice);
 
   useEffect(() => {
     locationUpdate();
@@ -50,8 +52,20 @@ function Location() {
       lat: location[0],
       lng: location[1],
     });
-    setNearbyOffices(offices);
-    setSelectedOffice(offices[0]);
+    console.log(offices);
+    const newFormat = offices.map((office) => {
+      return {
+        name: office.name,
+        address: office.formatted_address,
+        open_now: office.opening_hours.open_now,
+        location: [office.geometry.location.lat, office.geometry.location.lng],
+        rating: office.rating,
+      };
+    });
+
+    setNearbyOffices(newFormat);
+    setSelectedOffice(newFormat[0]);
+    await axiosSendNewOffices(newFormat);
   };
 
   return (
@@ -86,10 +100,7 @@ function Location() {
           {nearbyOffices && (
             <MapContainer
               style={{ width: "100%", height: "500px" }}
-              center={[
-                selectedOffice.geometry.location.lat,
-                selectedOffice.geometry.location.lng,
-              ]}
+              center={[selectedOffice.location[0], selectedOffice.location[1]]}
               zoom={15}
               scrollWheelZoom={false}
             >
@@ -99,15 +110,15 @@ function Location() {
               />
 
               {nearbyOffices.map((office, i) => {
-                const lat = office.geometry.location.lat;
-                const lng = office.geometry.location.lng;
+                const lat = office.location[0];
+                const lng = office.location[1];
                 return (
                   <Marker key={i} position={[lat, lng]}>
                     <Popup>
                       <h1>{office.name}</h1>
-                      <h2>Address: {office.formatted_address.split(",")[0]}</h2>
+                      <h2>Address: {office.address.split(",")[0]}</h2>
                       <Rating name="read-only" value={office.rating} readOnly />
-                      {office.opening_hours.open_now ? (
+                      {office.open_now ? (
                         <p style={{ color: "green" }}>Is Open</p>
                       ) : (
                         <p style={{ color: "red" }}>Is Close</p>
@@ -121,17 +132,18 @@ function Location() {
 
           <Grid container spacing={2} width={"70%"} margin={5}>
             {nearbyOffices &&
-              nearbyOffices.map((office, i) => (
-                <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <CardOffice
-                    office={office}
-                    setSelectedOffice={setSelectedOffice}
-                    selectedOffice={selectedOffice}
-                  />
-                </Grid>
-              ))}
+              nearbyOffices.map((office, i) => {
+                return (
+                  <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
+                    <CardOffice
+                      office={office}
+                      setSelectedOffice={setSelectedOffice}
+                      selectedOffice={selectedOffice}
+                    />
+                  </Grid>
+                );
+              })}
           </Grid>
-
           <Box width="50%" m={5}>
             <ButtonGlobant>Confirm Office</ButtonGlobant>
           </Box>

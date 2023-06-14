@@ -22,11 +22,9 @@ const CardOffice = ({ office, setSelectedOffice, selectedOffice }) => {
     >
       <CardContent>
         <Typography variant="body1">{office.name}</Typography>
+        <Typography variant="body2">Address: {office.address}</Typography>
         <Typography variant="body2">
-          Address: {office.formatted_address}
-        </Typography>
-        <Typography variant="body2">
-          {office.opening_hours.open_now ? "Is Open" : "Closed"}
+          {office.open_now ? "Is Open" : "Closed"}
         </Typography>
       </CardContent>
     </Card>
