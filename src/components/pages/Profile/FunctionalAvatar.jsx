@@ -4,29 +4,25 @@ import { useDispatch, useSelector } from "react-redux";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { axiosGetUrl, axiosUpdateUser } from "../../../services/api";
 import { updateUser } from "../../../store/users";
-import { base64Data } from "../../../utils";
+import { convertBlobToBase64 } from "../../../utils";
 
 function FunctionalAvatar() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
+
   const fileInputRef = useRef(null);
 
-  const getInitials = (name) => {
-    const names = name.split(" ");
-    return names.map((n) => n.charAt(0)).join("");
-  };
-
-  const initials = getInitials(user.name);
-
-  const base64image = base64Data(selectedImage);
-
   const handleEditImage = async () => {
-    const imageUrl = await axiosGetUrl(base64image);
     if (isEditMode) {
+      const base64Data = await convertBlobToBase64(selectedImage);
+      const base64WithoutPrefix = base64Data.replace(
+        /^data:image\/\w+;base64,/,
+        ""
+      );
+      const imageUrl = await axiosGetUrl(base64WithoutPrefix);
       await axiosUpdateUser({ image: imageUrl }, user.id);
-
       dispatch(updateUser({ image: imageUrl }));
       setIsEditMode(false);
     } else {
@@ -47,7 +43,7 @@ function FunctionalAvatar() {
     overflow: "hidden",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    backgroundImage: selectedImage ? `url(${selectedImage})` : "none",
+    backgroundImage: `url(${user.image})`,
   };
 
   return (
@@ -60,7 +56,7 @@ function FunctionalAvatar() {
         }}
       >
         <Avatar alt="User Avatar" sx={avatarStyle}>
-          {!selectedImage && initials}
+          {!selectedImage}
         </Avatar>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>

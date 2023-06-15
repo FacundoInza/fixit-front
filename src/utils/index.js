@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const getUserLocation = () => {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
@@ -43,7 +45,7 @@ export function formatDate(dateString) {
   return `${day}/${month < 10 ? "0" + month : month}/${year}`;
 }
 
-async function convertBlobToBase64(selectedImage) {
+export async function convertBlobToBase64(selectedImage) {
   const { data } = await axios({
     method: "GET",
     url: selectedImage,
@@ -58,10 +60,3 @@ async function convertBlobToBase64(selectedImage) {
     reader.readAsDataURL(data);
   });
 }
-
-export const base64Data = (selectedImage) => {
-  return convertBlobToBase64(selectedImage).replace(
-    /^data:image\/w+;base64,/,
-    ""
-  );
-};
