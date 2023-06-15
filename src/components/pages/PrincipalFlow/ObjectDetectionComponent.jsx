@@ -5,12 +5,11 @@ import { MainLayout } from "../../layout/MainLayout";
 import { Box, Typography } from "@mui/material";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { updateIssue } from "../../../store/issue";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const ObjectDetectionComponent = () => {
-  let base64WithoutPrefix = "";
   const navigate = useNavigate();
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -83,7 +82,12 @@ const ObjectDetectionComponent = () => {
 
     const base64Data = image.src;
 
-    base64WithoutPrefix = base64Data.replace(/^data:image\/\w+;base64,/, "");
+    let base64WithoutPrefix = base64Data.replace(
+      /^data:image\/\w+;base64,/,
+      ""
+    );
+
+    console.log("base64WithoutPrefix", typeof base64Data);
   };
   const handleSelectFromList = () => {
     console.log("hola");

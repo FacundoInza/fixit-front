@@ -22,6 +22,7 @@ const DeviceList = () => {
   }, [dispatch]);
 
   console.log("devices >> ", devices);
+  const handleconfirmDevice = () => {};
 
   return (
     <MainLayout title="Device-list" inLoginOrRegister={true}>
@@ -79,7 +80,9 @@ const DeviceList = () => {
       </Box>
       <Box sx={{ maxWidth: "100%", margin: "20px", mt: "10%" }}>
         <Link to={"/description"}>
-          <ButtonGlobant>Confirm</ButtonGlobant>
+          <ButtonGlobant props={(onclick = { handleconfirmDevice })}>
+            Confirm
+          </ButtonGlobant>
         </Link>
       </Box>
     </MainLayout>
