@@ -42,3 +42,26 @@ export function formatDate(dateString) {
 
   return `${day}/${month < 10 ? "0" + month : month}/${year}`;
 }
+
+async function convertBlobToBase64(selectedImage) {
+  const { data } = await axios({
+    method: "GET",
+    url: selectedImage,
+    responseType: "blob",
+  });
+  console.log("data", data);
+
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(data);
+  });
+}
+
+export const base64Data = (selectedImage) => {
+  return convertBlobToBase64(selectedImage).replace(
+    /^data:image\/w+;base64,/,
+    ""
+  );
+};

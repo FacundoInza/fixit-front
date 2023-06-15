@@ -1,10 +1,14 @@
 import { Avatar } from "@mui/material";
 import React, { useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ButtonGlobant from "../../commons/ButtonGlobant";
+import { axiosGetUrl, axiosUpdateUser } from "../../../services/api";
+import { updateUser } from "../../../store/users";
+import { base64Data } from "../../../utils";
 
 function FunctionalAvatar() {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const fileInputRef = useRef(null);
@@ -16,9 +20,14 @@ function FunctionalAvatar() {
 
   const initials = getInitials(user.name);
 
-  const handleEditImage = () => {
+  const base64image = base64Data(selectedImage);
+
+  const handleEditImage = async () => {
+    const imageUrl = await axiosGetUrl(base64image);
     if (isEditMode) {
-      // axios para guardar la imagen
+      await axiosUpdateUser({ image: imageUrl }, user.id);
+
+      dispatch(updateUser({ image: imageUrl }));
       setIsEditMode(false);
     } else {
       fileInputRef.current.click();

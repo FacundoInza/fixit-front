@@ -55,8 +55,10 @@ export const axiosCasesUser = async (id, filterAds) => {
 };
 
 export const axiosUpdateUser = async (update, id) => {
+  console.log("update", update);
   try {
     const { data } = await axios.put(`${apiUrl}users/update/${id}`, update);
+    console.log("data", data);
     document.cookie = "token=" + data;
 
     return { message: data };
@@ -107,6 +109,17 @@ export const axiosGetNearbyOffice = async (locationUser) => {
 export const axiosIssue = async (issue) => {
   try {
     const { data } = await axios.post(`${apiUrl}cases/newCase`, issue);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const axiosGetUrl = async (base64) => {
+  try {
+    const { data } = await axios.post(`${apiUrl}images/urlImage`, {
+      image: base64,
+    });
     return data;
   } catch (error) {
     console.log(error);
