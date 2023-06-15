@@ -10,6 +10,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const ObjectDetectionComponent = () => {
+  let base64WithoutPrefix = "";
   const navigate = useNavigate();
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -79,30 +80,10 @@ const ObjectDetectionComponent = () => {
     const image = new Image();
     image.src = canvas.toDataURL();
     setCapturedImage(image);
-    //buffer
 
     const base64Data = image.src;
-    const base64WithoutPrefix = base64Data.replace(
-      /^data:image\/\w+;base64,/,
-      ""
-    );
 
-    const downloadImage = async (url, fileName) => {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const objectURL = URL.createObjectURL(blob);
-      console.log("URL de la imagen capturada:", response);
-      const link = document.createElement("a");
-      link.href = objectURL;
-      link.download = fileName;
-
-      link.click();
-
-      URL.revokeObjectURL(objectURL);
-    };
-
-    downloadImage(`data:image/png;base64,${base64WithoutPrefix}`, "imagen.png");
-    console.log("URL de la imagen capturada:", blob);
+    base64WithoutPrefix = base64Data.replace(/^data:image\/\w+;base64,/, "");
   };
   const handleSelectFromList = () => {
     console.log("hola");
@@ -113,12 +94,13 @@ const ObjectDetectionComponent = () => {
   };
 
   const handleConfirmObject = () => {
-    console.log("Objeto detectado:", detectedObject);
+    console.log(base64WithoutPrefix);
+
     dispatch(
       updateIssue({
         damaged_equipment: {
           name: detectedObject.class,
-          image: image.src,
+          image: "string provisorio,",
           location: "",
         },
       })
