@@ -9,8 +9,20 @@ import {
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import image from "../../../assets/Rectangle 23 1.png";
 import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchDevices } from "../../../store/devices";
 
 const DeviceList = () => {
+  const devices = useSelector((state) => state.devices);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDevices());
+  }, [dispatch]);
+
+  console.log("devices >> ", devices);
+
   return (
     <MainLayout title="Device-list" inLoginOrRegister={true}>
       <Box
@@ -57,9 +69,11 @@ const DeviceList = () => {
               },
             }}
           >
-            <option value={"laptop"}>laptop</option>
-            <option value={"pending"}>Pending</option>
-            <option value={"solved"}>Solved</option>
+            {devices.map((device) => (
+              <option key={device.id} value={device.id}>
+                {device.name}
+              </option>
+            ))}
           </NativeSelect>
         </FormControl>
       </Box>
