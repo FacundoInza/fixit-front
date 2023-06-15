@@ -3,6 +3,7 @@ import { userReducer } from "./users";
 import { reportsReducer } from "./Reports";
 import { issueReducer } from "./issue";
 import { filterReducer } from "./ui/filter";
+import { devicesReducer } from "./devices";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     reports: reportsReducer,
     issue: issueReducer,
     filter: filterReducer,
+    devices: devicesReducer,
   },
 });
 
