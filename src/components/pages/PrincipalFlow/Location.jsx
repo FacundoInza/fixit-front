@@ -19,6 +19,7 @@ import {
 import { getLocation } from "../../../utils";
 //ACTIONS
 import { updateUser } from "../../../store/users";
+import { Link } from "react-router-dom";
 
 function Location() {
   const { id, location } = useSelector((state) => state.user);
@@ -37,20 +38,23 @@ function Location() {
   };
 
   const setUserLocation = async () => {
-    const { error, data } = await getLocation();
+    // const { error, data } = await getLocation();
 
-    const lat = data.coords.latitude;
-    const lng = data.coords.longitude;
+    // const lat = data.coords.latitude;
+    // const lng = data.coords.longitude;
 
-    const { message } = await axiosUpdateUser({ location: [lat, lng] }, id);
+    const { message } = await axiosUpdateUser(
+      { location: [-34.6046846, -58.3687408] },
+      id
+    );
 
-    dispatch(updateUser({ location: [lat, lng] }));
+    dispatch(updateUser({ location: [-34.6046846, -58.3687408] }));
   };
 
   const setOfficesLocation = async () => {
     const offices = await axiosGetNearbyOffice({
-      lat: location[0],
-      lng: location[1],
+      lat: -34.6046846,
+      lng: -58.3687408,
     });
     console.log(offices);
     const newFormat = offices.map((office) => {
@@ -101,7 +105,7 @@ function Location() {
             <MapContainer
               style={{ width: "100%", height: "500px" }}
               center={[selectedOffice.location[0], selectedOffice.location[1]]}
-              zoom={15}
+              zoom={16}
               scrollWheelZoom={false}
             >
               <TileLayer
@@ -144,11 +148,17 @@ function Location() {
                 );
               })}
           </Grid>
-          <Box width="50%" m={5}>
+          <Box
+            width="50%"
+            m={5}
+            display={"flex"}
+            flexDirection={"column"}
+            alignItems={"center"}
+          >
             <ButtonGlobant>Confirm Office</ButtonGlobant>
-          </Box>
-          <Box width="50%" m={2} display={"none"}>
-            <ButtonGlobant>Choose Another Office</ButtonGlobant>
+            <Link to={"/select-office"}>
+              <ButtonGlobant>Choose Another Office</ButtonGlobant>
+            </Link>
           </Box>
         </Box>
       </div>
