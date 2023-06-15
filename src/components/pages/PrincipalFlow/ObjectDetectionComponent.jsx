@@ -85,6 +85,7 @@ const ObjectDetectionComponent = () => {
 
     base64WithoutPrefix = base64Data.replace(/^data:image\/\w+;base64,/, "");
   };
+
   const handleSelectFromList = () => {
     console.log("hola");
   };
