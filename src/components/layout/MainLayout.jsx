@@ -20,7 +20,9 @@ export const MainLayout = ({
       <Box display="flex" flexDirection="column" minHeight="100vh">
         {inLoginOrRegister && <Navbar />}
 
-        <Box flexGrow={1}>{children}</Box>
+        <Box marginTop={"80px"} flexGrow={1} height={"100%"}>
+          {children}
+        </Box>
 
         <Footer />
       </Box>

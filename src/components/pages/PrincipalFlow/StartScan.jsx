@@ -6,57 +6,59 @@ import { Link } from "react-router-dom";
 const StartScan = () => {
   return (
     <MainLayout title="start-scan" inLoginOrRegister={true}>
-      <div
-        mb={2}
-        style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="column"
       >
         <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
+          textAlign="center"
           flexDirection="column"
-          overflow="overflow"
+          height="100%"
         >
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            textAlign="center"
-            flexDirection="column"
-            height="100%"
-          >
-            <Typography variant="body1" sx={{ mb: 2, mt: 3 }} fontWeight="bold">
-              Capture an Image
-            </Typography>
-            <Typography>
-              Let Image Recognition Identify the Damaged Item!
-            </Typography>
-            <Typography variant="body1" sx={{ mb: 2 }} fontWeight="bold">
-              Make sure there are no other items in the image.
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              height: "250px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <img
-              src={image}
-              style={{ maxWidth: "100%", maxHeight: "100%" }}
-              alt="Image"
-            />
-          </Box>
-
-          <Box width="50%" marginTop={3}>
-            <Link to={"/scanner"}>
-              <ButtonGlobant>Scan Item</ButtonGlobant>
-            </Link>
-          </Box>
+          <Typography variant="h5" sx={{ mb: 2, mt: 3 }} fontWeight="bold">
+            Capture an Image
+          </Typography>
+          <Typography>
+            Let Image Recognition Identify the Damaged Item!
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 2 }} fontWeight="bold">
+            Make sure there are no other items in the image.
+          </Typography>
         </Box>
-      </div>
+        <Box
+          sx={{
+            height: "250px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={image}
+            style={{ maxWidth: "100%", maxHeight: "100%" }}
+            alt="Image"
+          />
+        </Box>
+
+        <Box
+          display="flex"
+          justifyContent="center"
+          flexDirection={"column"}
+          mt={15}
+        >
+          <Link to={"/scanner"}>
+            <ButtonGlobant>Scan Item</ButtonGlobant>
+          </Link>
+          <Link to={"/device-list"}>
+            <ButtonGlobant>Upload Manually</ButtonGlobant>
+          </Link>
+        </Box>
+      </Box>
     </MainLayout>
   );
 };

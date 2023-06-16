@@ -750,35 +750,33 @@ function OfficeMap() {
 
   return (
     <MainLayout title="WorkOptions" inLoginOrRegister={true}>
-      <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          flexDirection="column"
-          height="100%"
-        >
-          {desk ? (
-            <Typography variant="body1" sx={{ mb: 2 }} fontWeight="bold">
-              You selected the desk number: {desk}{" "}
-            </Typography>
-          ) : (
-            <Typography variant="body1" sx={{ mb: 2 }} fontWeight="bold">
-              Please select your desk from the map below:
-            </Typography>
-          )}
-          <Box display="flex" flexDirection="column" gap={2}>
-            <div dangerouslySetInnerHTML={{ __html: mapOffice }} />
-          </Box>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="column"
+        height="100%"
+      >
+        {desk ? (
+          <Typography variant="body1" sx={{ mb: 2 }} fontWeight="bold">
+            You selected the desk number: {desk}{" "}
+          </Typography>
+        ) : (
+          <Typography variant="body1" sx={{ mb: 2 }} fontWeight="bold">
+            Please select your desk from the map below:
+          </Typography>
+        )}
+        <Box display="flex" flexDirection="column" gap={2}>
+          <div dangerouslySetInnerHTML={{ __html: mapOffice }} />
         </Box>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Box width="50%" mb={1}>
-            <ButtonGlobant props={{ onClick: handleClick }}>
-              Confirm Desk
-            </ButtonGlobant>
-          </Box>
-        </div>
-      </div>
+      </Box>
+
+      <Box display="flex" justifyContent="center">
+        <ButtonGlobant props={{ onClick: handleClick }}>
+          Confirm Desk
+        </ButtonGlobant>
+      </Box>
+
       {openSnackbar && (
         <Snackbar
           sx={{ zIndex: 999999 }}

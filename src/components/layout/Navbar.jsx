@@ -38,10 +38,11 @@ function Navbar() {
 
   return (
     <>
-      <Box sx={{ height: "88px" }}>
+      <Box sx={{ height: "100px" }}>
         <AppBar
           position="static"
           sx={{
+            height: "100%",
             background:
               "linear-gradient(85.8deg, #A6CE39 -12.56%, #39B54A 75.83%)",
           }}

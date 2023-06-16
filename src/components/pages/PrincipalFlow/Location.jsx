@@ -21,6 +21,7 @@ import { getLocation } from "../../../utils";
 import { updateUser } from "../../../store/users";
 import { Link, useNavigate } from "react-router-dom";
 import { updateIssue } from "../../../store/issue";
+import { Scanner } from "@mui/icons-material";
 
 function Location() {
   const { id, location } = useSelector((state) => state.user);
@@ -73,101 +74,94 @@ function Location() {
 
   const handleConfirmOffice = () => {
     dispatch(updateIssue({ closest_office: selectedOffice._id }));
+    navigate("/start-scan");
   };
 
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
-      <div
-        style={{
-          maxHeight: "calc(100vh - 250px)",
-          overflowY: "auto",
-          overflowX: "hidden",
-        }}
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="column"
       >
         <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          flexDirection="column"
+          display={"flex"}
+          flexDirection={"column"}
+          padding={2}
+          alignItems={"center"}
         >
-          <Box
-            display={"flex"}
-            flexDirection={"column"}
-            padding={2}
-            alignItems={"center"}
-          >
-            <Typography variant="body1" sx={{ mb: 1 }} fontWeight="bold">
-              Location:
-            </Typography>
-            <Typography variant="body1" sx={{ mb: 3 }}>
-              We identified you are near the following office
-            </Typography>
-          </Box>
-
-          {center && (
-            <MapContainer
-              key={mapKey}
-              style={{ width: "100%", height: "500px" }}
-              center={center}
-              zoom={16}
-              scrollWheelZoom={false}
-            >
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-
-              {nearbyOffices.map((office, i) => {
-                const lat = office.location[0];
-                const lng = office.location[1];
-                return (
-                  <Marker key={i} position={[lat, lng]}>
-                    <Popup>
-                      <h1>{office.name}</h1>
-                      <h2>Address: {office.address.split(",")[0]}</h2>
-                      <Rating name="read-only" value={office.rating} readOnly />
-                      {office.open_now ? (
-                        <p style={{ color: "green" }}>Is Open </p>
-                      ) : (
-                        <p style={{ color: "red" }}>Is Close</p>
-                      )}
-                    </Popup>
-                  </Marker>
-                );
-              })}
-            </MapContainer>
-          )}
-
-          <Grid container spacing={3} width={"70%"} margin={5}>
-            {nearbyOffices &&
-              nearbyOffices.map((office, i) => {
-                return (
-                  <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
-                    <CardOffice
-                      office={office}
-                      setSelectedOffice={setSelectedOffice}
-                      selectedOffice={selectedOffice}
-                    />
-                  </Grid>
-                );
-              })}
-          </Grid>
-          <Box
-            width="50%"
-            m={5}
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"center"}
-          >
-            <ButtonGlobant props={{ onClick: handleConfirmOffice }}>
-              Confirm Office
-            </ButtonGlobant>
-            <Link to={"/select-office"}>
-              <ButtonGlobant>Choose Another Office</ButtonGlobant>
-            </Link>
-          </Box>
+          <Typography variant="h5" sx={{ mb: 1 }} fontWeight="bold">
+            Location:
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 3 }}>
+            We identified you are near the following office
+          </Typography>
         </Box>
-      </div>
+
+        {center && (
+          <MapContainer
+            key={mapKey}
+            style={{ width: "100%", height: "500px" }}
+            center={center}
+            zoom={16}
+            scrollWheelZoom={false}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            {nearbyOffices.map((office, i) => {
+              const lat = office.location[0];
+              const lng = office.location[1];
+              return (
+                <Marker key={i} position={[lat, lng]}>
+                  <Popup>
+                    <h1>{office.name}</h1>
+                    <h2>Address: {office.address.split(",")[0]}</h2>
+                    <Rating name="read-only" value={office.rating} readOnly />
+                    {office.open_now ? (
+                      <p style={{ color: "green" }}>Is Open </p>
+                    ) : (
+                      <p style={{ color: "red" }}>Is Close</p>
+                    )}
+                  </Popup>
+                </Marker>
+              );
+            })}
+          </MapContainer>
+        )}
+
+        <Grid container spacing={3} width={"70%"} margin={5}>
+          {nearbyOffices &&
+            nearbyOffices.map((office, i) => {
+              return (
+                <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
+                  <CardOffice
+                    office={office}
+                    setSelectedOffice={setSelectedOffice}
+                    selectedOffice={selectedOffice}
+                  />
+                </Grid>
+              );
+            })}
+        </Grid>
+        <Box
+          width="50%"
+          m={5}
+          display={"flex"}
+          flexDirection={"column"}
+          alignItems={"center"}
+        >
+          <ButtonGlobant props={{ onClick: handleConfirmOffice }}>
+            Confirm Office
+          </ButtonGlobant>
+          <Link to={"/select-office"}>
+            <ButtonGlobant>Choose Another Office</ButtonGlobant>
+          </Link>
+        </Box>
+      </Box>
     </MainLayout>
   );
 }

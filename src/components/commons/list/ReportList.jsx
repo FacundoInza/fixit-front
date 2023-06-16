@@ -32,6 +32,7 @@ const ReportList = ({ filterAds }) => {
   const handleClickRemoveFilter = () => {
     updateListCases({ status: "", period: "", device: "" });
     dispatch(updateFilter({ status: "", period: "", device: "" }));
+    window.location.reload();
   };
 
   const handleChangePage = (event, value) => {
