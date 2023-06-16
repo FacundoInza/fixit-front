@@ -55,12 +55,8 @@ export const axiosCasesUser = async (id, filterAds) => {
 };
 
 export const axiosUpdateUser = async (update, id) => {
-  console.log("update", update);
   try {
     const { data } = await axios.put(`${apiUrl}users/update/${id}`, update);
-    console.log("data", data);
-    document.cookie = "token=" + data;
-
     return { message: data };
   } catch (error) {
     throw new Error({ message: "The user was not updated" });
@@ -115,7 +111,17 @@ export const axiosIssue = async (issue) => {
   }
 };
 
-<<<<<<< HEAD
+export const axiosGetUrl = async (base64) => {
+  try {
+    const { data } = await axios.post(`${apiUrl}images/urlImage`, {
+      image: base64,
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const axiosAllOffices = async () => {
   try {
     const { data } = await axios.get(`${apiUrl}offices/all`);
@@ -136,19 +142,11 @@ export const axiosSendNewOffices = async (offices) => {
         rating: office.rating,
       };
     });
-
     const { data } = await axios.post(
       `${apiUrl}offices/create`,
       newFormatOffices
     );
     console.log("data", data);
-=======
-export const axiosGetUrl = async (base64) => {
-  try {
-    const { data } = await axios.post(`${apiUrl}images/urlImage`, {
-      image: base64,
-    });
->>>>>>> develop
     return data;
   } catch (error) {
     console.log(error);
