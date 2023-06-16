@@ -65,7 +65,7 @@ const DeviceList = () => {
         }}
       >
         <img
-          src={issue.damaged_equipment.image}
+          src={issue.damaged_equipment.image || image}
           style={{ maxWidth: "100%", maxHeight: "100%" }}
           alt="Image"
         />
@@ -95,7 +95,7 @@ const DeviceList = () => {
           </NativeSelect>
         </FormControl>
       </Box>
-      <Box sx={{ maxWidth: "100%", margin: "20px", mt: "10%" }}>
+      <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
         <Link to={"/description"}>
           <ButtonGlobant props={{ onClick: handleconfirmDevice }}>
             Confirm

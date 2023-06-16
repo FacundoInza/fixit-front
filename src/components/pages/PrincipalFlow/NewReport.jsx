@@ -11,41 +11,47 @@ function NewReport() {
 
   return (
     <MainLayout title="newReport" inLoginOrRegister={true}>
-      <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          flexDirection="column"
-          overflow="overflow"
-        >
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            Welcome {actualUser.name}!
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 1 }} fontWeight="bold">
-            Do you have a problem with a device?
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 3 }}>
-            Report it so Service Desk can FIX IT
-          </Typography>
+      <Box
+        key={"hola"}
+        display="flex"
+        alignItems="center"
+        flexDirection="column"
+        overflow="overflow"
+        height={"100%"}
+      >
+        <Typography variant="h5" sx={{ mb: 2 }}>
+          Welcome {actualUser.name}!
+        </Typography>
+        <Typography variant="body1" sx={{ mb: 1 }} fontWeight="bold">
+          Do you have a problem with a device?
+        </Typography>
+        <Typography variant="body1" sx={{ mb: 3 }}>
+          Report it so Service Desk can FIX IT
+        </Typography>
 
-          <Box mb={3}>
-            <img src={newReportImg} alt="Imagen" style={{ maxWidth: "100%" }} />
-          </Box>
-          <Box width="50%" mb={3}>
-            {actualUser.is_admin && (
-              <Link to>
-                <ButtonGlobant>Admin View</ButtonGlobant>
-              </Link>
-            )}
-          </Box>
-          <Box width="50%" mb={1}>
-            <Link to={"/work-options"}>
-              <ButtonGlobant>Create A Report</ButtonGlobant>
-            </Link>
-          </Box>
+        <Box mb={3} marginBottom={"200px"}>
+          <img src={newReportImg} alt="Imagen" style={{ maxWidth: "100%" }} />
         </Box>
-      </div>
+
+        <Box width="100%" mb={3}>
+          {actualUser.is_admin && (
+            <Link to>
+              <ButtonGlobant>Admin View</ButtonGlobant>
+            </Link>
+          )}
+        </Box>
+      </Box>
+      <Box
+        display={"flex"}
+        width="100%"
+        height={"100%"}
+        justifyContent={"center"}
+        mb={1}
+      >
+        <Link to={"/work-options"}>
+          <ButtonGlobant>Create A Report</ButtonGlobant>
+        </Link>
+      </Box>
     </MainLayout>
   );
 }
