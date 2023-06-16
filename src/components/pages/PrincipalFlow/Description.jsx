@@ -31,16 +31,7 @@ const Description = () => {
 
       try {
         await axiosIssue({
-          user: "64832134d1cdd1070a870cdb",
-          home_office: false,
-          damaged_equipment: {
-            name: "6480a26a78472943cd22342b",
-            image: "hola.jpg",
-            location: "test",
-          },
-          owner: "6478f201b4ff5b5937d4a2fd",
-          description: descriptionForCase,
-          closest_office: "64832134d1cdd1070a870cd6",
+          issue,
         });
 
         Swal.fire({
