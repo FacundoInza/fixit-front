@@ -17,12 +17,14 @@ const Description = () => {
   const navigate = useNavigate();
   const [descriptionForCase, setDescriptionForCase] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [confirmReport, setConfirmReport] = useState(false);
   const issue = useSelector((state) => state.issue);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (descriptionForCase.length < 50) setOpenSnackbar(true);
     else {
+      setConfirmReport(true);
       dispatch(
         updateIssue({
           description: descriptionForCase,
@@ -33,7 +35,6 @@ const Description = () => {
         await axiosIssue({
           issue,
         });
-
         Swal.fire({
           icon: "success",
           title: "Report created",
@@ -55,36 +56,43 @@ const Description = () => {
 
   return (
     <MainLayout title="Description" inLoginOrRegister={true}>
-      <form onSubmit={handleSubmit}>
-        <Typography
-          fontWeight={"bold"}
-          sx={{ textAlign: "center", margin: "15px" }}
-        >
-          Please describe your issue in detail below:{" "}
-        </Typography>
-        <div style={{ padding: "10px" }}>
-          <TextField
-            name="description"
-            label="Describe below"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            multiline
-            rows={8}
-            value={descriptionForCase}
-            onChange={(e) => {
-              setDescriptionForCase(e.target.value);
-            }}
-          />
-        </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
-            <ButtonGlobant props={{ type: "submit" }}>
-              Create Report
-            </ButtonGlobant>
-          </Box>
-        </div>
-      </form>
+      {!confirmReport && (
+        <form onSubmit={handleSubmit}>
+          <Typography
+            fontWeight={"bold"}
+            sx={{ textAlign: "center", margin: "15px" }}
+          >
+            Please describe your issue in detail below:{" "}
+          </Typography>
+          <div style={{ padding: "10px" }}>
+            <TextField
+              name="description"
+              label="Describe below"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              multiline
+              rows={16}
+              value={descriptionForCase}
+              onChange={(e) => {
+                setDescriptionForCase(e.target.value);
+              }}
+            />
+          </div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <ButtonGlobant props={{ type: "submit" }}>
+                Create Report
+              </ButtonGlobant>
+            </Box>
+          </div>
+        </form>
+      )}
+
       {openSnackbar && (
         <Snackbar
           sx={{ zIndex: 999999 }}

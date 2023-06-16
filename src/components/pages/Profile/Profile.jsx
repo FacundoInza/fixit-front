@@ -78,7 +78,8 @@ const Profile = () => {
         >
           Glober
         </Typography>
-
+      </Box>
+      <Box display={"flex"} justifyContent={"center"}>
         <Formik
           validationSchema={validationSchema}
           initialValues={initialValues}
@@ -90,7 +91,7 @@ const Profile = () => {
               style={{
                 backgroundColor: "white",
                 margin: "10px",
-                width: "50vw",
+                width: "90%",
                 padding: "10px",
                 borderRadius: "2em",
               }}
@@ -202,11 +203,13 @@ const Profile = () => {
                   </ErrorMessage>
                 </div>
               </Box>
-              <ButtonGlobant
-                props={{ type: "submit", onClick: handleEditMode }}
-              >
-                {!editMode ? "Edit Profile" : "Send Changes"}
-              </ButtonGlobant>
+              <Box display={"flex"} justifyContent={"center"}>
+                <ButtonGlobant
+                  props={{ type: "submit", onClick: handleEditMode }}
+                >
+                  {!editMode ? "Edit Profile" : "Send Changes"}
+                </ButtonGlobant>
+              </Box>
             </Form>
           )}
         </Formik>

@@ -71,8 +71,19 @@ const DeviceList = () => {
         />
       </Box>
 
-      <Box sx={{ maxWidth: "100%", margin: "20px", mt: "10%" }}>
-        <FormControl fullWidth>
+      <Box
+        sx={{
+          maxWidth: { xs: "90%", sm: "40%" },
+          margin: "auto",
+          mt: "50px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <FormControl
+          fullWidth
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
           <InputLabel variant="standard" htmlFor="uncontrolled-native">
             DEVICE LIST
           </InputLabel>
@@ -89,13 +100,18 @@ const DeviceList = () => {
           >
             {devices.map((device) => (
               <option key={device.id} value={device.id}>
-                {device.name}
+                {device}
               </option>
             ))}
           </NativeSelect>
         </FormControl>
       </Box>
-      <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
+      <Box
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        mt={5}
+      >
         <Link to={"/description"}>
           <ButtonGlobant props={{ onClick: handleconfirmDevice }}>
             Confirm

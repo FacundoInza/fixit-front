@@ -74,178 +74,174 @@ function SignUp() {
 
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
-      <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
-        <Container
-          sx={{
-            width: { xs: "100%", sm: "70%", md: "40%" },
-            boxShadow: {
-              xs: "none",
-              sm: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-            },
-          }}
-        >
-          <Box display={"flex"} justifyContent={"center"} margin={"40px"}>
-            <img
-              src={fullLogo}
-              alt="Logo"
-              style={{ height: "30px", marginLeft: "20px", marginTop: "15px" }}
-            />
-          </Box>
-          {!isRegistered && (
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}
-            >
-              {({ errors, touched }) => (
-                <Form>
-                  <Typography
-                    fontWeight={"bold"}
-                    sx={{ textAlign: "center", margin: "15px" }}
-                  >
-                    Complete the fields to Sign Up
-                  </Typography>
-                  <div style={{ padding: "10px" }}>
-                    <Field
-                      as={TextField}
-                      id="name"
-                      name="name"
-                      label="Name"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      error={touched.name && !!errors.name}
-                    />
-                    <ErrorMessage name="name">
-                      {(errorMsg) => (
-                        <Alert severity="error">
-                          <AlertTitle>Error</AlertTitle>
-                          {errorMsg}
-                        </Alert>
-                      )}
-                    </ErrorMessage>
-                  </div>
-                  <div style={{ padding: "10px" }}>
-                    <Field
-                      as={TextField}
-                      type="email"
-                      id="email"
-                      name="email"
-                      label="Email"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      error={touched.email && !!errors.email}
-                    />
-                    <ErrorMessage name="email">
-                      {(errorMsg) => (
-                        <Alert severity="error">
-                          <AlertTitle>Error</AlertTitle>
-                          {errorMsg}
-                        </Alert>
-                      )}
-                    </ErrorMessage>
-                  </div>
-                  <div style={{ padding: "10px" }}>
-                    <Field
-                      as={TextField}
-                      id="cellphone"
-                      name="cellphone"
-                      label="Cellphone"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      error={touched.cellphone && !!errors.cellphone}
-                    />
-                    <ErrorMessage name="cellphone">
-                      {(errorMsg) => (
-                        <Alert severity="error">
-                          <AlertTitle>Error</AlertTitle>
-                          {errorMsg}
-                        </Alert>
-                      )}
-                    </ErrorMessage>
-                  </div>
+      <Container
+        sx={{
+          width: { xs: "100%", sm: "70%", md: "40%" },
+          boxShadow: {
+            xs: "none",
+            sm: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+          },
+          marginBottom: 20,
+          padding: 3,
+        }}
+      >
+        <Box display={"flex"} justifyContent={"center"} margin={"40px"}>
+          <img
+            src={fullLogo}
+            alt="Logo"
+            style={{ height: "30px", marginLeft: "20px", marginTop: "15px" }}
+          />
+        </Box>
+        {!isRegistered && (
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ errors, touched }) => (
+              <Form>
+                <Typography
+                  fontWeight={"bold"}
+                  sx={{ textAlign: "center", margin: "15px" }}
+                >
+                  Complete the fields to Sign Up
+                </Typography>
+                <div style={{ padding: "10px" }}>
+                  <Field
+                    as={TextField}
+                    id="name"
+                    name="name"
+                    label="Name"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={touched.name && !!errors.name}
+                  />
+                  <ErrorMessage name="name">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+                <div style={{ padding: "10px" }}>
+                  <Field
+                    as={TextField}
+                    type="email"
+                    id="email"
+                    name="email"
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={touched.email && !!errors.email}
+                  />
+                  <ErrorMessage name="email">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
+                <div style={{ padding: "10px" }}>
+                  <Field
+                    as={TextField}
+                    id="cellphone"
+                    name="cellphone"
+                    label="Cellphone"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={touched.cellphone && !!errors.cellphone}
+                  />
+                  <ErrorMessage name="cellphone">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
 
-                  <div style={{ padding: "10px" }}>
-                    <Field
-                      as={TextField}
-                      id="password"
-                      name="password"
-                      type="password"
-                      label="Password"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      error={touched.password && !!errors.password}
-                    />
-                    <ErrorMessage name="password">
-                      {(errorMsg) => (
-                        <Alert severity="error">
-                          <AlertTitle>Error</AlertTitle>
-                          {errorMsg}
-                        </Alert>
-                      )}
-                    </ErrorMessage>
-                  </div>
+                <div style={{ padding: "10px" }}>
+                  <Field
+                    as={TextField}
+                    id="password"
+                    name="password"
+                    type="password"
+                    label="Password"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={touched.password && !!errors.password}
+                  />
+                  <ErrorMessage name="password">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
 
-                  <div style={{ padding: "10px" }}>
-                    <Field
-                      as={TextField}
-                      id="address"
-                      name="address"
-                      label="Address"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      error={touched.address && !!errors.address}
-                    />
-                    <ErrorMessage name="address">
-                      {(errorMsg) => (
-                        <Alert severity="error">
-                          <AlertTitle>Error</AlertTitle>
-                          {errorMsg}
-                        </Alert>
-                      )}
-                    </ErrorMessage>
-                  </div>
+                <div style={{ padding: "10px" }}>
+                  <Field
+                    as={TextField}
+                    id="address"
+                    name="address"
+                    label="Address"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={touched.address && !!errors.address}
+                  />
+                  <ErrorMessage name="address">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
 
-                  <div style={{ padding: "10px" }}>
-                    <Field
-                      as={TextField}
-                      id="role"
-                      name="role"
-                      label="Role"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      error={touched.role && !!errors.role}
-                    />
-                    <ErrorMessage name="role">
-                      {(errorMsg) => (
-                        <Alert severity="error">
-                          <AlertTitle>Error</AlertTitle>
-                          {errorMsg}
-                        </Alert>
-                      )}
-                    </ErrorMessage>
-                  </div>
+                <div style={{ padding: "10px" }}>
+                  <Field
+                    as={TextField}
+                    id="role"
+                    name="role"
+                    label="Role"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={touched.role && !!errors.role}
+                  />
+                  <ErrorMessage name="role">
+                    {(errorMsg) => (
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        {errorMsg}
+                      </Alert>
+                    )}
+                  </ErrorMessage>
+                </div>
 
-                  <Box
-                    display={"flex"}
-                    justifyContent={"center"}
-                    width={"100%"}
-                  >
-                    <ButtonGlobant props={{ type: "submit" }}>
-                      Sign Up
-                    </ButtonGlobant>
-                  </Box>
-                </Form>
-              )}
-            </Formik>
-          )}
-        </Container>
-      </div>
+                <Box display={"flex"} justifyContent={"center"} width={"100%"}>
+                  <ButtonGlobant props={{ type: "submit" }}>
+                    Sign Up
+                  </ButtonGlobant>
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        )}
+      </Container>
     </MainLayout>
   );
 }

@@ -8,7 +8,7 @@ const ButtonGlobant = ({ children, props }) => {
     <Button
       {...props}
       sx={{
-        margin: 2,
+        margin: 1,
         color: colorButton,
         fontWeight: "bold",
         backgroundColor: "transparent",

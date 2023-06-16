@@ -46,12 +46,16 @@ const Home = () => {
           >
             If you want to report your issue, please log in below
           </Typography>
-          <Box width={"100%"} padding={"20px"} marginTop={"20px"}>
+          <Box
+            mt={3}
+            display={"flex"}
+            flexDirection={"column"}
+            alignItems={"center"}
+          >
             <Link to="/login">
               <ButtonGlobant>Log in</ButtonGlobant>
             </Link>
-          </Box>
-          <Box width={"100%"} padding={"10px"}>
+
             <Link to="/signUp">
               <ButtonGlobant>Sign Up</ButtonGlobant>
             </Link>
