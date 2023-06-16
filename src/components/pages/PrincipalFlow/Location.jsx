@@ -19,18 +19,32 @@ import {
 import { getLocation } from "../../../utils";
 //ACTIONS
 import { updateUser } from "../../../store/users";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { updateIssue } from "../../../store/issue";
 
 function Location() {
   const { id, location } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [nearbyOffices, setNearbyOffices] = useState("");
   const [selectedOffice, setSelectedOffice] = useState("");
+  const [center, setCenter] = useState("");
+  const [mapKey, setMapKey] = useState(Date.now());
 
   useEffect(() => {
     locationUpdate();
   }, []);
+
+  useEffect(() => {
+    if (selectedOffice) {
+      setCenter([selectedOffice.location[0], selectedOffice.location[1]]);
+    }
+  }, [selectedOffice]);
+
+  useEffect(() => {
+    setMapKey(Date.now());
+  }, [center]);
 
   const locationUpdate = async () => {
     await setUserLocation();
@@ -38,38 +52,27 @@ function Location() {
   };
 
   const setUserLocation = async () => {
-    // const { error, data } = await getLocation();
+    const { error, data } = await getLocation();
+    const lat = data.coords.latitude;
+    const lng = data.coords.longitude;
 
-    // const lat = data.coords.latitude;
-    // const lng = data.coords.longitude;
-
-    const { message } = await axiosUpdateUser(
-      { location: [-34.6046846, -58.3687408] },
-      id
-    );
-
-    dispatch(updateUser({ location: [-34.6046846, -58.3687408] }));
+    const { message } = await axiosUpdateUser({ location: [lat, lng] }, id);
+    dispatch(updateUser({ location: [lat, lng] }));
   };
 
   const setOfficesLocation = async () => {
     const offices = await axiosGetNearbyOffice({
-      lat: -34.6046846,
-      lng: -58.3687408,
+      lat: location[0],
+      lng: location[1],
     });
     console.log(offices);
-    const newFormat = offices.map((office) => {
-      return {
-        name: office.name,
-        address: office.formatted_address,
-        open_now: office.opening_hours.open_now,
-        location: [office.geometry.location.lat, office.geometry.location.lng],
-        rating: office.rating,
-      };
-    });
+    const officesWithId = await axiosSendNewOffices(offices);
+    setNearbyOffices(officesWithId);
+    setSelectedOffice(officesWithId[0]);
+  };
 
-    setNearbyOffices(newFormat);
-    setSelectedOffice(newFormat[0]);
-    await axiosSendNewOffices(newFormat);
+  const handleConfirmOffice = () => {
+    dispatch(updateIssue({ closest_office: selectedOffice._id }));
   };
 
   return (
@@ -101,10 +104,11 @@ function Location() {
             </Typography>
           </Box>
 
-          {nearbyOffices && (
+          {center && (
             <MapContainer
+              key={mapKey}
               style={{ width: "100%", height: "500px" }}
-              center={[selectedOffice.location[0], selectedOffice.location[1]]}
+              center={center}
               zoom={16}
               scrollWheelZoom={false}
             >
@@ -123,7 +127,7 @@ function Location() {
                       <h2>Address: {office.address.split(",")[0]}</h2>
                       <Rating name="read-only" value={office.rating} readOnly />
                       {office.open_now ? (
-                        <p style={{ color: "green" }}>Is Open</p>
+                        <p style={{ color: "green" }}>Is Open </p>
                       ) : (
                         <p style={{ color: "red" }}>Is Close</p>
                       )}
@@ -134,7 +138,7 @@ function Location() {
             </MapContainer>
           )}
 
-          <Grid container spacing={2} width={"70%"} margin={5}>
+          <Grid container spacing={3} width={"70%"} margin={5}>
             {nearbyOffices &&
               nearbyOffices.map((office, i) => {
                 return (
@@ -155,7 +159,9 @@ function Location() {
             flexDirection={"column"}
             alignItems={"center"}
           >
-            <ButtonGlobant>Confirm Office</ButtonGlobant>
+            <ButtonGlobant props={{ onClick: handleConfirmOffice }}>
+              Confirm Office
+            </ButtonGlobant>
             <Link to={"/select-office"}>
               <ButtonGlobant>Choose Another Office</ButtonGlobant>
             </Link>

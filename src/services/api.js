@@ -122,11 +122,22 @@ export const axiosAllOffices = async () => {
 
 export const axiosSendNewOffices = async (offices) => {
   try {
-    for (let i = 0; i < offices.length; i++) {
-      const { data } = await axios.post(`${apiUrl}offices/create`, offices[i]);
+    const newFormatOffices = offices.map((office) => {
+      return {
+        name: office.name,
+        address: office.formatted_address,
+        open_now: office.opening_hours.open_now,
+        location: [office.geometry.location.lat, office.geometry.location.lng],
+        rating: office.rating,
+      };
+    });
 
-      console.log("sds", data);
-    }
+    const { data } = await axios.post(
+      `${apiUrl}offices/create`,
+      newFormatOffices
+    );
+    console.log("data", data);
+    return data;
   } catch (error) {
     console.log(error);
   }
