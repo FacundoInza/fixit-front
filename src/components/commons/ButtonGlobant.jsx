@@ -8,12 +8,13 @@ const ButtonGlobant = ({ children, props }) => {
     <Button
       {...props}
       sx={{
+        margin: 2,
         color: colorButton,
         fontWeight: "bold",
         backgroundColor: "transparent",
         borderRadius: "20px",
         border: `solid 0.1rem ${colorButton}`,
-        width: "100%",
+        width: { xs: "250px", sm: "300px", md: "380px" },
 
         "&:hover": {
           color: "white",

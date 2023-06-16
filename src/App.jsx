@@ -18,6 +18,7 @@ import ObjectDetectionComponent from "./components/pages/PrincipalFlow/ObjectDet
 import Description from "./components/pages/PrincipalFlow/Description";
 import StartScan from "./components/pages/PrincipalFlow/StartScan";
 import DeviceList from "./components/pages/PrincipalFlow/DeviceList";
+import SelectOffice from "./components/pages/PrincipalFlow/SelectOffice";
 import { setDevices } from "./store/devices";
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/start-scan" element={<StartScan />} />
           <Route path="/scanner" element={<ObjectDetectionComponent />} />
           <Route path="/device-list" element={<DeviceList />} />
+          <Route path="/select-office" element={<SelectOffice />} />
         </Routes>
       ) : (
         <Routes>

@@ -15,18 +15,15 @@ const CardOffice = ({ office, setSelectedOffice, selectedOffice }) => {
         boxShadow: office == selectedOffice && "0 2px 4px rgba(0, 0, 0, 0.1)",
         backgroundColor: "#F5F6F7",
         maxWidth: "300px",
-        margin: "20px",
         mb: 2,
       }}
       onClick={handleClick}
     >
       <CardContent>
         <Typography variant="body1">{office.name}</Typography>
+        <Typography variant="body2">Address: {office.address}</Typography>
         <Typography variant="body2">
-          Address: {office.formatted_address}
-        </Typography>
-        <Typography variant="body2">
-          {office.opening_hours.open_now ? "Is Open" : "Closed"}
+          {office.open_now ? "Is Open" : "Closed"}
         </Typography>
       </CardContent>
     </Card>
