@@ -28,8 +28,8 @@ export const issueReducer = createReducer(initialState, {
     }
   },
   [updateIssue]: (state, action) => {
+    console.log("update", action.payload);
     const updates = Object.keys(action.payload);
-    console.log("UPDATES", updates);
     updates.map((key) => (state[key] = action.payload[key]));
   },
 });

@@ -5,17 +5,22 @@ import { MainLayout } from "../../layout/MainLayout";
 import { Box, Typography } from "@mui/material";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { updateIssue } from "../../../store/issue";
-import { useDispatch } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
+import { axiosGetUrl } from "../../../services/api";
 
 const ObjectDetectionComponent = () => {
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const dispatch = useDispatch();
+  const [url, setUrl] = useState("");
   const [detectedObject, setDetectedObject] = useState(null);
   const [capturedImage, setCapturedImage] = useState(null);
+  const { damaged_equipment } = useSelector((state) => state.issue);
+  const devices = useSelector((state) => state.devices);
+  console.log(devices);
 
   useEffect(() => {
     const runObjectDetection = async () => {
@@ -61,7 +66,7 @@ const ObjectDetectionComponent = () => {
     runObjectDetection();
   }, []);
 
-  const captureImage = () => {
+  const captureImage = async () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
@@ -79,51 +84,49 @@ const ObjectDetectionComponent = () => {
     const image = new Image();
     image.src = canvas.toDataURL();
     setCapturedImage(image);
-    //buffer
 
     const base64Data = image.src;
-    const base64WithoutPrefix = base64Data.replace(
+
+    let base64WithoutPrefix = base64Data.replace(
       /^data:image\/\w+;base64,/,
       ""
     );
-
-    const downloadImage = async (url, fileName) => {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const objectURL = URL.createObjectURL(blob);
-      console.log("URL de la imagen capturada:", response);
-      const link = document.createElement("a");
-      link.href = objectURL;
-      link.download = fileName;
-
-      link.click();
-
-      URL.revokeObjectURL(objectURL);
-    };
-
-    downloadImage(`data:image/png;base64,${base64WithoutPrefix}`, "imagen.png");
-    console.log("URL de la imagen capturada:", blob);
+    console.log(base64WithoutPrefix);
+    const url = await axiosGetUrl(base64WithoutPrefix);
+    setUrl(url);
   };
+
   const handleSelectFromList = () => {
-    console.log("hola");
-  };
-
-  const handleScanAgain = () => {
-    console.log("hola");
-  };
-
-  const handleConfirmObject = () => {
-    console.log("Objeto detectado:", detectedObject);
     dispatch(
       updateIssue({
         damaged_equipment: {
-          name: detectedObject.class,
-          image: image.src,
-          location: "",
+          ...damaged_equipment,
+
+          image: url,
         },
       })
     );
-    navigate("/description");
+    Navigate("/device-list");
+  };
+
+  const handleScanAgain = () => {
+    window.location.reload();
+    //Navigate("/start-scan");
+  };
+
+  const handleConfirmObject = () => {
+    console.log(url);
+    dispatch(
+      updateIssue({
+        damaged_equipment: {
+          ...damaged_equipment,
+          name: detectedObject.class,
+          image: url,
+        },
+      })
+    );
+
+    Navigate("/description");
   };
 
   return (
@@ -203,16 +206,15 @@ const ObjectDetectionComponent = () => {
               width="75%"
             >
               <Box width="100%" mb={1}>
-                <ButtonGlobant onClick={handleScanAgain} width="100%">
+                <ButtonGlobant
+                  props={{ onClick: handleScanAgain }}
+                  width="100%"
+                >
                   No, scan again
                 </ButtonGlobant>
               </Box>
               <Box width="100%" mb={1}>
-                <ButtonGlobant
-                  onClick={handleSelectFromList}
-                  marginTop="5px"
-                  width="100%"
-                >
+                <ButtonGlobant props={{ onClick: handleSelectFromList }}>
                   No, select item from a list
                 </ButtonGlobant>
               </Box>

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const getUserLocation = () => {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
@@ -41,4 +43,20 @@ export function formatDate(dateString) {
   const year = date.getFullYear();
 
   return `${day}/${month < 10 ? "0" + month : month}/${year}`;
+}
+
+export async function convertBlobToBase64(selectedImage) {
+  const { data } = await axios({
+    method: "GET",
+    url: selectedImage,
+    responseType: "blob",
+  });
+  console.log("data", data);
+
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(data);
+  });
 }

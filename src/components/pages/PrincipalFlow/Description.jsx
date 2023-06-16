@@ -52,8 +52,6 @@ const Description = () => {
         }).then(() => {
           navigate("/reports");
         });
-
-        S;
       } catch (error) {
         console.error(error);
       }

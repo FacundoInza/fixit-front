@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router";
 import { useEffect } from "react";
-import { axiosSecret } from "./services/api";
+import { axiosAllDevices, axiosSecret } from "./services/api";
 import { setUser } from "./store/users";
 
 import Home from "./components/pages/Home";
@@ -19,6 +19,7 @@ import Description from "./components/pages/PrincipalFlow/Description";
 import StartScan from "./components/pages/PrincipalFlow/StartScan";
 import DeviceList from "./components/pages/PrincipalFlow/DeviceList";
 import SelectOffice from "./components/pages/PrincipalFlow/SelectOffice";
+import { setDevices } from "./store/devices";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -27,7 +28,9 @@ function App() {
   useEffect(() => {
     const persintence = async () => {
       const data = await axiosSecret();
+      const devices = await axiosAllDevices();
       dispatch(setUser(data));
+      dispatch(setDevices(devices));
     };
     if (document.cookie) {
       persintence();
