@@ -16,6 +16,7 @@ import IndividualReport from "./components/pages/Profile/IndividualReport";
 import OfficeMap from "./components/pages/PrincipalFlow/OfficeMap";
 import ObjectDetectionComponent from "./components/pages/PrincipalFlow/ObjectDetectionComponent";
 import Description from "./components/pages/PrincipalFlow/Description";
+import AddressConfirmation from "./components/pages/PrincipalFlow/AddressConfirmation";
 import StartScan from "./components/pages/PrincipalFlow/StartScan";
 import DeviceList from "./components/pages/PrincipalFlow/DeviceList";
 import SelectOffice from "./components/pages/PrincipalFlow/SelectOffice";
@@ -47,6 +48,10 @@ function App() {
           <Route path="/work-options" element={<WorkOptions />} />
           <Route path="/map-selection" element={<OfficeMap />} />
           <Route path="/description" element={<Description />} />
+          <Route
+            path="/address-confirmation"
+            element={<AddressConfirmation />}
+          />
           <Route path="/location" element={<Location />} />
           <Route path="/report/:id" element={<IndividualReport />} />
           <Route path="/start-scan" element={<StartScan />} />
