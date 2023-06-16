@@ -6,6 +6,8 @@ export const setDevices = createAction("SET_DEVICES");
 const initialState = [];
 
 export const devicesReducer = createReducer(initialState, {
-  [setDevices]: (state, action) => action.payload,
+  [setDevices]: (state, action) => {
+    return action.payload.map((device) => device.name);
+  },
 });
 export default devicesReducer;

@@ -20,8 +20,6 @@ const ObjectDetectionComponent = () => {
   const [capturedImage, setCapturedImage] = useState(null);
   const { damaged_equipment } = useSelector((state) => state.issue);
   const devices = useSelector((state) => state.devices);
-  console.log(devices);
-
   useEffect(() => {
     const runObjectDetection = async () => {
       const model = await cocoSsd.load();
@@ -36,16 +34,13 @@ const ObjectDetectionComponent = () => {
 
       const detectObjects = async () => {
         if (model && videoRef.current.readyState === 4) {
-          const officeObjects = ["mouse", "headset", "charger", "cell phone"];
           const predictions = await model.detect(videoRef.current);
           const detectedOfficeObject = predictions.find((prediction) =>
-            officeObjects.includes(prediction.class)
+            devices.includes(prediction.class)
           );
 
           if (detectedOfficeObject) {
             setDetectedObject(detectedOfficeObject);
-
-            console.log("Objeto detectado:", detectedOfficeObject.class);
 
             captureImage();
           }
@@ -91,7 +86,7 @@ const ObjectDetectionComponent = () => {
       /^data:image\/\w+;base64,/,
       ""
     );
-    console.log(base64WithoutPrefix);
+
     const url = await axiosGetUrl(base64WithoutPrefix);
     setUrl(url);
   };
@@ -115,7 +110,6 @@ const ObjectDetectionComponent = () => {
   };
 
   const handleConfirmObject = () => {
-    console.log(url);
     dispatch(
       updateIssue({
         damaged_equipment: {
@@ -205,20 +199,22 @@ const ObjectDetectionComponent = () => {
               marginTop={3}
               width="75%"
             >
-              <Box width="100%" mb={1}>
+              <Box
+                display={"flex"}
+                flexDirection={"column"}
+                alignItems={"center"}
+              >
                 <ButtonGlobant
                   props={{ onClick: handleScanAgain }}
                   width="100%"
                 >
                   No, scan again
                 </ButtonGlobant>
-              </Box>
-              <Box width="100%" mb={1}>
+
                 <ButtonGlobant props={{ onClick: handleSelectFromList }}>
                   No, select item from a list
                 </ButtonGlobant>
-              </Box>
-              <Box width="100%" mb={1}>
+
                 <ButtonGlobant
                   props={{ onClick: handleConfirmObject, width: "100%" }}
                 >
