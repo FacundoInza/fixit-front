@@ -25,6 +25,7 @@ import { Scanner } from "@mui/icons-material";
 
 function Location() {
   const { id, location } = useSelector((state) => state.user);
+  const issue = useSelector((state) => state.issue);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -57,7 +58,7 @@ function Location() {
     const lat = data.coords.latitude;
     const lng = data.coords.longitude;
 
-    const { message } = await axiosUpdateUser({ location: [lat, lng] }, id);
+    await axiosUpdateUser({ location: [lat, lng] }, id);
     dispatch(updateUser({ location: [lat, lng] }));
   };
 
@@ -73,8 +74,12 @@ function Location() {
   };
 
   const handleConfirmOffice = () => {
-    dispatch(updateIssue({ closest_office: selectedOffice._id }));
-    navigate("/start-scan");
+    dispatch(updateIssue({ ...issue, closest_office: selectedOffice._id }));
+    if (issue.home_office) {
+      navigate("/address-confirmation");
+    } else {
+      navigate("/map-selection");
+    }
   };
 
   return (

@@ -64,8 +64,7 @@ const Login = () => {
             xs: "none",
             sm: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
           },
-          height: "calc(100vh - 200px)",
-          overflowY: "auto",
+          padding: "50px",
         }}
       >
         <Box display={"flex"} justifyContent={"center"} margin={"40px"}>

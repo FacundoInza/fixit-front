@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 const SelectOffice = () => {
   const [selectedOffice, setSelectedOffice] = useState("");
   const [allOffices, setallOffices] = useState([]);
+  const issue = useSelector((state) => state.issue);
   const [pages, setPages] = useState(0);
   const dispatch = useDispatch();
 
@@ -19,8 +20,12 @@ const SelectOffice = () => {
   }, []);
 
   const handleConfirmOffice = () => {
-    console.log(selectedOffice);
     dispatch(updateIssue({ closest_office: selectedOffice._id }));
+    if (issue.home_office) {
+      navigate("/address-confirmation");
+    } else {
+      navigate("/map-selection");
+    }
   };
 
   const getAllOffices = async () => {

@@ -49,7 +49,7 @@ const StartScan = () => {
           display="flex"
           justifyContent="center"
           flexDirection={"column"}
-          mt={15}
+          mt={5}
         >
           <Link to={"/scanner"}>
             <ButtonGlobant>Scan Item</ButtonGlobant>

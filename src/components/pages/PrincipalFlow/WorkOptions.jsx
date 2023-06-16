@@ -8,6 +8,8 @@ import { styled } from "@mui/system";
 import inGlobantOffice from "../../../assets/inGlobantOffice.png";
 import workFromHome from "../../../assets/workFromHome.png";
 import logo from "../../../assets/Short-White-Green.png";
+import { useDispatch } from "react-redux";
+import { updateIssue } from "../../../store/issue";
 
 const MobileButtonContainer = styled(Box)({
   display: "flex",
@@ -22,6 +24,15 @@ const DesktopButtonContainer = styled(Box)({
 
 function WorkOptions() {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const dispatch = useDispatch();
+
+  const handleClickOffice = () => {
+    dispatch(updateIssue({ home_office: false }));
+  };
+
+  const handleClickHome = () => {
+    dispatch(updateIssue({ home_office: true }));
+  };
 
   return (
     <MainLayout title="WorkOptions" inLoginOrRegister={true}>
@@ -43,8 +54,75 @@ function WorkOptions() {
             {isMobile ? (
               <MobileButtonContainer>
                 <Link to={"/location"}>
-                  {" "}
                   <IconButton
+                    variant="contained"
+                    size="large"
+                    sx={{
+                      width: "200px",
+                      height: "200px",
+                      backgroundColor: "#999999",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                      borderRadius: "20%",
+                    }}
+                    onClick={handleClickOffice}
+                  >
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      flexDirection="column"
+                      height="100%"
+                    >
+                      <Typography variant="body2" color="white">
+                        Globant office
+                      </Typography>
+                      <img
+                        src={logo}
+                        style={{ maxWidth: "20%", maxHeight: "20%" }}
+                        alt="Image 1"
+                      />
+                      <img src={inGlobantOffice} alt="Image 1" />
+                    </Box>
+                  </IconButton>
+                </Link>
+                <Link to={"/location"}>
+                  <IconButton
+                    onClick={handleClickHome}
+                    variant="contained"
+                    size="large"
+                    sx={{
+                      width: "200px",
+                      height: "200px",
+                      backgroundColor: "#999999",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: "20%",
+                    }}
+                  >
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      flexDirection="column"
+                      height="100%"
+                    >
+                      <Typography variant="body2" color="white">
+                        Working from home
+                      </Typography>
+                      <img src={workFromHome} alt="Image 2" />
+                    </Box>
+                  </IconButton>
+                </Link>
+              </MobileButtonContainer>
+            ) : (
+              <DesktopButtonContainer>
+                <Link to={"/location"}>
+                  <IconButton
+                    onClick={handleClickOffice}
                     variant="contained"
                     size="large"
                     sx={{
@@ -77,9 +155,10 @@ function WorkOptions() {
                     </Box>
                   </IconButton>
                 </Link>
-
-                <Link to={"location"}>
+                <Link to={"/location"}>
                   <IconButton
+                    onClick={handleClickHome}
+                    href="/location"
                     variant="contained"
                     size="large"
                     sx={{
@@ -106,70 +185,6 @@ function WorkOptions() {
                     </Box>
                   </IconButton>
                 </Link>
-              </MobileButtonContainer>
-            ) : (
-              <DesktopButtonContainer>
-                <IconButton
-                  href="/location"
-                  variant="contained"
-                  size="large"
-                  sx={{
-                    width: "200px",
-                    height: "200px",
-                    backgroundColor: "#999999",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    borderRadius: "20%",
-                  }}
-                >
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    flexDirection="column"
-                    height="100%"
-                  >
-                    <Typography variant="body2" color="white">
-                      Globant office
-                    </Typography>
-                    <img
-                      src={logo}
-                      style={{ maxWidth: "20%", maxHeight: "20%" }}
-                      alt="Image 1"
-                    />
-                    <img src={inGlobantOffice} alt="Image 1" />
-                  </Box>
-                </IconButton>
-
-                <IconButton
-                  href="/location"
-                  variant="contained"
-                  size="large"
-                  sx={{
-                    width: "200px",
-                    height: "200px",
-                    backgroundColor: "#999999",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: "20%",
-                  }}
-                >
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    flexDirection="column"
-                    height="100%"
-                  >
-                    <Typography variant="body2" color="white">
-                      Working from home
-                    </Typography>
-                    <img src={workFromHome} alt="Image 2" />
-                  </Box>
-                </IconButton>
               </DesktopButtonContainer>
             )}
           </Box>

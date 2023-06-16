@@ -13,6 +13,7 @@ import { axiosIssue } from "../../../services/api";
 import { updateIssue } from "../../../store/issue";
 
 const AddressConfirmation = () => {
+  const issue = useSelector((state) => state.issue);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [addressForCase, setAddressForCase] = useState("");
@@ -25,6 +26,7 @@ const AddressConfirmation = () => {
     try {
       dispatch(
         updateIssue({
+          ...issue,
           damaged_equipment: { ...damaged_equipment, location: addressForCase },
         })
       );
@@ -47,12 +49,12 @@ const AddressConfirmation = () => {
         <div style={{ padding: "10px" }}>
           <TextField
             name="address"
-            label="Enter here"
             variant="outlined"
             fullWidth
             margin="normal"
             multiline
             rows={1}
+            placeholder={address}
             defaultValue={address}
             value={addressForCase}
             onChange={(e) => {
