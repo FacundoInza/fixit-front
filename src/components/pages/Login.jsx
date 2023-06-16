@@ -55,28 +55,6 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
-  const ErrorMessageContainer = styled("div")({
-    position: "relative",
-    backgroundColor: "#f8d7da",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "4px",
-    border: "1px solid red",
-  });
-
-  const ErrorMessageText = styled("div")({
-    color: "red",
-    marginLeft: "10px",
-  });
-
-  const CloseIcon = styled(Close)({
-    position: "absolute",
-    top: "5px",
-    right: "5px",
-    cursor: "pointer",
-    color: "red",
-  });
-
   return (
     <MainLayout title="Login" inLoginOrRegister={true}>
       <Container
