@@ -4,14 +4,10 @@ export const setIssue = createAction("SET_ISSUE");
 export const updateIssue = createAction("UPDATE_ISSUE");
 
 const initialState = {
-  id: "",
   closest_office: "",
   damaged_equipment: { name: "", image: "", location: "" },
   description: "",
   home_office: null,
-  owner: "",
-  startingDate: "",
-  status: "",
   user: "",
 };
 

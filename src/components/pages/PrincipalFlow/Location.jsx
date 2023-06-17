@@ -63,11 +63,12 @@ function Location() {
   };
 
   const setOfficesLocation = async () => {
+    console.log("location", location);
     const offices = await axiosGetNearbyOffice({
       lat: location[0],
       lng: location[1],
     });
-    console.log(offices);
+    console.log("offices", offices);
     const officesWithId = await axiosSendNewOffices(offices);
     setNearbyOffices(officesWithId);
     setSelectedOffice(officesWithId[0]);

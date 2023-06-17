@@ -136,6 +136,8 @@ export const axiosAllOffices = async () => {
 export const axiosSendNewOffices = async (offices) => {
   try {
     const newFormatOffices = offices.map((office) => {
+      if (office.opening_hours === undefined)
+        office.opening_hours = { open_now: false };
       return {
         name: office.name,
         address: office.formatted_address,
@@ -144,6 +146,7 @@ export const axiosSendNewOffices = async (offices) => {
         rating: office.rating,
       };
     });
+
     const { data } = await axios.post(
       `${apiUrl}offices/create`,
       newFormatOffices
