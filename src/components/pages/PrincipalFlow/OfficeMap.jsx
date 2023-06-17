@@ -10,10 +10,6 @@ import { updateIssue } from "../../../store/issue";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 
 function OfficeMap() {
-  // const selectedOfficeMap = useSelector(
-  //   (state) => state.issue.closest_office.map
-  // );
-
   const selectedOfficeMap = `<svg
         width="1110"
         height="1160"
@@ -740,7 +736,7 @@ function OfficeMap() {
           damaged_equipment: { ...damaged_equipment, location: desk },
         })
       );
-      navigate("/scanner");
+      navigate("/start-scan");
     }
   };
 

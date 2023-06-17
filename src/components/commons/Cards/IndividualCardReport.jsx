@@ -9,7 +9,7 @@ const IndividualCardReport = ({ individualReport }) => {
       <div className={style.card}>
         <div className={style.card}>
           <img
-            src={image}
+            src={individualReport.damaged_equipment.image}
             alt="report"
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />

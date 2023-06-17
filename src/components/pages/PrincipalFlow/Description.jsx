@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
@@ -19,18 +19,10 @@ const Description = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [confirmReport, setConfirmReport] = useState(false);
   const issue = useSelector((state) => state.issue);
+  const { id } = useSelector((state) => state.user);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (descriptionForCase.length < 50) setOpenSnackbar(true);
-    else {
-      setConfirmReport(true);
-      dispatch(
-        updateIssue({
-          description: descriptionForCase,
-        })
-      );
-
+  useEffect(() => {
+    const sendIssue = async () => {
       try {
         await axiosIssue({
           issue,
@@ -47,6 +39,24 @@ const Description = () => {
       } catch (error) {
         console.error(error);
       }
+    };
+
+    if (confirmReport) {
+      sendIssue();
+    }
+  }, [confirmReport, issue]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (descriptionForCase.length < 50) setOpenSnackbar(true);
+    else {
+      setConfirmReport(true);
+      dispatch(
+        updateIssue({
+          user: id,
+          description: descriptionForCase,
+        })
+      );
     }
   };
 
@@ -62,7 +72,7 @@ const Description = () => {
             fontWeight={"bold"}
             sx={{ textAlign: "center", margin: "15px" }}
           >
-            Please describe your issue in detail below:{" "}
+            Please describe your issue in detail below:
           </Typography>
           <div style={{ padding: "10px" }}>
             <TextField

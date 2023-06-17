@@ -19,6 +19,8 @@ const ObjectDetectionComponent = () => {
   const [detectedObject, setDetectedObject] = useState(null);
   const [capturedImage, setCapturedImage] = useState(null);
   const { damaged_equipment } = useSelector((state) => state.issue);
+  const issue = useSelector((state) => state.issue);
+
   const devices = useSelector((state) => state.devices);
   useEffect(() => {
     const runObjectDetection = async () => {
@@ -115,10 +117,12 @@ const ObjectDetectionComponent = () => {
         damaged_equipment: {
           ...damaged_equipment,
           name: detectedObject.class,
-          image: url,
+          image: "test",
         },
       })
     );
+
+    console.log("issue post dispatch", issue);
 
     Navigate("/description");
   };

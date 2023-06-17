@@ -26,7 +26,6 @@ const AddressConfirmation = () => {
     try {
       dispatch(
         updateIssue({
-          ...issue,
           damaged_equipment: { ...damaged_equipment, location: addressForCase },
         })
       );
@@ -34,7 +33,7 @@ const AddressConfirmation = () => {
       console.error(error);
     }
 
-    navigate("/scanner");
+    navigate("/start-scan");
   };
 
   return (
