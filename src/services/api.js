@@ -18,7 +18,6 @@ export const axiosSignUp = async (value) => {
     const { data } = await axios.post(`${apiUrl}users/signup`, value, {
       withCredentials: true,
     });
-    console.log("data", data);
   } catch (error) {
     console.log("error", error);
   }
@@ -40,7 +39,6 @@ export const axiosCasesUser = async (id, filterAds) => {
   try {
     const { status, period, device } = filterAds;
     let query = qs.stringify(filterAds);
-    console.log(query);
 
     const { data } = await axios.get(
       `${apiUrl}cases/filterGlober/${id}?${query}`,
@@ -56,9 +54,7 @@ export const axiosCasesUser = async (id, filterAds) => {
 
 export const axiosUpdateUser = async (update, id) => {
   try {
-    console.log(update);
     const { data } = await axios.put(`${apiUrl}users/update/${id}`, update);
-    console.log(data);
   } catch (error) {
     throw new Error({ message: "The user was not updated" });
   }
@@ -105,7 +101,6 @@ export const axiosGetNearbyOffice = async (locationUser) => {
 
 export const axiosIssue = async (issue) => {
   try {
-    console.log(issue);
     const { data } = await axios.post(`${apiUrl}cases/newCase`, issue);
     return data;
   } catch (error) {
@@ -151,7 +146,7 @@ export const axiosSendNewOffices = async (offices) => {
       `${apiUrl}offices/create`,
       newFormatOffices
     );
-    console.log("data", data);
+
     return data;
   } catch (error) {
     console.log(error);

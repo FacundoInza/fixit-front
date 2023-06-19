@@ -9,12 +9,11 @@ const CardOffice = ({ office, setSelectedOffice, selectedOffice }) => {
   return (
     <Card
       sx={{
-        scale: office == selectedOffice ? "1.1" : "1",
         border: office == selectedOffice && "1px solid #ddd",
         borderRadius: office == selectedOffice && "10px",
         boxShadow: office == selectedOffice && "0 2px 4px rgba(0, 0, 0, 0.1)",
         backgroundColor: "#F5F6F7",
-        maxWidth: "300px",
+        width: "280px",
         mb: 2,
       }}
       onClick={handleClick}

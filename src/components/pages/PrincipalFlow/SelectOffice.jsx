@@ -6,13 +6,15 @@ import CardOffice from "../../commons/Cards/CardOffice";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { Link } from "react-router-dom";
 import { updateIssue } from "../../../store/issue";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Map from "../../commons/Map";
 
 const SelectOffice = () => {
   const [selectedOffice, setSelectedOffice] = useState("");
   const [allOffices, setallOffices] = useState([]);
+
   const issue = useSelector((state) => state.issue);
-  const [pages, setPages] = useState(0);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const SelectOffice = () => {
     try {
       const { offices, totalPages } = await axiosAllOffices();
       setallOffices(offices);
-      setPages(totalPages);
+      setSelectedOffice(offices[0]);
     } catch (error) {
       console.log(error.message);
     }
@@ -49,18 +51,24 @@ const SelectOffice = () => {
         <Typography variant="h5">Select Your Office</Typography>
       </Box>
 
-      <Grid container spacing={3} width={"70%"} margin={8}>
-        {allOffices &&
-          allOffices.map((office, i) => (
-            <Grid item xs={12} sm={6} md={4} lg={3}>
-              <CardOffice
-                office={office}
-                setSelectedOffice={setSelectedOffice}
-                selectedOffice={selectedOffice}
-              />
-            </Grid>
-          ))}
-      </Grid>
+      <Box display={{ xs: "inline", md: "flex" }}>
+        <Box width={{ xs: "80%", md: "40%" }} margin={5}>
+          <Map offices={allOffices} selectedOffice={selectedOffice} />
+        </Box>
+
+        <Grid container spacing={2} width={"50%"} margin={8}>
+          {allOffices &&
+            allOffices.map((office, i) => (
+              <Grid item xs={12} lg={6}>
+                <CardOffice
+                  office={office}
+                  setSelectedOffice={setSelectedOffice}
+                  selectedOffice={selectedOffice}
+                />
+              </Grid>
+            ))}
+        </Grid>
+      </Box>
 
       <Box
         display="flex"
