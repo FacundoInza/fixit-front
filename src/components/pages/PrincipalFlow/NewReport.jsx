@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MainLayout } from "../../layout/MainLayout";
 import ButtonGlobant from "../../commons/ButtonGlobant";
-import { Box, Typography, useMediaQuery } from "@mui/material";
-import { useSelector } from "react-redux";
+import { Box, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import newReportImg from "../../../assets/newReport.png";
 import { Link } from "react-router-dom";
+import { resetIssue } from "../../../store/issue";
 
 function NewReport() {
   const actualUser = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetIssue());
+  }, []);
 
   return (
     <MainLayout title="newReport" inLoginOrRegister={true}>
