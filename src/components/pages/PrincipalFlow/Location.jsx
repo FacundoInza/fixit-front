@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 //MATERIAL
 import { Box, Container, Grid, Rating, Typography } from "@mui/material";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import "./map.css";
+
 //LOCAL COMPONENTS
 import { MainLayout } from "../../layout/MainLayout";
 import ButtonGlobant from "../../commons/ButtonGlobant";
@@ -22,6 +22,7 @@ import { updateUser } from "../../../store/users";
 import { Link, useNavigate } from "react-router-dom";
 import { updateIssue } from "../../../store/issue";
 import { Scanner } from "@mui/icons-material";
+import Map from "../../commons/Map";
 
 function Location() {
   const { id, location } = useSelector((state) => state.user);
@@ -31,22 +32,10 @@ function Location() {
 
   const [nearbyOffices, setNearbyOffices] = useState("");
   const [selectedOffice, setSelectedOffice] = useState("");
-  const [center, setCenter] = useState("");
-  const [mapKey, setMapKey] = useState(Date.now());
 
   useEffect(() => {
     locationUpdate();
   }, []);
-
-  useEffect(() => {
-    if (selectedOffice) {
-      setCenter([selectedOffice.location[0], selectedOffice.location[1]]);
-    }
-  }, [selectedOffice]);
-
-  useEffect(() => {
-    setMapKey(Date.now());
-  }, [center]);
 
   const locationUpdate = async () => {
     await setUserLocation();
@@ -63,12 +52,11 @@ function Location() {
   };
 
   const setOfficesLocation = async () => {
-    console.log("location", location);
     const offices = await axiosGetNearbyOffice({
       lat: location[0],
       lng: location[1],
     });
-    console.log("offices", offices);
+
     const officesWithId = await axiosSendNewOffices(offices);
     setNearbyOffices(officesWithId);
     setSelectedOffice(officesWithId[0]);
@@ -105,38 +93,8 @@ function Location() {
           </Typography>
         </Box>
 
-        {center && (
-          <MapContainer
-            key={mapKey}
-            style={{ width: "100%", height: "500px" }}
-            center={center}
-            zoom={16}
-            scrollWheelZoom={false}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-
-            {nearbyOffices.map((office, i) => {
-              const lat = office.location[0];
-              const lng = office.location[1];
-              return (
-                <Marker key={i} position={[lat, lng]}>
-                  <Popup>
-                    <h1>{office.name}</h1>
-                    <h2>Address: {office.address.split(",")[0]}</h2>
-                    <Rating name="read-only" value={office.rating} readOnly />
-                    {office.open_now ? (
-                      <p style={{ color: "green" }}>Is Open </p>
-                    ) : (
-                      <p style={{ color: "red" }}>Is Close</p>
-                    )}
-                  </Popup>
-                </Marker>
-              );
-            })}
-          </MapContainer>
+        {selectedOffice && (
+          <Map offices={nearbyOffices} selectedOffice={selectedOffice} />
         )}
 
         <Grid container spacing={3} width={"70%"} margin={5}>
