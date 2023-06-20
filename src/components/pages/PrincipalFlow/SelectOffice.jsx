@@ -4,7 +4,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import { axiosAllOffices } from "../../../services/api";
 import CardOffice from "../../commons/Cards/CardOffice";
 import ButtonGlobant from "../../commons/ButtonGlobant";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { updateIssue } from "../../../store/issue";
 import { useDispatch, useSelector } from "react-redux";
 import Map from "../../commons/Map";
@@ -12,6 +12,8 @@ import Map from "../../commons/Map";
 const SelectOffice = () => {
   const [selectedOffice, setSelectedOffice] = useState("");
   const [allOffices, setallOffices] = useState([]);
+
+  const navigate = useNavigate();
 
   const issue = useSelector((state) => state.issue);
 
@@ -75,14 +77,14 @@ const SelectOffice = () => {
         flexDirection={"column"}
         width={"100%"}
         alignItems={"center"}
+        mb={3}
       >
-        <Link to={"/location"}>
-          <ButtonGlobant>Back to Nearby Office</ButtonGlobant>
-        </Link>
-
-        <ButtonGlobant props={{ onClick: handleConfirmOffice }}>
+        <ButtonGlobant type="success" props={{ onClick: handleConfirmOffice }}>
           Confirm Office
         </ButtonGlobant>
+        <Link to={"/location"}>
+          <ButtonGlobant type="pending">Back to Nearby Office</ButtonGlobant>
+        </Link>
       </Box>
     </MainLayout>
   );

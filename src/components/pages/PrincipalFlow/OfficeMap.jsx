@@ -767,7 +767,7 @@ function OfficeMap() {
         </Box>
 
         <Box display="flex" justifyContent="center">
-          <ButtonGlobant props={{ onClick: handleClick }}>
+          <ButtonGlobant type={"success"} props={{ onClick: handleClick }}>
             Confirm Desk
           </ButtonGlobant>
         </Box>
