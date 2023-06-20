@@ -7,6 +7,9 @@ export const axiosLogin = async (value) => {
     const { data } = await axios.post(`${apiUrl}users/login`, value, {
       withCredentials: true,
     });
+
+    document.cookie = "token=" + data.token;
+
     return data;
   } catch (error) {
     console.log(error);
@@ -25,9 +28,15 @@ export const axiosSignUp = async (value) => {
 
 export const axiosSecret = async () => {
   try {
-    const { data } = await axios.get(`${apiUrl}users/secret`, {
-      withCredentials: true,
-    });
+    const token = document.cookie.token;
+
+    const { data } = await axios.get(
+      `${apiUrl}users/secret`,
+      { token: token },
+      {
+        withCredentials: true,
+      }
+    );
 
     return data;
   } catch (error) {
