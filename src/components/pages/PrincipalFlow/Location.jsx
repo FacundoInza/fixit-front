@@ -118,11 +118,14 @@ function Location() {
           flexDirection={"column"}
           alignItems={"center"}
         >
-          <ButtonGlobant props={{ onClick: handleConfirmOffice }}>
+          <ButtonGlobant
+            type="success"
+            props={{ onClick: handleConfirmOffice }}
+          >
             Confirm Office
           </ButtonGlobant>
           <Link to={"/select-office"}>
-            <ButtonGlobant>Choose Another Office</ButtonGlobant>
+            <ButtonGlobant type="pending">Choose Another Office</ButtonGlobant>
           </Link>
         </Box>
       </Box>

@@ -209,20 +209,25 @@ const ObjectDetectionComponent = () => {
                 alignItems={"center"}
               >
                 <ButtonGlobant
+                  type={"success"}
+                  props={{ onClick: handleConfirmObject, width: "100%" }}
+                >
+                  Confirm
+                </ButtonGlobant>
+
+                <ButtonGlobant
+                  type={"error"}
                   props={{ onClick: handleScanAgain }}
                   width="100%"
                 >
                   No, scan again
                 </ButtonGlobant>
 
-                <ButtonGlobant props={{ onClick: handleSelectFromList }}>
-                  No, select item from a list
-                </ButtonGlobant>
-
                 <ButtonGlobant
-                  props={{ onClick: handleConfirmObject, width: "100%" }}
+                  type={"pending"}
+                  props={{ onClick: handleSelectFromList }}
                 >
-                  Confirm
+                  No, select item from a list
                 </ButtonGlobant>
               </Box>
             </Box>

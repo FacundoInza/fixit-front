@@ -113,7 +113,10 @@ const DeviceList = () => {
         mt={5}
       >
         <Link to={"/description"}>
-          <ButtonGlobant props={{ onClick: handleconfirmDevice }}>
+          <ButtonGlobant
+            type={"success"}
+            props={{ onClick: handleconfirmDevice }}
+          >
             Confirm
           </ButtonGlobant>
         </Link>

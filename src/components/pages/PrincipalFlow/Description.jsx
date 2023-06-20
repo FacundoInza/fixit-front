@@ -95,7 +95,7 @@ const Description = () => {
               flexDirection={"column"}
               alignItems={"center"}
             >
-              <ButtonGlobant props={{ type: "submit" }}>
+              <ButtonGlobant type={"success"} props={{ type: "submit" }}>
                 Create Report
               </ButtonGlobant>
             </Box>
