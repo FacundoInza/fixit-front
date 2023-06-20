@@ -26,13 +26,14 @@ function App() {
   const actualUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const persintence = async () => {
+    const data = await axiosSecret();
+    const devices = await axiosAllDevices();
+    dispatch(setUser(data));
+    dispatch(setDevices(devices));
+  };
+
   useEffect(() => {
-    const persintence = async () => {
-      const data = await axiosSecret();
-      const devices = await axiosAllDevices();
-      dispatch(setUser(data));
-      dispatch(setDevices(devices));
-    };
     if (document.cookie) {
       persintence();
     }
@@ -40,7 +41,7 @@ function App() {
 
   return (
     <>
-      {actualUser.email ? (
+      {!actualUser.email ? (
         <Routes>
           <Route path="/profile" element={<Profile />} />
           <Route path="/reports" element={<UserReports />} />
