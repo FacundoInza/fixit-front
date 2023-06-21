@@ -53,6 +53,7 @@ const ObjectDetectionComponent = () => {
           const predictions = await model.detect(videoRef.current);
 
           console.log("predictions", predictions[0]);
+          console.log("dev", devices);
 
           const detectedOfficeObject = predictions.find((prediction) =>
             devices.includes(prediction.class)
