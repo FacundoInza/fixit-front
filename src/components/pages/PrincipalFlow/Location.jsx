@@ -33,6 +33,8 @@ function Location() {
   const [nearbyOffices, setNearbyOffices] = useState("");
   const [selectedOffice, setSelectedOffice] = useState("");
 
+  console.log(nearbyOffices);
+
   useEffect(() => {
     locationUpdate();
   }, []);
