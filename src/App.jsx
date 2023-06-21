@@ -21,6 +21,8 @@ import StartScan from "./components/pages/PrincipalFlow/StartScan";
 import DeviceList from "./components/pages/PrincipalFlow/DeviceList";
 import SelectOffice from "./components/pages/PrincipalFlow/SelectOffice";
 import { setDevices } from "./store/devices";
+import AdminEditStatus from "./components/pages/adminViews/AdminEditStatus";
+import AdminFilterCases from "./components/pages/adminViews/AdminFilterCases";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -58,6 +60,9 @@ function App() {
           <Route path="/scanner" element={<ObjectDetectionComponent />} />
           <Route path="/device-list" element={<DeviceList />} />
           <Route path="/select-office" element={<SelectOffice />} />
+          {/*ADMIN ROUTES*/}
+          <Route path="/edit-status" element={<AdminEditStatus />} />
+          <Route path="/filter-cases" element={<AdminFilterCases />} />
         </Routes>
       ) : (
         <Routes>
