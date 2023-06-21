@@ -153,6 +153,17 @@ export const axiosSendNewOffices = async (offices) => {
   }
 };
 
+export const axiosOwners = async () => {
+  try {
+    const { data } = await axios.get(`${apiUrl}/users/getUsers?isAdmin=true`, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const axiosAllCases = async (filterAds) => {
   try {
     const { status, period, device } = filterAds;
