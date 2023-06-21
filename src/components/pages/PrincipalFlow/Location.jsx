@@ -37,9 +37,25 @@ function Location() {
     locationUpdate();
   }, []);
 
+  useEffect(() => {
+    const setOfficesLocation = async () => {
+      console.log("loc", location);
+      const offices = await axiosGetNearbyOffice({
+        lat: location[0],
+        lng: location[1],
+      });
+
+      const officesWithId = await axiosSendNewOffices(offices);
+      setNearbyOffices(officesWithId);
+      setSelectedOffice(officesWithId[0]);
+    };
+
+    setOfficesLocation();
+  }, [location]);
+
   const locationUpdate = async () => {
     await setUserLocation();
-    await setOfficesLocation();
+    // await setOfficesLocation();
   };
 
   const setUserLocation = async () => {
@@ -51,16 +67,17 @@ function Location() {
     dispatch(updateUser({ location: [lat, lng] }));
   };
 
-  const setOfficesLocation = async () => {
-    const offices = await axiosGetNearbyOffice({
-      lat: location[0],
-      lng: location[1],
-    });
+  // const setOfficesLocation = async () => {
+  //   console.log("loc", location);
+  //   const offices = await axiosGetNearbyOffice({
+  //     lat: location[0],
+  //     lng: location[1],
+  //   });
 
-    const officesWithId = await axiosSendNewOffices(offices);
-    setNearbyOffices(officesWithId);
-    setSelectedOffice(officesWithId[0]);
-  };
+  //   const officesWithId = await axiosSendNewOffices(offices);
+  //   setNearbyOffices(officesWithId);
+  //   setSelectedOffice(officesWithId[0]);
+  // };
 
   const handleConfirmOffice = () => {
     dispatch(updateIssue({ ...issue, closest_office: selectedOffice._id }));

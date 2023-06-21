@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { MainLayout } from "../../layout/MainLayout";
@@ -695,6 +695,10 @@ function OfficeMap() {
 
   var rects = document.querySelectorAll("rect");
   var ellipses = document.querySelectorAll("path");
+
+  useEffect(() => {
+    handleClick();
+  }, []);
 
   const setListeners = () => {
     rects.forEach(function (rect) {

@@ -9,19 +9,33 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 import { axiosGetUrl } from "../../../services/api";
+import { image } from "@tensorflow/tfjs";
 
 const ObjectDetectionComponent = () => {
   const Navigate = useNavigate();
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const dispatch = useDispatch();
-  const [url, setUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [detectedObject, setDetectedObject] = useState(null);
   const [capturedImage, setCapturedImage] = useState(null);
   const { damaged_equipment } = useSelector((state) => state.issue);
   const issue = useSelector((state) => state.issue);
 
   const devices = useSelector((state) => state.devices);
+
+  useEffect(() => {
+    dispatch(
+      updateIssue({
+        damaged_equipment: {
+          ...damaged_equipment,
+          name: detectedObject,
+          image: imageUrl,
+        },
+      })
+    );
+  }, [imageUrl]);
+
   useEffect(() => {
     const runObjectDetection = async () => {
       const model = await cocoSsd.load();
@@ -37,12 +51,15 @@ const ObjectDetectionComponent = () => {
       const detectObjects = async () => {
         if (model && videoRef.current.readyState === 4) {
           const predictions = await model.detect(videoRef.current);
+
+          console.log("predictions", predictions[0]);
+
           const detectedOfficeObject = predictions.find((prediction) =>
             devices.includes(prediction.class)
           );
 
           if (detectedOfficeObject) {
-            setDetectedObject(detectedOfficeObject);
+            setDetectedObject(detectedOfficeObject.class);
 
             captureImage();
           }
@@ -89,20 +106,11 @@ const ObjectDetectionComponent = () => {
       ""
     );
 
-    const url = await axiosGetUrl(base64WithoutPrefix);
-    setUrl(url);
+    const imgurUrl = await axiosGetUrl(base64WithoutPrefix);
+    setImageUrl(imgurUrl);
   };
 
   const handleSelectFromList = () => {
-    dispatch(
-      updateIssue({
-        damaged_equipment: {
-          ...damaged_equipment,
-
-          image: url,
-        },
-      })
-    );
     Navigate("/device-list");
   };
 
@@ -112,18 +120,6 @@ const ObjectDetectionComponent = () => {
   };
 
   const handleConfirmObject = () => {
-    dispatch(
-      updateIssue({
-        damaged_equipment: {
-          ...damaged_equipment,
-          name: detectedObject.class,
-          image: "test",
-        },
-      })
-    );
-
-    console.log("issue post dispatch", issue);
-
     Navigate("/description");
   };
 
@@ -188,7 +184,7 @@ const ObjectDetectionComponent = () => {
               width="75%"
             >
               <Typography variant="body1" marginBottom={2} fontWeight="bold">
-                Are you trying to report damage to your {detectedObject.class}?
+                Are you trying to report damage to your {detectedObject}?
               </Typography>
             </Box>
           )}
