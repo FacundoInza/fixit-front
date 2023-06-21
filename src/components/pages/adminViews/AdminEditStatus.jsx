@@ -26,7 +26,7 @@ function AdminEditStatus() {
   const { individualReport } = useSelector((state) => state.reports);
   const { id } = useParams();
 
-  const [selectedCheckbox, setSelectedCheckbox] = useState(null);
+  const [selectedCheckbox, setSelectedCheckbox] = useState("open");
 
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
