@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { formatDate } from "../../../utils";
 
 const CardReportList = ({ info }) => {
+  console.log(info);
   return (
     <Grid item xs={12} sm={12} md={6} lg={3}>
       <Card
@@ -50,8 +51,9 @@ const CardReportList = ({ info }) => {
               Report #{info._id.slice(20)}
             </Typography>
           </Link>
+
           <Typography variant="body2" color="text.secondary">
-            {info.description.slice(0, 80 - 3) + "..."}
+            {info.description.slice(0, 50) + "..."}
           </Typography>
 
           <Typography gutterBottom component="div">

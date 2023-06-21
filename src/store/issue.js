@@ -7,7 +7,12 @@ const initialState = {
   user: "",
   home_office: null,
   closest_office: "",
-  damaged_equipment: { name: "", image: "", location: "" },
+  damaged_equipment: {
+    name: "",
+    image:
+      "https://th.bing.com/th/id/OIP.Cfa8sRTwoZG6n1ShByoNNgHaHa?pid=ImgDet&rs=1",
+    location: "",
+  },
   description: "",
 };
 
