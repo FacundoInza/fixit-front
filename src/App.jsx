@@ -21,6 +21,8 @@ import StartScan from "./components/pages/PrincipalFlow/StartScan";
 import DeviceList from "./components/pages/PrincipalFlow/DeviceList";
 import SelectOffice from "./components/pages/PrincipalFlow/SelectOffice";
 import { setDevices } from "./store/devices";
+import Principal from "./components/pages/admin/Principal";
+import EditOwner from "./components/pages/admin/EditOwner";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -58,6 +60,8 @@ function App() {
           <Route path="/scanner" element={<ObjectDetectionComponent />} />
           <Route path="/device-list" element={<DeviceList />} />
           <Route path="/select-office" element={<SelectOffice />} />
+          <Route path="/principal-admin-views" element={<Principal />} />
+          <Route path="/edit-owner" element={<EditOwner />} />
         </Routes>
       ) : (
         <Routes>

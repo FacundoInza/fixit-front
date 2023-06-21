@@ -152,3 +152,14 @@ export const axiosSendNewOffices = async (offices) => {
     console.log(error);
   }
 };
+
+export const axiosOwners = async () => {
+  try {
+    const { data } = await axios.get(`${apiUrl}/users/getUsers?isAdmin=true`, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
