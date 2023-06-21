@@ -26,6 +26,8 @@ function App() {
   const actualUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const cookieCheck = document.cookie;
+
   useEffect(() => {
     const persintence = async () => {
       const data = await axiosSecret();
@@ -36,7 +38,7 @@ function App() {
     if (document.cookie) {
       persintence();
     }
-  }, []);
+  }, [cookieCheck]);
 
   return (
     <>
