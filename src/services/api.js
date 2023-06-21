@@ -8,8 +8,6 @@ export const axiosLogin = async (value) => {
       withCredentials: true,
     });
 
-    document.cookie = "token=" + data.token;
-
     return data;
   } catch (error) {
     console.log(error);
@@ -28,15 +26,9 @@ export const axiosSignUp = async (value) => {
 
 export const axiosSecret = async () => {
   try {
-    const token = document.cookie.token;
-
-    const { data } = await axios.get(
-      `${apiUrl}users/secret`,
-      { token: token },
-      {
-        withCredentials: true,
-      }
-    );
+    const { data } = await axios.get(`${apiUrl}users/secret`, {
+      withCredentials: true,
+    });
 
     return data;
   } catch (error) {

@@ -41,7 +41,7 @@ function App() {
 
   return (
     <>
-      {!actualUser.email ? (
+      {actualUser.email ? (
         <Routes>
           <Route path="/profile" element={<Profile />} />
           <Route path="/reports" element={<UserReports />} />
