@@ -33,13 +33,31 @@ function Location() {
   const [nearbyOffices, setNearbyOffices] = useState("");
   const [selectedOffice, setSelectedOffice] = useState("");
 
+  console.log(nearbyOffices);
+
   useEffect(() => {
     locationUpdate();
   }, []);
 
+  useEffect(() => {
+    const setOfficesLocation = async () => {
+      console.log("loc", location);
+      const offices = await axiosGetNearbyOffice({
+        lat: location[0],
+        lng: location[1],
+      });
+
+      const officesWithId = await axiosSendNewOffices(offices);
+      setNearbyOffices(officesWithId);
+      setSelectedOffice(officesWithId[0]);
+    };
+
+    setOfficesLocation();
+  }, [location]);
+
   const locationUpdate = async () => {
     await setUserLocation();
-    await setOfficesLocation();
+    // await setOfficesLocation();
   };
 
   const setUserLocation = async () => {
@@ -51,16 +69,17 @@ function Location() {
     dispatch(updateUser({ location: [lat, lng] }));
   };
 
-  const setOfficesLocation = async () => {
-    const offices = await axiosGetNearbyOffice({
-      lat: location[0],
-      lng: location[1],
-    });
+  // const setOfficesLocation = async () => {
+  //   console.log("loc", location);
+  //   const offices = await axiosGetNearbyOffice({
+  //     lat: location[0],
+  //     lng: location[1],
+  //   });
 
-    const officesWithId = await axiosSendNewOffices(offices);
-    setNearbyOffices(officesWithId);
-    setSelectedOffice(officesWithId[0]);
-  };
+  //   const officesWithId = await axiosSendNewOffices(offices);
+  //   setNearbyOffices(officesWithId);
+  //   setSelectedOffice(officesWithId[0]);
+  // };
 
   const handleConfirmOffice = () => {
     dispatch(updateIssue({ ...issue, closest_office: selectedOffice._id }));
@@ -118,11 +137,14 @@ function Location() {
           flexDirection={"column"}
           alignItems={"center"}
         >
-          <ButtonGlobant props={{ onClick: handleConfirmOffice }}>
+          <ButtonGlobant
+            type="success"
+            props={{ onClick: handleConfirmOffice }}
+          >
             Confirm Office
           </ButtonGlobant>
           <Link to={"/select-office"}>
-            <ButtonGlobant>Choose Another Office</ButtonGlobant>
+            <ButtonGlobant type="pending">Choose Another Office</ButtonGlobant>
           </Link>
         </Box>
       </Box>

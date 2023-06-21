@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setDevices } from "../../../store/devices";
 import { updateIssue } from "../../../store/issue";
 import { useState } from "react";
+import { axiosAllDevices } from "../../../services/api";
 
 const DeviceList = () => {
   const [device, setDevice] = useState("");
@@ -24,6 +25,15 @@ const DeviceList = () => {
   const dispatch = useDispatch();
 
   console.log("devices >> ", devices);
+
+  const getAllDevices = async () => {
+    const listOfDevices = await axiosAllDevices();
+    dispatch(setDevices(listOfDevices));
+  };
+
+  useEffect(() => {
+    getAllDevices();
+  }, []);
 
   const handleChange = (event) => {
     setDevice(event.target.value);
@@ -85,7 +95,7 @@ const DeviceList = () => {
           sx={{ display: "flex", justifyContent: "center" }}
         >
           <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            DEVICE LIST
+            {""}
           </InputLabel>
           <NativeSelect
             defaultValue={"choose a device"}
@@ -98,11 +108,12 @@ const DeviceList = () => {
             }}
             onChange={handleChange}
           >
-            {devices.map((device) => (
-              <option key={device.id} value={device.id}>
-                {device}
-              </option>
-            ))}
+            {devices &&
+              devices.map((device) => (
+                <option key={device.id} value={device.id}>
+                  {device}
+                </option>
+              ))}
           </NativeSelect>
         </FormControl>
       </Box>
@@ -113,7 +124,10 @@ const DeviceList = () => {
         mt={5}
       >
         <Link to={"/description"}>
-          <ButtonGlobant props={{ onClick: handleconfirmDevice }}>
+          <ButtonGlobant
+            type={"success"}
+            props={{ onClick: handleconfirmDevice }}
+          >
             Confirm
           </ButtonGlobant>
         </Link>

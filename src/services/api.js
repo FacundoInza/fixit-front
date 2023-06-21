@@ -163,3 +163,17 @@ export const axiosOwners = async () => {
     console.log(error);
   }
 };
+
+export const axiosAllCases = async (filterAds) => {
+  try {
+    const { status, period, device } = filterAds;
+
+    const { data } = await axios.get(`${apiUrl}cases/filter/`, {
+      withCredentials: true,
+    });
+    console.log("data", data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -23,10 +23,14 @@ import SelectOffice from "./components/pages/PrincipalFlow/SelectOffice";
 import { setDevices } from "./store/devices";
 import Principal from "./components/pages/admin/Principal";
 import EditOwner from "./components/pages/admin/EditOwner";
+import AdminEditStatus from "./components/pages/adminViews/AdminEditStatus";
+import AdminFilterCases from "./components/pages/adminViews/AdminFilterCases";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  const cookieCheck = document.cookie;
 
   useEffect(() => {
     const persintence = async () => {
@@ -38,7 +42,7 @@ function App() {
     if (document.cookie) {
       persintence();
     }
-  }, []);
+  }, [cookieCheck]);
 
   return (
     <>
@@ -62,6 +66,9 @@ function App() {
           <Route path="/select-office" element={<SelectOffice />} />
           <Route path="/principal-admin-views" element={<Principal />} />
           <Route path="/edit-owner" element={<EditOwner />} />
+          {/*ADMIN ROUTES*/}
+          <Route path="/edit-status" element={<AdminEditStatus />} />
+          <Route path="/filter-cases" element={<AdminFilterCases />} />
         </Routes>
       ) : (
         <Routes>

@@ -55,7 +55,7 @@ function NewReport() {
         mb={1}
       >
         <Link to={"/work-options"}>
-          <ButtonGlobant>Create A Report</ButtonGlobant>
+          <ButtonGlobant type={"success"}>Create A Report</ButtonGlobant>
         </Link>
       </Box>
     </MainLayout>

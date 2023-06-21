@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { MainLayout } from "../../layout/MainLayout";
@@ -696,6 +696,10 @@ function OfficeMap() {
   var rects = document.querySelectorAll("rect");
   var ellipses = document.querySelectorAll("path");
 
+  useEffect(() => {
+    handleClick();
+  }, []);
+
   const setListeners = () => {
     rects.forEach(function (rect) {
       if (rect.id != "Rectangle Main") {
@@ -767,7 +771,7 @@ function OfficeMap() {
         </Box>
 
         <Box display="flex" justifyContent="center">
-          <ButtonGlobant props={{ onClick: handleClick }}>
+          <ButtonGlobant type={"success"} props={{ onClick: handleClick }}>
             Confirm Desk
           </ButtonGlobant>
         </Box>
