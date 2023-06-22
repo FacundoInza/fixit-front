@@ -116,7 +116,7 @@ function Location() {
           <Map offices={nearbyOffices} selectedOffice={selectedOffice} />
         )}
 
-        <Grid container spacing={3} width={"70%"} margin={5}>
+        <Grid container spacing={3} width={"80%"} margin={2}>
           {nearbyOffices &&
             nearbyOffices.map((office, i) => {
               return (
