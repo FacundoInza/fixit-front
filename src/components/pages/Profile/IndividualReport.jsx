@@ -29,7 +29,7 @@ const IndividualReport = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const steps = ["open", "in progress", "partially solved", "solved"];
+  const steps = ["Open", "In progress", "Partially solved", "Solved"];
   const activeStep = steps.indexOf(individualReport.status);
 
   useEffect(() => {
