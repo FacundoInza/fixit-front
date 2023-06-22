@@ -4,8 +4,10 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
+import { Breadcrumb } from "antd";
+import MainBreadcrumb from "../commons/MainBreadcrumb";
 
-export const MainLayout = ({
+export const PrincipalFlowLayout = ({
   title = "FixIt",
   children,
   inLoginOrRegister = false,
@@ -19,8 +21,11 @@ export const MainLayout = ({
 
       <Box display="flex" flexDirection="column" minHeight="100vh">
         {inLoginOrRegister && <Navbar />}
+        <Box display={"flex"} margin={"20px"} justifyContent={"center"}>
+          <MainBreadcrumb />
+        </Box>
 
-        <Box flexGrow={1} height={"100%"}>
+        <Box marginTop={"50px"} flexGrow={1} height={"100%"}>
           {children}
         </Box>
 

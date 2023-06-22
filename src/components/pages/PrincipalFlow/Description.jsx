@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { axiosIssue } from "../../../services/api";
 
 import { updateIssue } from "../../../store/issue";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const Description = () => {
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const Description = () => {
   };
 
   return (
-    <MainLayout title="Description" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="Description" inLoginOrRegister={true}>
       {!confirmReport && (
         <form onSubmit={handleSubmit}>
           <Typography
@@ -120,7 +121,7 @@ const Description = () => {
           </Alert>
         </Snackbar>
       )}
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 };
 

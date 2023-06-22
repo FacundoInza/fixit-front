@@ -20,9 +20,10 @@ import { getLocation } from "../../../utils";
 //ACTIONS
 import { updateUser } from "../../../store/users";
 import { Link, useNavigate } from "react-router-dom";
-import { updateIssue } from "../../../store/issue";
+import { deleteStepIssue, updateIssue } from "../../../store/issue";
 import { Scanner } from "@mui/icons-material";
 import Map from "../../commons/Map";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 function Location() {
   const { id, location } = useSelector((state) => state.user);
@@ -33,27 +34,26 @@ function Location() {
   const [nearbyOffices, setNearbyOffices] = useState("");
   const [selectedOffice, setSelectedOffice] = useState("");
 
-  console.log(nearbyOffices);
-
   useEffect(() => {
     locationUpdate();
+    dispatch(deleteStepIssue("closest_office"));
   }, []);
 
   useEffect(() => {
-    const setOfficesLocation = async () => {
-      console.log("loc", location);
-      const offices = await axiosGetNearbyOffice({
-        lat: location[0],
-        lng: location[1],
-      });
-
-      const officesWithId = await axiosSendNewOffices(offices);
-      setNearbyOffices(officesWithId);
-      setSelectedOffice(officesWithId[0]);
-    };
-
     setOfficesLocation();
   }, [location]);
+
+  const setOfficesLocation = async () => {
+    console.log("loc", location);
+    const offices = await axiosGetNearbyOffice({
+      lat: location[0],
+      lng: location[1],
+    });
+
+    const officesWithId = await axiosSendNewOffices(offices);
+    setNearbyOffices(officesWithId);
+    setSelectedOffice(officesWithId[0]);
+  };
 
   const locationUpdate = async () => {
     await setUserLocation();
@@ -69,21 +69,9 @@ function Location() {
     dispatch(updateUser({ location: [lat, lng] }));
   };
 
-  // const setOfficesLocation = async () => {
-  //   console.log("loc", location);
-  //   const offices = await axiosGetNearbyOffice({
-  //     lat: location[0],
-  //     lng: location[1],
-  //   });
-
-  //   const officesWithId = await axiosSendNewOffices(offices);
-  //   setNearbyOffices(officesWithId);
-  //   setSelectedOffice(officesWithId[0]);
-  // };
-
   const handleConfirmOffice = () => {
     dispatch(updateIssue({ ...issue, closest_office: selectedOffice._id }));
-    if (issue.home_office) {
+    if (issue.home_office == "home") {
       navigate("/address-confirmation");
     } else {
       navigate("/map-selection");
@@ -91,7 +79,7 @@ function Location() {
   };
 
   return (
-    <MainLayout title="Login" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="Login" inLoginOrRegister={true}>
       <Box
         display="flex"
         justifyContent="center"
@@ -148,7 +136,7 @@ function Location() {
           </Link>
         </Box>
       </Box>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 }
 
