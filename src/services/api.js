@@ -167,8 +167,8 @@ export const axiosOwners = async () => {
 export const axiosAllCases = async (filterAds) => {
   try {
     const { status, period, device } = filterAds;
-
-    const { data } = await axios.get(`${apiUrl}cases/filter/`, {
+    let query = qs.stringify(filterAds);
+    const { data } = await axios.get(`${apiUrl}cases/filter/?${query}`, {
       withCredentials: true,
     });
     console.log("data", data);
