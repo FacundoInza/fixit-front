@@ -18,6 +18,7 @@ const ObjectDetectionComponent = () => {
   const canvasRef = useRef(null);
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState("");
+  const [objectInCamera, setObjectInCamera] = useState("");
   const [detectedObject, setDetectedObject] = useState(null);
   const [modelStart, setModelStart] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
@@ -42,12 +43,17 @@ const ObjectDetectionComponent = () => {
     const runObjectDetection = async () => {
       const model = await cocoSsd.load();
       setModelStart(true);
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" },
-        });
 
-        videoRef.current.srcObject = stream;
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" },
+          });
+
+          videoRef.current.srcObject = stream;
+        } catch (error) {
+          Navigate("/device-list");
+        }
       }
 
       const detectObjects = async () => {
@@ -55,7 +61,8 @@ const ObjectDetectionComponent = () => {
           const predictions = await model.detect(videoRef.current);
 
           console.log("predictions", predictions[0]);
-          console.log("dev", devices);
+          if (predictions[0] !== undefined)
+            setObjectInCamera(predictions[0].class);
 
           const detectedOfficeObject = predictions.find((prediction) =>
             devices.includes(prediction.class)
@@ -155,6 +162,9 @@ const ObjectDetectionComponent = () => {
                 autoPlay
               ></video>
             )}
+            <div style={{ fontFamily: "Heebo, sans-serif" }}>
+              {objectInCamera ? `We detect a ${objectInCamera}` : ""}
+            </div>
             <canvas
               ref={canvasRef}
               style={{ display: "none" }}

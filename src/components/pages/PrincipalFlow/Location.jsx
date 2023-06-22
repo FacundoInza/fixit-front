@@ -19,7 +19,7 @@ import {
 import { getLocation } from "../../../utils";
 //ACTIONS
 import { updateUser } from "../../../store/users";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { deleteStepIssue, updateIssue } from "../../../store/issue";
 import { Scanner } from "@mui/icons-material";
 import Map from "../../commons/Map";
@@ -62,6 +62,9 @@ function Location() {
 
   const setUserLocation = async () => {
     const { error, data } = await getLocation();
+    console.log("data en geoloc:", data);
+    if (data == "User denied Geolocation") navigate("/select-office");
+
     const lat = data.coords.latitude;
     const lng = data.coords.longitude;
 

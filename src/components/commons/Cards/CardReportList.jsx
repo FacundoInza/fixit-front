@@ -13,9 +13,20 @@ import {
 import image from "../../../assets/Rectangle 40.jpg";
 import { Link } from "react-router-dom";
 import { formatDate } from "../../../utils";
+import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
+import { axiosDeleteReport } from "../../../services/api";
+import { setDeletedReport } from "../../../store/Reports";
+import { useDispatch } from "react-redux";
 
 const CardReportList = ({ info }) => {
-  console.log(info);
+  const id = info._id;
+  const dispatch = useDispatch();
+
+  const handleDelete = async () => {
+    const deleteReport = await axiosDeleteReport(id);
+    dispatch(setDeletedReport({ _id: id }));
+  };
+
   return (
     <Grid item xs={12} sm={12} md={6} lg={3}>
       <Card
@@ -43,14 +54,20 @@ const CardReportList = ({ info }) => {
         </Link>
 
         <Box sx={{ maxWidth: "55%", maxHeight: 200, padding: "10px" }}>
-          <Link
-            to={`/report/${info._id}`}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <Typography gutterBottom variant="h5" component="div">
-              Report #{info._id.slice(20)}
-            </Typography>
-          </Link>
+          <Typography gutterBottom variant="h5" component="div">
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <span style={{ marginRight: "10px" }}>
+                Report #{info._id.slice(20)}
+              </span>
+              <DeleteSharpIcon
+                sx={{
+                  color: "black",
+                  cursor: "pointer",
+                }}
+                onClick={handleDelete}
+              />
+            </Box>
+          </Typography>
 
           <Typography variant="body2" color="text.secondary">
             {info.description.slice(0, 50) + "..."}

@@ -25,6 +25,7 @@ import Principal from "./components/pages/adminViews/Principal";
 import EditOwner from "./components/pages/adminViews/EditOwner";
 import AdminEditStatus from "./components/pages/adminViews/AdminEditStatus";
 import AdminFilterCases from "./components/pages/adminViews/AdminFilterCases";
+import Error404View from "./components/commons/Error404View";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
@@ -64,11 +65,13 @@ function App() {
           <Route path="/scanner" element={<ObjectDetectionComponent />} />
           <Route path="/device-list" element={<DeviceList />} />
           <Route path="/select-office" element={<SelectOffice />} />
+          {/*ADMIN ROUTES*/}
           <Route path="/principal-admin-views" element={<Principal />} />
           <Route path="/edit-owner" element={<EditOwner />} />
-          {/*ADMIN ROUTES*/}
           <Route path="/edit-status" element={<AdminEditStatus />} />
           <Route path="/filter-cases" element={<AdminFilterCases />} />
+          <Route path="/error-404" element={<Error404View />} />
+          <Route path="/*" element={<Error404View />} />
         </Routes>
       ) : (
         <Routes>

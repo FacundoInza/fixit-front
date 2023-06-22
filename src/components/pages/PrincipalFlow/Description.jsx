@@ -59,6 +59,8 @@ const Description = () => {
           description: descriptionForCase,
         })
       );
+
+      dispatch(resetIssue());
     }
   };
 

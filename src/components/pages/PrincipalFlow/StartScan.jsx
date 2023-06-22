@@ -53,7 +53,7 @@ const StartScan = () => {
           mt={5}
         >
           <Link to={"/scanner"}>
-            <ButtonGlobant type={"pending"}>Scan Item</ButtonGlobant>
+            <ButtonGlobant type={"success"}>Scan Item</ButtonGlobant>
           </Link>
           <Link to={"/device-list"}>
             <ButtonGlobant type={"pending"}>Upload Manually</ButtonGlobant>

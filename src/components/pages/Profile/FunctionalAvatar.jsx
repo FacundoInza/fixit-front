@@ -60,7 +60,10 @@ function FunctionalAvatar() {
         </Avatar>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <ButtonGlobant props={{ type: "button", onClick: handleEditImage }}>
+        <ButtonGlobant
+          type={"success"}
+          props={{ type: "button", onClick: handleEditImage }}
+        >
           {isEditMode ? "Save" : "Edit image"}
         </ButtonGlobant>
       </div>
