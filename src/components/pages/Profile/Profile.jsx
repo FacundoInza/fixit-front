@@ -215,6 +215,7 @@ const Profile = () => {
               </Box>
               <Box display={"flex"} justifyContent={"center"}>
                 <ButtonGlobant
+                  type={!editMode ? "success" : "pending"}
                   props={{ type: "submit", onClick: handleEditMode }}
                 >
                   {!editMode ? "Edit Profile" : "Save Changes"}
