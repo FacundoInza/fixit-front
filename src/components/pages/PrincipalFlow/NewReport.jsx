@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import newReportImg from "../../../assets/newReport.png";
 import { Link } from "react-router-dom";
 import { resetIssue } from "../../../store/issue";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 function NewReport() {
   const actualUser = useSelector((state) => state.user);
@@ -20,7 +21,7 @@ function NewReport() {
   }
 
   return (
-    <MainLayout title="newReport" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="newReport" inLoginOrRegister={true}>
       <Box
         key={"hola"}
         display="flex"
@@ -70,7 +71,7 @@ function NewReport() {
           <ButtonGlobant type={"success"}>Create A Report</ButtonGlobant>
         </Link>
       </Box>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 }
 

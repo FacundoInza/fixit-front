@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { axiosGetUrl } from "../../../services/api";
 import { image } from "@tensorflow/tfjs";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const ObjectDetectionComponent = () => {
   const Navigate = useNavigate();
@@ -130,7 +131,7 @@ const ObjectDetectionComponent = () => {
   };
 
   return (
-    <MainLayout title="Scanner" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="Scanner" inLoginOrRegister={true}>
       <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
         <Box
           display="flex"
@@ -266,7 +267,7 @@ const ObjectDetectionComponent = () => {
           )}
         </Box>
       </div>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 };
 
