@@ -36,6 +36,10 @@ function Navbar() {
     window.location.reload();
   };
 
+  function removeSpecialCharactersWithSpaces(str) {
+    return str.replace(/[^a-zA-Z.\s]/g, "");
+  }
+
   return (
     <>
       <Box sx={{ height: "100px" }}>
@@ -130,7 +134,16 @@ function Navbar() {
                       component="div"
                       sx={{ color: "white", margin: "auto" }}
                     >
-                      {actualUser.name}
+                      {removeSpecialCharactersWithSpaces(
+                        actualUser.name
+                          .toLowerCase()
+                          .split(" ")
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() + word.slice(1)
+                          )
+                          .join(" ")
+                      )}
                     </Typography>
                   </Box>
                 </Link>
