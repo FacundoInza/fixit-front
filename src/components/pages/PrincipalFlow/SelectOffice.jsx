@@ -26,7 +26,7 @@ const SelectOffice = () => {
 
   const handleConfirmOffice = () => {
     dispatch(updateIssue({ closest_office: selectedOffice._id }));
-    if (issue.home_office) {
+    if (issue.home_office == "home") {
       navigate("/address-confirmation");
     } else {
       navigate("/map-selection");
