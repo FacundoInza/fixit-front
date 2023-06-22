@@ -207,7 +207,7 @@ const Profile = () => {
                 <ButtonGlobant
                   props={{ type: "submit", onClick: handleEditMode }}
                 >
-                  {!editMode ? "Edit Profile" : "Send Changes"}
+                  {!editMode ? "Edit Profile" : "Save Changes"}
                 </ButtonGlobant>
               </Box>
             </Form>

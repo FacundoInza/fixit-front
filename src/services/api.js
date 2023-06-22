@@ -46,6 +46,7 @@ export const axiosCasesUser = async (id, filterAds) => {
         withCredentials: true,
       }
     );
+
     return data;
   } catch (error) {
     console.log(error);
@@ -55,6 +56,10 @@ export const axiosCasesUser = async (id, filterAds) => {
 export const axiosUpdateUser = async (update, id) => {
   try {
     const { data } = await axios.put(`${apiUrl}users/update/${id}`, update);
+
+    document.cookie = "token=" + data;
+
+    return { message: data };
   } catch (error) {
     throw new Error({ message: "The user was not updated" });
   }
@@ -147,6 +152,31 @@ export const axiosSendNewOffices = async (offices) => {
       newFormatOffices
     );
 
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const axiosOwners = async () => {
+  try {
+    const { data } = await axios.get(`${apiUrl}/users/getUsers?isAdmin=true`, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const axiosAllCases = async (filterAds) => {
+  try {
+    const { status, period, device } = filterAds;
+    let query = qs.stringify(filterAds);
+    const { data } = await axios.get(`${apiUrl}cases/filter/?${query}`, {
+      withCredentials: true,
+    });
+    console.log("data", data);
     return data;
   } catch (error) {
     console.log(error);

@@ -59,7 +59,7 @@ const SelectOffice = () => {
           <Map offices={allOffices} selectedOffice={selectedOffice} />
         </Box>
 
-        <Grid container spacing={2} width={"50%"} margin={8}>
+        <Grid container spacing={2} width={"50%"} margin={4}>
           {allOffices &&
             allOffices.map((office, i) => (
               <Grid item xs={12} lg={6}>

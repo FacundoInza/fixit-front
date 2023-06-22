@@ -9,6 +9,7 @@ import { updateIssue } from "../../../store/issue";
 
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
+import { axiosAllOffices } from "../../../services/api";
 
 function OfficeMap() {
   const selectedOfficeMap = `<svg
@@ -684,13 +685,16 @@ function OfficeMap() {
           />
         </g>
       </svg>`;
-  const { damaged_equipment } = useSelector((state) => state.issue);
+  const { damaged_equipment, closest_office } = useSelector(
+    (state) => state.issue
+  );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [desk, setDesk] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [selectedOffice, setSelectedOffice] = useState("");
 
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
@@ -698,8 +702,21 @@ function OfficeMap() {
   var ellipses = document.querySelectorAll("path");
 
   useEffect(() => {
+    getAllOffices();
     handleClick();
   }, []);
+
+  const getAllOffices = async () => {
+    try {
+      const { offices } = await axiosAllOffices();
+
+      setSelectedOffice(
+        offices.filter((office) => office._id == closest_office)[0]
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const setListeners = () => {
     rects.forEach(function (rect) {
@@ -768,7 +785,7 @@ function OfficeMap() {
           </Typography>
         )}
         <Box display="flex" flexDirection="column" gap={2}>
-          <div dangerouslySetInnerHTML={{ __html: selectedOfficeMap }} />
+          <div dangerouslySetInnerHTML={{ __html: selectedOffice.map }} />
         </Box>
 
         <Box display="flex" justifyContent="center">

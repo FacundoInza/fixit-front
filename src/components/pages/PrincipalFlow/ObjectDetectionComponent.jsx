@@ -19,6 +19,7 @@ const ObjectDetectionComponent = () => {
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState("");
   const [detectedObject, setDetectedObject] = useState(null);
+  const [modelStart, setModelStart] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
   const { damaged_equipment } = useSelector((state) => state.issue);
   const issue = useSelector((state) => state.issue);
@@ -40,7 +41,7 @@ const ObjectDetectionComponent = () => {
   useEffect(() => {
     const runObjectDetection = async () => {
       const model = await cocoSsd.load();
-
+      setModelStart(true);
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: "environment" },
@@ -54,6 +55,7 @@ const ObjectDetectionComponent = () => {
           const predictions = await model.detect(videoRef.current);
 
           console.log("predictions", predictions[0]);
+          console.log("dev", devices);
 
           const detectedOfficeObject = predictions.find((prediction) =>
             devices.includes(prediction.class)
@@ -124,6 +126,10 @@ const ObjectDetectionComponent = () => {
     Navigate("/description");
   };
 
+  const handleGoBack = () => {
+    Navigate("/device-list");
+  };
+
   return (
     <PrincipalFlowLayout title="Scanner" inLoginOrRegister={true}>
       <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
@@ -165,10 +171,40 @@ const ObjectDetectionComponent = () => {
               paddingTop={2}
               width="75%"
             >
-              {!detectedObject && (
+              {!modelStart && (
                 <Typography variant="body1" marginBottom={2} fontWeight="bold">
-                  scaning on course...
+                  {
+                    <h2 style={{ fontFamily: "Heebo, sans-serif" }}>
+                      {" "}
+                      Please wait for the scanner to start...
+                    </h2>
+                  }{" "}
+                  {<br />}
+                  {
+                    <h3 style={{ fontFamily: "Heebo, sans-serif" }}>
+                      This process can take a few seconds.
+                    </h3>
+                  }
                 </Typography>
+              )}
+            </Box>
+            <Box
+              position="relative"
+              top={5}
+              left={0}
+              right={0}
+              textAlign="center"
+              margin="0 auto"
+              paddingTop={2}
+              width="75%"
+            >
+              {!detectedObject && (
+                <ButtonGlobant
+                  type={"pending"}
+                  props={{ onClick: handleGoBack }}
+                >
+                  SKIP and select from list
+                </ButtonGlobant>
               )}
             </Box>
           </Box>

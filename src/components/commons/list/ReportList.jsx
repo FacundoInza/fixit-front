@@ -45,7 +45,7 @@ const ReportList = ({ filterAds }) => {
       <Box display={"flex"} justifyContent={"center"} padding={"5px"}>
         <Box padding={1}>
           <Button variant="contained" onClick={handleClickAplyFilter}>
-            Aply filter
+            Apply filter
           </Button>
         </Box>
         <Box padding={1}>
@@ -67,6 +67,11 @@ const ReportList = ({ filterAds }) => {
           height={"100%"}
           padding={{ xs: "1.8rem", sm: "1rem", md: "1.2rem" }}
         >
+          {countPages == 0 && (
+            <div style={{ fontFamily: "Heebo, sans-serif" }}>
+              There are no matching reports
+            </div>
+          )}
           {reports &&
             reports.map((report, i) => (
               <CardReportList key={i} info={report} />
