@@ -46,6 +46,7 @@ export const axiosCasesUser = async (id, filterAds) => {
         withCredentials: true,
       }
     );
+
     return data;
   } catch (error) {
     console.log(error);
@@ -55,6 +56,10 @@ export const axiosCasesUser = async (id, filterAds) => {
 export const axiosUpdateUser = async (update, id) => {
   try {
     const { data } = await axios.put(`${apiUrl}users/update/${id}`, update);
+
+    document.cookie = "token=" + data;
+
+    return { message: data };
   } catch (error) {
     throw new Error({ message: "The user was not updated" });
   }
