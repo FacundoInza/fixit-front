@@ -183,7 +183,6 @@ export const axiosAllCases = async (filterAds) => {
   }
 };
 
-
 export const axiosAutocomplete = async (inpuText) => {
   try {
     if (inpuText) {
@@ -200,12 +199,15 @@ export const axiosAutocomplete = async (inpuText) => {
     } else {
       return [];
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const axiosDeleteReport = async (id) => {
   try {
     const { data } = await axios.delete(`${apiUrl}cases/delete/${id}`);
     return data;
- develop
   } catch (error) {
     console.log(error);
   }
