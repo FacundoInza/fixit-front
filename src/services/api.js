@@ -182,3 +182,12 @@ export const axiosAllCases = async (filterAds) => {
     console.log(error);
   }
 };
+
+export const axiosDeleteReport = async (id) => {
+  try {
+    const { data } = await axios.delete(`${apiUrl}cases/delete/${id}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
