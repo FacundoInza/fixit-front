@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { axiosIssue } from "../../../services/api";
 
-import { updateIssue } from "../../../store/issue";
+import { resetIssue, updateIssue } from "../../../store/issue";
 import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const Description = () => {
@@ -28,6 +28,7 @@ const Description = () => {
         await axiosIssue({
           issue,
         });
+        dispatch(resetIssue());
         Swal.fire({
           icon: "success",
           title: "Report created",

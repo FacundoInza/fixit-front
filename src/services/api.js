@@ -182,3 +182,24 @@ export const axiosAllCases = async (filterAds) => {
     console.log(error);
   }
 };
+
+export const axiosAutocomplete = async (inpuText) => {
+  try {
+    if (inpuText) {
+      const query = qs.stringify({ input: inpuText });
+
+      const { data } = await axios.get(
+        `${apiUrl}maps/places/autocomplete?${query}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      return data.predictions;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

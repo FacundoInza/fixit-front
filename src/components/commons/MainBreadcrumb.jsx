@@ -9,7 +9,7 @@ const MainBreadcrumb = () => {
   const issue = useSelector((state) => state.issue);
 
   const step = findFalsyProperty(issue);
-  console.log(step);
+
   return (
     <Breadcrumbs maxItems={5} aria-label="breadcrumb">
       <Link
