@@ -28,6 +28,7 @@ const Description = () => {
         await axiosIssue({
           issue,
         });
+        dispatch(resetIssue());
         Swal.fire({
           icon: "success",
           title: "Report created",
