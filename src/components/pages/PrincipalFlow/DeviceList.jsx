@@ -18,7 +18,7 @@ import { axiosAllDevices } from "../../../services/api";
 import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const DeviceList = () => {
-  const [device, setDevice] = useState("");
+  const [device, setDevice] = useState("HDMI cable");
   const devices = useSelector((state) => state.devices);
   const issue = useSelector((state) => state.issue);
   const { damaged_equipment } = useSelector((state) => state.issue);
