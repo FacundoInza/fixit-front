@@ -58,7 +58,7 @@ const Profile = () => {
   }
 
   return (
-    <MainLayout title="Profile" inLoginOrRegister>
+    <MainLayout title="Profile" inLoginOrRegister={true}>
       <Box
         sx={{
           display: "flex",
