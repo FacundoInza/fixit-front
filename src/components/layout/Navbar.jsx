@@ -150,10 +150,10 @@ function Navbar() {
 
                 <Button
                   variant="contained"
-                  color="primary"
+                  color="error"
                   onClick={handleLogout}
                 >
-                  Logout
+                  Log out
                 </Button>
               </>
             )}

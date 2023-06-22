@@ -44,12 +44,20 @@ const ReportList = ({ filterAds }) => {
     <>
       <Box display={"flex"} justifyContent={"center"} padding={"5px"}>
         <Box padding={1}>
-          <Button variant="contained" onClick={handleClickAplyFilter}>
+          <Button
+            color="success"
+            variant="contained"
+            onClick={handleClickAplyFilter}
+          >
             Apply filter
           </Button>
         </Box>
         <Box padding={1}>
-          <Button variant="contained" onClick={handleClickRemoveFilter}>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={handleClickRemoveFilter}
+          >
             Remove Filter
           </Button>
         </Box>
