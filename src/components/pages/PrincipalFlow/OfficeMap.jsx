@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateIssue } from "../../../store/issue";
 
 import ButtonGlobant from "../../commons/ButtonGlobant";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 import { axiosAllOffices } from "../../../services/api";
 
 function OfficeMap() {
@@ -766,7 +767,7 @@ function OfficeMap() {
   };
 
   return (
-    <MainLayout title="WorkOptions" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="WorkOptions" inLoginOrRegister={true}>
       <Box
         display="flex"
         justifyContent="center"
@@ -811,7 +812,7 @@ function OfficeMap() {
           </Alert>
         </Snackbar>
       )}
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 }
 
