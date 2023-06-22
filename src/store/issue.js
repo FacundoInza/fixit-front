@@ -1,4 +1,5 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
+import image from "../assets/tools.png";
 
 export const resetIssue = createAction("RESET_ISSUE");
 export const updateIssue = createAction("UPDATE_ISSUE");
@@ -9,8 +10,7 @@ const initialState = {
   closest_office: "",
   damaged_equipment: {
     name: "",
-    image:
-      "https://th.bing.com/th/id/OIP.Cfa8sRTwoZG6n1ShByoNNgHaHa?pid=ImgDet&rs=1",
+    image: image,
     location: "",
   },
   description: "",

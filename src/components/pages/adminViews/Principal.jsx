@@ -16,6 +16,10 @@ import ButtonGlobant from "../../commons/ButtonGlobant";
 function Principal() {
   const actualUser = useSelector((state) => state.user);
 
+  function removeSpecialCharactersWithSpaces(str) {
+    return str.replace(/[^a-zA-Z.\s]/g, "");
+  }
+
   return (
     <MainLayout title="Principal">
       <AppBar
@@ -54,7 +58,13 @@ function Principal() {
         }}
       >
         <Typography color="white" sx={{ fontSize: { xs: "2rem" } }}>
-          {actualUser.name}
+          {removeSpecialCharactersWithSpaces(
+            actualUser.name
+              .toLowerCase()
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")
+          )}
         </Typography>
 
         <Avatar

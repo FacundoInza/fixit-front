@@ -15,6 +15,10 @@ function NewReport() {
     dispatch(resetIssue());
   }, []);
 
+  function removeSpecialCharactersWithSpaces(str) {
+    return str.replace(/[^a-zA-Z.\s]/g, "");
+  }
+
   return (
     <MainLayout title="newReport" inLoginOrRegister={true}>
       <Box
@@ -26,7 +30,15 @@ function NewReport() {
         height={"100%"}
       >
         <Typography variant="h5" sx={{ mb: 2 }}>
-          Welcome {actualUser.name}!
+          Welcome{" "}
+          {removeSpecialCharactersWithSpaces(
+            actualUser.name
+              .toLowerCase()
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")
+          )}
+          !
         </Typography>
         <Typography variant="body1" sx={{ mb: 1 }} fontWeight="bold">
           Do you have a problem with a device?

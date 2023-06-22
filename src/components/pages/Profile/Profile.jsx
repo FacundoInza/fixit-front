@@ -53,6 +53,10 @@ const Profile = () => {
     }
   };
 
+  function removeSpecialCharactersWithSpaces(str) {
+    return str.replace(/[^a-zA-Z.\s]/g, "");
+  }
+
   return (
     <MainLayout title="Profile" inLoginOrRegister>
       <Box
@@ -68,7 +72,13 @@ const Profile = () => {
         }}
       >
         <Typography margin={2} color="white" sx={{ fontSize: { xs: "2rem" } }}>
-          {user.name}
+          {removeSpecialCharactersWithSpaces(
+            user.name
+              .toLowerCase()
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")
+          )}
         </Typography>
         <FunctionalAvatar />
         <Typography

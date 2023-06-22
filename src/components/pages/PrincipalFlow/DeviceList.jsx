@@ -111,7 +111,7 @@ const DeviceList = () => {
             {devices &&
               devices.map((device) => (
                 <option key={device.id} value={device.id}>
-                  {device}
+                  {device.charAt(0).toUpperCase() + device.slice(1)}
                 </option>
               ))}
           </NativeSelect>
