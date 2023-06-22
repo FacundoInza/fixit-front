@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { MainLayout } from "../../layout/MainLayout";
@@ -9,7 +9,8 @@ import inGlobantOffice from "../../../assets/inGlobantOffice.png";
 import workFromHome from "../../../assets/workFromHome.png";
 import logo from "../../../assets/Short-White-Green.png";
 import { useDispatch } from "react-redux";
-import { updateIssue } from "../../../store/issue";
+import { deleteStepIssue, updateIssue } from "../../../store/issue";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const MobileButtonContainer = styled(Box)({
   display: "flex",
@@ -26,16 +27,20 @@ function WorkOptions() {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(deleteStepIssue("home_office"));
+  }, []);
+
   const handleClickOffice = () => {
-    dispatch(updateIssue({ home_office: false }));
+    dispatch(updateIssue({ home_office: "office" }));
   };
 
   const handleClickHome = () => {
-    dispatch(updateIssue({ home_office: true }));
+    dispatch(updateIssue({ home_office: "home" }));
   };
 
   return (
-    <MainLayout title="WorkOptions" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="WorkOptions" inLoginOrRegister={true}>
       <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
         <Box
           display="flex"
@@ -190,7 +195,7 @@ function WorkOptions() {
           </Box>
         </Box>
       </div>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 }
 

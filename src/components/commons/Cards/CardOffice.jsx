@@ -9,7 +9,7 @@ const CardOffice = ({ office, setSelectedOffice, selectedOffice }) => {
   return (
     <Card
       sx={{
-        border: office == selectedOffice && "1px solid #ddd",
+        border: office == selectedOffice && "4px solid #BFD732",
         borderRadius: office == selectedOffice && "10px",
         boxShadow: office == selectedOffice && "0 2px 4px rgba(0, 0, 0, 0.1)",
         backgroundColor: "#F5F6F7",

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import newReportImg from "../../../assets/newReport.png";
 import { Link } from "react-router-dom";
 import { resetIssue } from "../../../store/issue";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 function NewReport() {
   const actualUser = useSelector((state) => state.user);
@@ -15,8 +16,12 @@ function NewReport() {
     dispatch(resetIssue());
   }, []);
 
+  function removeSpecialCharactersWithSpaces(str) {
+    return str.replace(/[^a-zA-Z.\s]/g, "");
+  }
+
   return (
-    <MainLayout title="newReport" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="newReport" inLoginOrRegister={true}>
       <Box
         key={"hola"}
         display="flex"
@@ -26,7 +31,15 @@ function NewReport() {
         height={"100%"}
       >
         <Typography variant="h5" sx={{ mb: 2 }}>
-          Welcome {actualUser.name}!
+          Welcome{" "}
+          {removeSpecialCharactersWithSpaces(
+            actualUser.name
+              .toLowerCase()
+              .split(" ")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")
+          )}
+          !
         </Typography>
         <Typography variant="body1" sx={{ mb: 1 }} fontWeight="bold">
           Do you have a problem with a device?
@@ -58,7 +71,7 @@ function NewReport() {
           <ButtonGlobant type={"success"}>Create A Report</ButtonGlobant>
         </Link>
       </Box>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 }
 

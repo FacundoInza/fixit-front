@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import Swal from "sweetalert2";
 
 import { TextField, Typography, Box, Alert, Snackbar } from "@mui/material";
-
-import { MainLayout } from "../../layout/MainLayout";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { useDispatch, useSelector } from "react-redux";
 
-import { axiosIssue } from "../../../services/api";
-
-import { updateIssue } from "../../../store/issue";
+import { deleteStepIssue, updateIssue } from "../../../store/issue";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const AddressConfirmation = () => {
   const issue = useSelector((state) => state.issue);
@@ -19,6 +15,10 @@ const AddressConfirmation = () => {
   const [addressForCase, setAddressForCase] = useState("");
   const { damaged_equipment } = useSelector((state) => state.issue);
   const { address } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(deleteStepIssue("damaged_equipment"));
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ const AddressConfirmation = () => {
   };
 
   return (
-    <MainLayout title="Address Confirmation" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="Address Confirmation" inLoginOrRegister={true}>
       <form onSubmit={handleSubmit}>
         <Typography
           fontWeight={"bold"}
@@ -69,7 +69,7 @@ const AddressConfirmation = () => {
           </Box>
         </div>
       </form>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 };
 

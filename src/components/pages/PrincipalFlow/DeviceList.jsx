@@ -15,6 +15,7 @@ import { setDevices } from "../../../store/devices";
 import { updateIssue } from "../../../store/issue";
 import { useState } from "react";
 import { axiosAllDevices } from "../../../services/api";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const DeviceList = () => {
   const [device, setDevice] = useState("");
@@ -51,7 +52,7 @@ const DeviceList = () => {
   };
   console.log("estado local", device);
   return (
-    <MainLayout title="Device-list" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="Device-list" inLoginOrRegister={true}>
       <Box
         display="flex"
         justifyContent="center"
@@ -111,7 +112,7 @@ const DeviceList = () => {
             {devices &&
               devices.map((device) => (
                 <option key={device.id} value={device.id}>
-                  {device}
+                  {device.charAt(0).toUpperCase() + device.slice(1)}
                 </option>
               ))}
           </NativeSelect>
@@ -132,7 +133,7 @@ const DeviceList = () => {
           </ButtonGlobant>
         </Link>
       </Box>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 };
 

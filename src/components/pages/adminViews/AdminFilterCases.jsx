@@ -98,7 +98,9 @@ const UserReports = () => {
               onChange={handleStatus}
             >
               <option value={"all"}>All reports</option>
-              <option value={"pending"}>Pending</option>
+              <option value={"open"}>Open</option>
+              <option value={"in progress"}>In progress</option>
+              <option value={"partially solved"}>Partially solved</option>
               <option value={"solved"}>Solved</option>
             </NativeSelect>
           </FormControl>

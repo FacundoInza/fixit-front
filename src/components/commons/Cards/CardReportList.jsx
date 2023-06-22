@@ -47,7 +47,7 @@ const CardReportList = ({ info }) => {
       >
         <Link to={`/report/${info._id}`}>
           <CardMedia
-            sx={{ height: "200px", width: "160px" }}
+            sx={{ height: "200px", width: "150px" }}
             image={info.damaged_equipment.image}
             title="green iguana"
           />

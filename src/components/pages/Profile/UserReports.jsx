@@ -92,8 +92,13 @@ const UserReports = () => {
               <option value="all">All devices</option>
               {allDevices &&
                 allDevices.map((device, i) => (
-                  <option key={i} value={device.name}>
-                    {device.name}
+                  <option
+                    key={i}
+                    value={
+                      device.name.charAt(0).toUpperCase() + device.name.slice(1)
+                    }
+                  >
+                    {device.name.charAt(0).toUpperCase() + device.name.slice(1)}
                   </option>
                 ))}
             </NativeSelect>
