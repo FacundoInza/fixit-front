@@ -9,6 +9,7 @@ import {
   StepLabel,
   Stepper,
   Typography,
+  Button,
 } from "@mui/material";
 
 import { MainLayout } from "../../layout/MainLayout";
@@ -21,6 +22,7 @@ import { axiosDeleteReport, axiosIndividualCase } from "../../../services/api";
 import { AcUnitTwoTone } from "@mui/icons-material";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import { formatDate } from "../../../utils";
+import { Link } from "react-router-dom";
 
 const IndividualReport = () => {
   const { individualReport } = useSelector((state) => state.reports);
@@ -44,6 +46,12 @@ const IndividualReport = () => {
     const deleteReport = await axiosDeleteReport(id);
     dispatch(setDeletedReport({ _id: id }));
     navigate("/reports");
+  };
+  const handleBack = () => {
+    navigate("/filter-cases");
+  };
+  const handleStatus = () => {
+    navigate("/edit-status");
   };
 
   return (
@@ -110,6 +118,35 @@ const IndividualReport = () => {
             </Step>
           ))}
         </Stepper>
+      </Box>
+
+      <Box paddingTop={1} display="flex" justifyContent="center">
+        <div
+          style={{
+            margin: "0 auto",
+            display: "flex",
+            gap: "20px",
+            width: "75%",
+          }}
+        >
+          <Button
+            onClick={handleBack}
+            color="pending"
+            variant="contained"
+            sx={{ color: "white", flex: 1 }}
+          >
+            Go back
+          </Button>
+
+          <Button
+            onClick={handleStatus}
+            color="success"
+            variant="contained"
+            sx={{ color: "white", flex: 1 }}
+          >
+            Change Status
+          </Button>
+        </div>
       </Box>
 
       <Typography
