@@ -65,19 +65,23 @@ function App() {
           <Route path="/scanner" element={<ObjectDetectionComponent />} />
           <Route path="/device-list" element={<DeviceList />} />
           <Route path="/select-office" element={<SelectOffice />} />
-          {/*ADMIN ROUTES*/}
-          <Route path="/principal-admin-views" element={<Principal />} />
-          <Route path="/edit-owner" element={<EditOwner />} />
-          <Route path="/edit-status" element={<AdminEditStatus />} />
-          <Route path="/filter-cases" element={<AdminFilterCases />} />
-          <Route path="/error-404" element={<Error404View />} />
-          <Route path="/*" element={<Error404View />} />
         </Routes>
       ) : (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
+        </Routes>
+      )}
+
+      {actualUser.is_admin && (
+        <Routes>
+          <Route path="/principal-admin-views" element={<Principal />} />
+          <Route path="/edit-owner" element={<EditOwner />} />
+          <Route path="/edit-status" element={<AdminEditStatus />} />
+          <Route path="/filter-cases" element={<AdminFilterCases />} />
+          <Route path="/error-404" element={<Error404View />} />
+          <Route path="/*" element={<Error404View />} />
         </Routes>
       )}
     </>

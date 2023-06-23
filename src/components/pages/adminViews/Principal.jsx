@@ -85,8 +85,17 @@ function Principal() {
           Admin Glober
         </Typography>
       </Box>
-      <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
-        <ButtonGlobant props={{ type: "button" }}>Manage Cases</ButtonGlobant>
+      <Box
+        mt={5}
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
+      >
+        <Link to="/filter-cases">
+          <ButtonGlobant type={"success"} props={{ type: "button" }}>
+            Manage Cases
+          </ButtonGlobant>
+        </Link>
         <ButtonGlobant props={{ type: "button" }}>Manege Offices</ButtonGlobant>
         <ButtonGlobant props={{ type: "button" }}>Manage Devices</ButtonGlobant>
         <ButtonGlobant props={{ type: "button" }}>Manage Admins</ButtonGlobant>

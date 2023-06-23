@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { pink } from "@mui/material/colors";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { styled } from "@mui/system";
 import { axiosIndividualCase } from "../../../services/api";
 import { setIndividualReport } from "../../../store/Reports";
@@ -22,9 +22,9 @@ const StyledCheckboxContainer = styled("div")({
 });
 
 function AdminEditStatus() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { individualReport } = useSelector((state) => state.reports);
-  const { id } = useParams();
 
   const [selectedCheckbox, setSelectedCheckbox] = useState("open");
 
@@ -32,8 +32,7 @@ function AdminEditStatus() {
     setSelectedCheckbox(index);
   };
   const handleConfirm = async () => {
-    const data = await axiosIndividualCase(id);
-    dispatch(setIndividualReport({ status: selectedCheckbox }));
+    navigate(`/report/${individualReport._id}`);
   };
   console.log("indiv", individualReport);
   return (
@@ -45,8 +44,9 @@ function AdminEditStatus() {
         flexDirection="column"
         overflow="overflow"
         height={"100%"}
+        paddingTop={3}
       >
-        <Typography variant="h5" sx={{ mb: 2 }}>
+        <Typography variant="h5" sx={{ fontSize: 20, mb: 2 }}>
           Report: {individualReport._id}
         </Typography>
         <Typography variant="body1" sx={{ mb: 1 }} fontWeight="bold">
@@ -125,11 +125,9 @@ function AdminEditStatus() {
           flexDirection={"column"}
           alignItems={"center"}
         >
-          <Link to={"/filter-cases"}>
-            <ButtonGlobant props={{ onClick: handleConfirm }}>
-              Confirm
-            </ButtonGlobant>
-          </Link>
+          <ButtonGlobant props={{ onClick: handleConfirm }}>
+            Confirm
+          </ButtonGlobant>
         </Box>
       </Box>
     </MainLayout>
