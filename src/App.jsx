@@ -80,9 +80,11 @@ function App() {
           <Route path="/edit-owner" element={<EditOwner />} />
           <Route path="/edit-status" element={<AdminEditStatus />} />
           <Route path="/filter-cases" element={<AdminFilterCases />} />
-          <Route path="/error-404" element={<Error404View />} />
+       
+
           <Route path="/*" element={<Error404View />} />
         </>
+
       )}
       <Route path="*" element={<Error404View />} />
     </Routes>
