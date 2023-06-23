@@ -19,6 +19,7 @@ const MainBreadcrumb = () => {
         style={{
           pointerEvents: step[0] <= 0 && "none",
           color: step >= 0 ? "#00A99D" : "grey",
+          fontFamily: "Heebo, sans-serif",
         }}
       >
         Start Report
@@ -30,6 +31,7 @@ const MainBreadcrumb = () => {
         style={{
           pointerEvents: step < 1 && "none",
           color: step >= 1 ? "#00A99D" : "grey",
+          fontFamily: "Heebo, sans-serif",
         }}
       >
         Work Option
@@ -41,6 +43,7 @@ const MainBreadcrumb = () => {
         style={{
           pointerEvents: step < 2 && "none",
           color: step >= 2 ? "#00A99D" : "grey",
+          fontFamily: "Heebo, sans-serif",
         }}
       >
         Location
@@ -52,6 +55,7 @@ const MainBreadcrumb = () => {
         style={{
           pointerEvents: step <= 3 && "none",
           color: step >= 3 ? "#00A99D" : "grey",
+          fontFamily: "Heebo, sans-serif",
         }}
       >
         Device
@@ -63,6 +67,7 @@ const MainBreadcrumb = () => {
         style={{
           pointerEvents: step <= 4 && "none",
           color: step >= 4 ? "#00A99D" : "grey",
+          fontFamily: "Heebo, sans-serif",
         }}
       >
         Description
