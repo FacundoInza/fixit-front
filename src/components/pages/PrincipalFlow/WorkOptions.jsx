@@ -58,7 +58,7 @@ function WorkOptions() {
           <Box display="flex" flexDirection="column" gap={2}>
             {isMobile ? (
               <MobileButtonContainer>
-                <Link to={"/location"}>
+                <Link to={"/location"} style={{ textDecoration: "none" }}>
                   <IconButton
                     variant="contained"
                     size="large"
@@ -93,7 +93,7 @@ function WorkOptions() {
                     </Box>
                   </IconButton>
                 </Link>
-                <Link to={"/location"}>
+                <Link to={"/location"} style={{ textDecoration: "none" }}>
                   <IconButton
                     onClick={handleClickHome}
                     variant="contained"
@@ -125,7 +125,7 @@ function WorkOptions() {
               </MobileButtonContainer>
             ) : (
               <DesktopButtonContainer>
-                <Link to={"/location"}>
+                <Link to={"/location"} style={{ textDecoration: "none" }}>
                   <IconButton
                     onClick={handleClickOffice}
                     variant="contained"
@@ -160,7 +160,7 @@ function WorkOptions() {
                     </Box>
                   </IconButton>
                 </Link>
-                <Link to={"/location"}>
+                <Link to={"/location"} style={{ textDecoration: "none" }}>
                   <IconButton
                     onClick={handleClickHome}
                     href="/location"

@@ -5,6 +5,7 @@ import { reportsReducer } from "./Reports";
 import { issueReducer } from "./issue";
 import { filterReducer } from "./ui/filter";
 import { devicesReducer } from "./devices";
+import { openDialogReducer } from "./ui/openDialog";
 
 const loadState = () => {
   try {
@@ -36,6 +37,7 @@ const store = configureStore({
     issue: issueReducer,
     filter: filterReducer,
     devices: devicesReducer,
+    openDialog: openDialogReducer,
   },
   preloadedState: {
     issue: persistedIssueState,

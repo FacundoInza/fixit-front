@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -22,9 +22,23 @@ const CardReportList = ({ info }) => {
   const id = info._id;
   const dispatch = useDispatch();
 
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const popoverId = open ? "cancel-popover" : undefined;
+
   const handleDelete = async () => {
     const deleteReport = await axiosDeleteReport(id);
     dispatch(setDeletedReport({ _id: id }));
+    handlePopoverClose();
   };
 
   return (
@@ -64,7 +78,7 @@ const CardReportList = ({ info }) => {
                   color: "black",
                   cursor: "pointer",
                 }}
-                onClick={handleDelete}
+                onClick={handlePopoverOpen}
               />
             </Box>
           </Typography>
@@ -103,6 +117,41 @@ const CardReportList = ({ info }) => {
             </Typography>
           </CardActions>
         </Box>
+
+        <Popover
+          id={popoverId}
+          open={open}
+          sx={{ zIndex: 9999 }}
+          anchorEl={anchorEl}
+          onClose={handlePopoverClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <Box sx={{ padding: "20px" }}>
+            <Typography>Confirm Report Cancellation</Typography>
+            <Button
+              onClick={handlePopoverClose}
+              variant="outlined"
+              color="error"
+            >
+              Cancel
+            </Button>
+            <Button
+              sx={{ margin: 2 }}
+              onClick={handleDelete}
+              variant="contained"
+              color="success"
+            >
+              Confirmar
+            </Button>
+          </Box>
+        </Popover>
       </Card>
     </Grid>
   );
