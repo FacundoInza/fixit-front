@@ -50,9 +50,21 @@ const UserReports = () => {
               }}
               onChange={handleStatus}
             >
-              <option value={"all"}>All reports</option>
-              <option value={"pending"}>Pending</option>
-              <option value={"solved"}>Solved</option>
+              <option value={"all"} style={{ fontFamily: "Heebo, sans-serif" }}>
+                All reports
+              </option>
+              <option
+                value={"pending"}
+                style={{ fontFamily: "Heebo, sans-serif" }}
+              >
+                Pending
+              </option>
+              <option
+                value={"solved"}
+                style={{ fontFamily: "Heebo, sans-serif" }}
+              >
+                Solved
+              </option>
             </NativeSelect>
           </FormControl>
         </Box>
@@ -69,10 +81,27 @@ const UserReports = () => {
               }}
               onChange={handlePeriod}
             >
-              <option value={"all"}>All time</option>
-              <option value={"15_days"}>Last 15 days</option>
-              <option value={"1_month"}>Last month</option>
-              <option value={"6_month"}>Last 6 months</option>
+              <option value={"all"} style={{ fontFamily: "Heebo, sans-serif" }}>
+                All time
+              </option>
+              <option
+                value={"15_days"}
+                style={{ fontFamily: "Heebo, sans-serif" }}
+              >
+                Last 15 days
+              </option>
+              <option
+                value={"1_month"}
+                style={{ fontFamily: "Heebo, sans-serif" }}
+              >
+                Last month
+              </option>
+              <option
+                value={"6_month"}
+                style={{ fontFamily: "Heebo, sans-serif" }}
+              >
+                Last 6 months
+              </option>
             </NativeSelect>
           </FormControl>
         </Box>
@@ -94,6 +123,7 @@ const UserReports = () => {
                 allDevices.map((device, i) => (
                   <option
                     key={i}
+                    style={{ fontFamily: "Heebo, sans-serif" }}
                     value={
                       device.name.charAt(0).toUpperCase() + device.name.slice(1)
                     }
