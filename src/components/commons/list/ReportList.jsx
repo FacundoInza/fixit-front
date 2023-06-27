@@ -32,7 +32,6 @@ const ReportList = ({ filterAds }) => {
   const handleClickRemoveFilter = () => {
     updateListCases({ status: "", period: "", device: "" });
     dispatch(updateFilter({ status: "", period: "", device: "" }));
-    window.location.reload();
   };
 
   const handleChangePage = (event, value) => {
@@ -43,7 +42,7 @@ const ReportList = ({ filterAds }) => {
   return (
     <>
       <Box display={"flex"} justifyContent={"center"} padding={"5px"}>
-        <Box padding={1}>
+        <Box padding={1} color={"white"}>
           <Button
             color="success"
             variant="contained"
@@ -52,9 +51,9 @@ const ReportList = ({ filterAds }) => {
             Apply filter
           </Button>
         </Box>
-        <Box padding={1}>
+        <Box padding={1} color={"white"}>
           <Button
-            color="error"
+            color="pending"
             variant="contained"
             onClick={handleClickRemoveFilter}
           >

@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 const IndividualReport = () => {
   const { individualReport } = useSelector((state) => state.reports);
   const { name } = useSelector((state) => state.user);
-  const { id } = useParams();
+  const { id, is_admin } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -48,7 +48,7 @@ const IndividualReport = () => {
     navigate("/reports");
   };
   const handleBack = () => {
-    navigate("/filter-cases");
+    navigate("/reports");
   };
   const handleStatus = () => {
     navigate("/edit-status");
@@ -137,18 +137,18 @@ const IndividualReport = () => {
           >
             Go back
           </Button>
-
-          <Button
-            onClick={handleStatus}
-            color="success"
-            variant="contained"
-            sx={{ color: "white", flex: 1 }}
-          >
-            Change Status
-          </Button>
+          {is_admin && (
+            <Button
+              onClick={handleStatus}
+              color="success"
+              variant="contained"
+              sx={{ color: "white", flex: 1 }}
+            >
+              Change Status
+            </Button>
+          )}
         </div>
       </Box>
-
       <Typography
         variant="h6"
         sx={{
@@ -164,7 +164,9 @@ const IndividualReport = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card
             sx={{
-              background: (theme) => theme.palette.primary.dark,
+              backdropFilter: "blur(50px)",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+
               height: "100%",
               display: "flex",
               flexDirection: "column",
@@ -175,7 +177,7 @@ const IndividualReport = () => {
               <Typography variant="h6" component="div">
                 ISSUE DESCRIPTION
               </Typography>
-              <Typography variant="body2" color="textSecondary">
+              <Typography variant="body2" color="white">
                 {individualReport.description}
               </Typography>
             </CardContent>
@@ -184,7 +186,9 @@ const IndividualReport = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card
             sx={{
-              background: (theme) => theme.palette.primary.dark,
+              backdropFilter: "blur(50px)",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+
               height: "100%",
               display: "flex",
               flexDirection: "column",
@@ -195,7 +199,7 @@ const IndividualReport = () => {
               <Typography variant="h6" component="div">
                 REPORT ADDRESS
               </Typography>
-              <Typography variant="body2" color="textSecondary">
+              <Typography variant="body2" color="white">
                 {individualReport.damaged_equipment.location}
               </Typography>
             </CardContent>
@@ -204,7 +208,8 @@ const IndividualReport = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card
             sx={{
-              background: (theme) => theme.palette.primary.dark,
+              backdropFilter: "blur(80px)",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
               height: "100%",
               display: "flex",
               flexDirection: "column",
@@ -215,7 +220,7 @@ const IndividualReport = () => {
               <Typography variant="h6" component="div">
                 REPORTED BY:
               </Typography>
-              <Typography variant="body2" color="textSecondary">
+              <Typography variant="body2" color="white">
                 {name}
               </Typography>
             </CardContent>
@@ -229,7 +234,10 @@ const IndividualReport = () => {
         flexDirection={"column"}
         alignItems={"center"}
       >
-        <ButtonGlobant props={{ type: "button", onClick: handleDelete }}>
+        <ButtonGlobant
+          type={"error"}
+          props={{ type: "button", onClick: handleDelete }}
+        >
           Delete Report
         </ButtonGlobant>
       </Box>
