@@ -135,7 +135,9 @@ const Login = () => {
                 width={"100%"}
                 onC
               >
-                <ButtonGlobant props={{ type: "submit" }}>Log In</ButtonGlobant>
+                <ButtonGlobant type={"success"} props={{ type: "submit" }}>
+                  Log In
+                </ButtonGlobant>
               </Box>
               <Box display={"flex"} justifyContent={"flex-end"} width={"100%"}>
                 <Button href="/signUp">Sign Up</Button>

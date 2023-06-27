@@ -46,7 +46,7 @@ const Description = () => {
     if (confirmReport) {
       sendIssue();
     }
-  }, [confirmReport, issue]);
+  }, [confirmReport]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
