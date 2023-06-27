@@ -11,7 +11,8 @@ const initialState = {
   closest_office: "",
   damaged_equipment: {
     name: "",
-    image: image,
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH7Ve2fJAXbGhBIUo7yBGh4vt86vzv2CLEJw&usqp=CAU",
     location: "",
   },
   description: "",
