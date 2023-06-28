@@ -30,7 +30,7 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    axiosLogout();
+    localStorage.removeItem("token");
     setDrawerOpen(!isDrawerOpen);
     navigate("/");
     window.location.reload();

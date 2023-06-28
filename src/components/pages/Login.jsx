@@ -40,13 +40,13 @@ const Login = () => {
 
   const handleSubmit = async (value) => {
     // Lógica para enviar los datos del formulario al servidor
-    const { error, message, data } = await axiosLogin(value);
+    const { error, message, token } = await axiosLogin(value);
+    localStorage.setItem("token", token);
     if (error) {
       console.log(message);
       setMessage(message);
       setOpenSnackbar(true);
     } else {
-      dispatch(setUser(data));
       navigate("/");
     }
   };

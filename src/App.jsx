@@ -31,19 +31,20 @@ function App() {
   const actualUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const cookieCheck = document.cookie;
+  const cookieCheck = localStorage.getItem("token");
 
   useEffect(() => {
-    const persintence = async () => {
-      const data = await axiosSecret();
-      const devices = await axiosAllDevices();
-      dispatch(setUser(data));
-      dispatch(setDevices(devices));
-    };
-    if (document.cookie) {
+    if (localStorage.getItem("token")) {
       persintence();
     }
   }, [cookieCheck]);
+
+  const persintence = async () => {
+    const data = await axiosSecret();
+    const devices = await axiosAllDevices();
+    dispatch(setUser(data));
+    dispatch(setDevices(devices));
+  };
 
   return (
     <>
