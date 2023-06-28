@@ -32,6 +32,13 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const dispatch = useDispatch();
 
+  const persintence = async () => {
+    const data = await axiosSecret();
+    const devices = await axiosAllDevices();
+    dispatch(setUser(data));
+    dispatch(setDevices(devices));
+  };
+
   useEffect(() => {
     setToken(localStorage.getItem("token"));
     if (localStorage.getItem("token")) {

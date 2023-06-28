@@ -7,6 +7,7 @@ export const axiosLogin = async (value) => {
     const { data } = await axios.post(`${apiUrl}users/login`, value, {
       withCredentials: true,
     });
+
     return data;
   } catch (error) {
     console.log(error);
