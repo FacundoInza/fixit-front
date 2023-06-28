@@ -1,21 +1,38 @@
 import React, { useEffect, useState } from "react";
 
-import { Box, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
+  Button,
+} from "@mui/material";
 
 import { MainLayout } from "../../layout/MainLayout";
 
 import IndividualCardReport from "../../commons/Cards/IndividualCardReport";
-import { useParams } from "react-router";
-import { setIndividualReport } from "../../../store/Reports";
+import { useNavigate, useParams } from "react-router";
+import { setDeletedReport, setIndividualReport } from "../../../store/Reports";
 import { useDispatch, useSelector } from "react-redux";
-import { axiosIndividualCase } from "../../../services/api";
-
-const steps = ["Open", "In Progress", "Partially Solved", "Solved"];
+import { axiosDeleteReport, axiosIndividualCase } from "../../../services/api";
+import { AcUnitTwoTone } from "@mui/icons-material";
+import ButtonGlobant from "../../commons/ButtonGlobant";
+import { formatDate } from "../../../utils";
+import { Link } from "react-router-dom";
 
 const IndividualReport = () => {
   const { individualReport } = useSelector((state) => state.reports);
-  const { id } = useParams();
+  const { name } = useSelector((state) => state.user);
+  const { id, is_admin } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const steps = ["Open", "In progress", "Partially solved", "Solved"];
+  const activeStep = steps.indexOf(individualReport.status);
 
   useEffect(() => {
     const updateCase = async () => {
@@ -24,6 +41,18 @@ const IndividualReport = () => {
     };
     updateCase();
   }, []);
+
+  const handleDelete = async () => {
+    const deleteReport = await axiosDeleteReport(id);
+    dispatch(setDeletedReport({ _id: id }));
+    navigate("/reports");
+  };
+  const handleBack = () => {
+    navigate("/reports");
+  };
+  const handleStatus = () => {
+    navigate("/edit-status");
+  };
 
   return (
     <MainLayout title="Report" inLoginOrRegister="true">
@@ -57,6 +86,18 @@ const IndividualReport = () => {
         >
           <IndividualCardReport individualReport={individualReport} />
         </Box>
+        <Typography
+          variant="h6"
+          sx={{
+            color: "white",
+            padding: "10px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          {formatDate(individualReport.starting_date)} -{" "}
+          {individualReport.damaged_equipment.name}
+        </Typography>
       </Box>
       <Box
         display={"flex"}
@@ -67,16 +108,138 @@ const IndividualReport = () => {
         }}
       >
         <Stepper
-          activeStep={3}
+          activeStep={activeStep}
           alternativeLabel
           sx={{ width: "400px", padding: "20px" }}
         >
-          {steps.map((label) => (
+          {steps.map((label, index) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>
+      </Box>
+
+      <Box paddingTop={1} display="flex" justifyContent="center">
+        <div
+          style={{
+            margin: "0 auto",
+            display: "flex",
+            gap: "20px",
+            width: "75%",
+          }}
+        >
+          <Button
+            onClick={handleBack}
+            color="pending"
+            variant="contained"
+            sx={{ color: "white", flex: 1 }}
+          >
+            Go back
+          </Button>
+          {is_admin && (
+            <Button
+              onClick={handleStatus}
+              color="success"
+              variant="contained"
+              sx={{ color: "white", flex: 1 }}
+            >
+              Change Status
+            </Button>
+          )}
+        </div>
+      </Box>
+      <Typography
+        variant="h6"
+        sx={{
+          color: "black",
+          padding: "30px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        Case Information
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card
+            sx={{
+              backdropFilter: "blur(50px)",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <CardContent>
+              <Typography variant="h6" component="div">
+                ISSUE DESCRIPTION
+              </Typography>
+              <Typography variant="body2" color="white">
+                {individualReport.description}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card
+            sx={{
+              backdropFilter: "blur(50px)",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <CardContent>
+              <Typography variant="h6" component="div">
+                REPORT ADDRESS
+              </Typography>
+              <Typography variant="body2" color="white">
+                {individualReport.damaged_equipment.location}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card
+            sx={{
+              backdropFilter: "blur(80px)",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <CardContent>
+              <Typography variant="h6" component="div">
+                REPORTED BY:
+              </Typography>
+              <Typography variant="body2" color="white">
+                {name}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+      <Box
+        paddingTop={"40px"}
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
+      >
+        <ButtonGlobant
+          type={"error"}
+          props={{ type: "button", onClick: handleDelete }}
+        >
+          Delete Report
+        </ButtonGlobant>
       </Box>
     </MainLayout>
   );

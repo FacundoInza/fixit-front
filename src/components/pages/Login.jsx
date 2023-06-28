@@ -40,7 +40,8 @@ const Login = () => {
 
   const handleSubmit = async (value) => {
     // Lógica para enviar los datos del formulario al servidor
-    const { error, message, data } = await axiosLogin(value);
+    const { error, message, token, data } = await axiosLogin(value);
+    localStorage.setItem("token", token);
     if (error) {
       console.log(message);
       setMessage(message);
@@ -135,7 +136,9 @@ const Login = () => {
                 width={"100%"}
                 onC
               >
-                <ButtonGlobant props={{ type: "submit" }}>Log In</ButtonGlobant>
+                <ButtonGlobant type={"success"} props={{ type: "submit" }}>
+                  Log In
+                </ButtonGlobant>
               </Box>
               <Box display={"flex"} justifyContent={"flex-end"} width={"100%"}>
                 <Button href="/signUp">Sign Up</Button>

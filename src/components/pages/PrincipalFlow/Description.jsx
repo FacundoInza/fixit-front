@@ -10,7 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { axiosIssue } from "../../../services/api";
 
-import { updateIssue } from "../../../store/issue";
+import { resetIssue, updateIssue } from "../../../store/issue";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const Description = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const Description = () => {
         await axiosIssue({
           issue,
         });
+        dispatch(resetIssue());
         Swal.fire({
           icon: "success",
           title: "Report created",
@@ -44,7 +46,7 @@ const Description = () => {
     if (confirmReport) {
       sendIssue();
     }
-  }, [confirmReport, issue]);
+  }, [confirmReport]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +67,7 @@ const Description = () => {
   };
 
   return (
-    <MainLayout title="Description" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="Description" inLoginOrRegister={true}>
       {!confirmReport && (
         <form onSubmit={handleSubmit}>
           <Typography
@@ -120,7 +122,7 @@ const Description = () => {
           </Alert>
         </Snackbar>
       )}
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 };
 

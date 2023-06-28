@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { axiosAllDevices, axiosSecret } from "./services/api";
 import { setUser } from "./store/users";
 
@@ -21,9 +21,15 @@ import StartScan from "./components/pages/PrincipalFlow/StartScan";
 import DeviceList from "./components/pages/PrincipalFlow/DeviceList";
 import SelectOffice from "./components/pages/PrincipalFlow/SelectOffice";
 import { setDevices } from "./store/devices";
+import Principal from "./components/pages/adminViews/Principal";
+import EditOwner from "./components/pages/adminViews/EditOwner";
+import AdminEditStatus from "./components/pages/adminViews/AdminEditStatus";
+import AdminFilterCases from "./components/pages/adminViews/AdminFilterCases";
+import Error404View from "./components/commons/Error404View";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const dispatch = useDispatch();
 
   const persintence = async () => {
@@ -34,10 +40,18 @@ function App() {
   };
 
   useEffect(() => {
-    if (document.cookie) {
+    setToken(localStorage.getItem("token"));
+    if (localStorage.getItem("token")) {
       persintence();
     }
-  }, []);
+  }, [token]);
+
+  const persintence = async () => {
+    const data = await axiosSecret();
+    const devices = await axiosAllDevices();
+    dispatch(setUser(data));
+    dispatch(setDevices(devices));
+  };
 
   return (
     <>
@@ -59,12 +73,24 @@ function App() {
           <Route path="/scanner" element={<ObjectDetectionComponent />} />
           <Route path="/device-list" element={<DeviceList />} />
           <Route path="/select-office" element={<SelectOffice />} />
+          <Route path="/*" element={<Error404View />} />
         </Routes>
       ) : (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
+          <Route path="/*" element={<Error404View />} />
+        </Routes>
+      )}
+
+      {actualUser.is_admin && (
+        <Routes>
+          <Route path="/principal-admin-views" element={<Principal />} />
+          <Route path="/edit-owner" element={<EditOwner />} />
+          <Route path="/edit-status" element={<AdminEditStatus />} />
+          <Route path="/filter-cases" element={<AdminFilterCases />} />
+          <Route path="/*" element={<Error404View />} />
         </Routes>
       )}
     </>

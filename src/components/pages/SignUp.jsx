@@ -233,7 +233,7 @@ function SignUp() {
                 </div>
 
                 <Box display={"flex"} justifyContent={"center"} width={"100%"}>
-                  <ButtonGlobant props={{ type: "submit" }}>
+                  <ButtonGlobant type={"success"} props={{ type: "submit" }}>
                     Sign Up
                   </ButtonGlobant>
                 </Box>

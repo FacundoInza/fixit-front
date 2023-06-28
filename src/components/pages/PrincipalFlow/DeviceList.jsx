@@ -14,9 +14,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { setDevices } from "../../../store/devices";
 import { updateIssue } from "../../../store/issue";
 import { useState } from "react";
+import { axiosAllDevices } from "../../../services/api";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const DeviceList = () => {
-  const [device, setDevice] = useState("");
+  const [device, setDevice] = useState("HDMI cable");
   const devices = useSelector((state) => state.devices);
   const issue = useSelector((state) => state.issue);
   const { damaged_equipment } = useSelector((state) => state.issue);
@@ -24,6 +26,15 @@ const DeviceList = () => {
   const dispatch = useDispatch();
 
   console.log("devices >> ", devices);
+
+  const getAllDevices = async () => {
+    const listOfDevices = await axiosAllDevices();
+    dispatch(setDevices(listOfDevices));
+  };
+
+  useEffect(() => {
+    getAllDevices();
+  }, []);
 
   const handleChange = (event) => {
     setDevice(event.target.value);
@@ -41,7 +52,7 @@ const DeviceList = () => {
   };
   console.log("estado local", device);
   return (
-    <MainLayout title="Device-list" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="Device-list" inLoginOrRegister={true}>
       <Box
         display="flex"
         justifyContent="center"
@@ -85,7 +96,7 @@ const DeviceList = () => {
           sx={{ display: "flex", justifyContent: "center" }}
         >
           <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            DEVICE LIST
+            {""}
           </InputLabel>
           <NativeSelect
             defaultValue={"choose a device"}
@@ -98,11 +109,12 @@ const DeviceList = () => {
             }}
             onChange={handleChange}
           >
-            {devices.map((device) => (
-              <option key={device.id} value={device.id}>
-                {device}
-              </option>
-            ))}
+            {devices &&
+              devices.map((device) => (
+                <option key={device.id} value={device.id}>
+                  {device.charAt(0).toUpperCase() + device.slice(1)}
+                </option>
+              ))}
           </NativeSelect>
         </FormControl>
       </Box>
@@ -121,7 +133,7 @@ const DeviceList = () => {
           </ButtonGlobant>
         </Link>
       </Box>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 };
 

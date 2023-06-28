@@ -1,3 +1,4 @@
+import { SignalWifiStatusbarNullRounded } from "@mui/icons-material";
 import axios from "axios";
 
 const getUserLocation = () => {
@@ -59,4 +60,52 @@ export async function convertBlobToBase64(selectedImage) {
     reader.onerror = reject;
     reader.readAsDataURL(data);
   });
+}
+
+export function findFalsyProperty(obj) {
+  const keys = Object.keys(obj);
+
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    if (!obj[key]) {
+      return i;
+    }
+
+    if (typeof obj[key] === "object") {
+      const nestedFalsyProperty = findFalsyProperty(obj[key]);
+      if (nestedFalsyProperty !== -1) {
+        return i;
+      }
+    }
+  }
+
+  return -1; // Si no se encuentra ninguna propiedad falsy
+}
+
+export function insertFalsyFromProperty(obj, property) {
+  const newObj = { ...obj };
+  const keys = Object.keys(obj);
+
+  let startIndex = 0;
+
+  for (let i = 0; i < keys.length; i++) {
+    if (keys[i] === property) {
+      startIndex = i;
+      break;
+    }
+  }
+
+  for (let j = startIndex; j < keys.length; j++) {
+    const key = keys[j];
+
+    if (typeof newObj[key] === "object" && newObj[key] !== null) {
+      newObj[key] = insertFalsyFromProperty(newObj[key], property);
+    } else {
+      if (key !== "image") {
+        newObj[key] = "";
+      }
+    }
+  }
+
+  return newObj;
 }

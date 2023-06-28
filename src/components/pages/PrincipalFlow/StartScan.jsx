@@ -3,9 +3,10 @@ import { Box, Typography } from "@mui/material";
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import image from "../../../assets/Rectangle 23 1.png";
 import { Link } from "react-router-dom";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 const StartScan = () => {
   return (
-    <MainLayout title="start-scan" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="start-scan" inLoginOrRegister={true}>
       <Box
         display="flex"
         justifyContent="center"
@@ -52,14 +53,14 @@ const StartScan = () => {
           mt={5}
         >
           <Link to={"/scanner"}>
-            <ButtonGlobant type={"pending"}>Scan Item</ButtonGlobant>
+            <ButtonGlobant type={"success"}>Scan Item</ButtonGlobant>
           </Link>
           <Link to={"/device-list"}>
             <ButtonGlobant type={"pending"}>Upload Manually</ButtonGlobant>
           </Link>
         </Box>
       </Box>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 };
 

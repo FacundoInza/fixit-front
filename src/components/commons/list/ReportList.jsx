@@ -32,7 +32,6 @@ const ReportList = ({ filterAds }) => {
   const handleClickRemoveFilter = () => {
     updateListCases({ status: "", period: "", device: "" });
     dispatch(updateFilter({ status: "", period: "", device: "" }));
-    window.location.reload();
   };
 
   const handleChangePage = (event, value) => {
@@ -43,13 +42,21 @@ const ReportList = ({ filterAds }) => {
   return (
     <>
       <Box display={"flex"} justifyContent={"center"} padding={"5px"}>
-        <Box padding={1}>
-          <Button variant="contained" onClick={handleClickAplyFilter}>
-            Aply filter
+        <Box padding={1} color={"white"}>
+          <Button
+            color="success"
+            variant="contained"
+            onClick={handleClickAplyFilter}
+          >
+            Apply filter
           </Button>
         </Box>
-        <Box padding={1}>
-          <Button variant="contained" onClick={handleClickRemoveFilter}>
+        <Box padding={1} color={"white"}>
+          <Button
+            color="pending"
+            variant="contained"
+            onClick={handleClickRemoveFilter}
+          >
             Remove Filter
           </Button>
         </Box>
@@ -67,6 +74,11 @@ const ReportList = ({ filterAds }) => {
           height={"100%"}
           padding={{ xs: "1.8rem", sm: "1rem", md: "1.2rem" }}
         >
+          {countPages == 0 && (
+            <div style={{ fontFamily: "Heebo, sans-serif" }}>
+              There are no matching reports
+            </div>
+          )}
           {reports &&
             reports.map((report, i) => (
               <CardReportList key={i} info={report} />

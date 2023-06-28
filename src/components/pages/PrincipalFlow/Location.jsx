@@ -19,10 +19,11 @@ import {
 import { getLocation } from "../../../utils";
 //ACTIONS
 import { updateUser } from "../../../store/users";
-import { Link, useNavigate } from "react-router-dom";
-import { updateIssue } from "../../../store/issue";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { deleteStepIssue, updateIssue } from "../../../store/issue";
 import { Scanner } from "@mui/icons-material";
 import Map from "../../commons/Map";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 function Location() {
   const { id, location } = useSelector((state) => state.user);
@@ -35,23 +36,15 @@ function Location() {
 
   useEffect(() => {
     locationUpdate();
+    dispatch(deleteStepIssue("closest_office"));
   }, []);
 
-  const locationUpdate = async () => {
-    await setUserLocation();
-    await setOfficesLocation();
-  };
-
-  const setUserLocation = async () => {
-    const { error, data } = await getLocation();
-    const lat = data.coords.latitude;
-    const lng = data.coords.longitude;
-
-    await axiosUpdateUser({ location: [lat, lng] }, id);
-    dispatch(updateUser({ location: [lat, lng] }));
-  };
+  useEffect(() => {
+    setOfficesLocation();
+  }, [location]);
 
   const setOfficesLocation = async () => {
+    console.log("loc", location);
     const offices = await axiosGetNearbyOffice({
       lat: location[0],
       lng: location[1],
@@ -62,9 +55,26 @@ function Location() {
     setSelectedOffice(officesWithId[0]);
   };
 
+  const locationUpdate = async () => {
+    await setUserLocation();
+    // await setOfficesLocation();
+  };
+
+  const setUserLocation = async () => {
+    const { error, data } = await getLocation();
+    console.log("data en geoloc:", data);
+    if (data == "User denied Geolocation") navigate("/select-office");
+
+    const lat = data.coords.latitude;
+    const lng = data.coords.longitude;
+
+    await axiosUpdateUser({ location: [lat, lng] }, id);
+    dispatch(updateUser({ location: [lat, lng] }));
+  };
+
   const handleConfirmOffice = () => {
     dispatch(updateIssue({ ...issue, closest_office: selectedOffice._id }));
-    if (issue.home_office) {
+    if (issue.home_office == "home") {
       navigate("/address-confirmation");
     } else {
       navigate("/map-selection");
@@ -72,7 +82,7 @@ function Location() {
   };
 
   return (
-    <MainLayout title="Login" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="Login" inLoginOrRegister={true}>
       <Box
         display="flex"
         justifyContent="center"
@@ -97,7 +107,7 @@ function Location() {
           <Map offices={nearbyOffices} selectedOffice={selectedOffice} />
         )}
 
-        <Grid container spacing={3} width={"70%"} margin={5}>
+        <Grid container spacing={3} width={"80%"} margin={2}>
           {nearbyOffices &&
             nearbyOffices.map((office, i) => {
               return (
@@ -129,7 +139,7 @@ function Location() {
           </Link>
         </Box>
       </Box>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 }
 

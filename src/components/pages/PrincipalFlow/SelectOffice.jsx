@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { updateIssue } from "../../../store/issue";
 import { useDispatch, useSelector } from "react-redux";
 import Map from "../../commons/Map";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const SelectOffice = () => {
   const [selectedOffice, setSelectedOffice] = useState("");
@@ -25,7 +26,7 @@ const SelectOffice = () => {
 
   const handleConfirmOffice = () => {
     dispatch(updateIssue({ closest_office: selectedOffice._id }));
-    if (issue.home_office) {
+    if (issue.home_office == "home") {
       navigate("/address-confirmation");
     } else {
       navigate("/map-selection");
@@ -43,7 +44,7 @@ const SelectOffice = () => {
   };
 
   return (
-    <MainLayout title="Offices" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="Offices" inLoginOrRegister={true}>
       <Box
         height={"100px"}
         display={"flex"}
@@ -58,7 +59,7 @@ const SelectOffice = () => {
           <Map offices={allOffices} selectedOffice={selectedOffice} />
         </Box>
 
-        <Grid container spacing={2} width={"50%"} margin={8}>
+        <Grid container spacing={2} width={"50%"} margin={4}>
           {allOffices &&
             allOffices.map((office, i) => (
               <Grid item xs={12} lg={6}>
@@ -86,7 +87,7 @@ const SelectOffice = () => {
           <ButtonGlobant type="pending">Back to Nearby Office</ButtonGlobant>
         </Link>
       </Box>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 };
 

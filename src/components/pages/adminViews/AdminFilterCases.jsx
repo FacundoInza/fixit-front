@@ -1,16 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { MainLayout } from "../../layout/MainLayout";
-import { Box, FormControl, InputLabel, NativeSelect } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  NativeSelect,
+  FormControlLabel,
+  FormLabel,
+  RadioGroup,
+  Radio,
+  TextField,
+} from "@mui/material";
 
 import ReportList from "../../commons/list/ReportList";
 import { axiosAllDevices } from "../../../services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFilter } from "../../../store/ui/filter";
+import { display } from "@mui/system";
+import { useState } from "react";
+import { axiosAllCases } from "../../../services/api";
 
 const UserReports = () => {
   const filter = useSelector((state) => state.filter);
   const dispatch = useDispatch();
   const [allDevices, setallDevices] = useState([]);
+
+  useEffect(() => {
+    const fetchCases = async () => {
+      const allCases = await axiosAllCases();
+      console.log("all", allCases);
+    };
+    fetchCases();
+  }, []);
 
   useEffect(() => {
     fetchDataDevices();
@@ -37,6 +58,32 @@ const UserReports = () => {
   return (
     <MainLayout title="Reports" inLoginOrRegister={true}>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box
+          sx={{ display: "flex", alignItems: "center", marginRight: "20px" }}
+        >
+          <TextField
+            name="address"
+            variant="outlined"
+            margin="normal"
+            multiline
+            rows={1}
+            placeholder={"user name"}
+          />
+        </Box>
+        <FormControl>
+          <RadioGroup
+            row
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue="user"
+            name="radio-buttons-group"
+          >
+            <FormControlLabel value="user" control={<Radio />} label="User" />
+            <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+          </RadioGroup>
+        </FormControl>
+      </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Box sx={{ width: "200px", margin: "20px" }}>
           <FormControl fullWidth>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
@@ -51,7 +98,9 @@ const UserReports = () => {
               onChange={handleStatus}
             >
               <option value={"all"}>All reports</option>
-              <option value={"pending"}>Pending</option>
+              <option value={"open"}>Open</option>
+              <option value={"in progress"}>In progress</option>
+              <option value={"partially solved"}>Partially solved</option>
               <option value={"solved"}>Solved</option>
             </NativeSelect>
           </FormControl>
@@ -92,13 +141,8 @@ const UserReports = () => {
               <option value="all">All devices</option>
               {allDevices &&
                 allDevices.map((device, i) => (
-                  <option
-                    key={i}
-                    value={
-                      device.name.charAt(0).toUpperCase() + device.name.slice(1)
-                    }
-                  >
-                    {device.name.charAt(0).toUpperCase() + device.name.slice(1)}
+                  <option key={i} value={device.name}>
+                    {device.name}
                   </option>
                 ))}
             </NativeSelect>

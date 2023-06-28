@@ -2,6 +2,7 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 
 export const setAllReports = createAction("ALL_REPORTS");
 export const setIndividualReport = createAction("SET_INDIVIDUAL_REPORTS");
+export const setDeletedReport = createAction("SET_DELETED_REPORT");
 
 const initialState = {
   reports: [],
@@ -23,7 +24,15 @@ export const reportsReducer = createReducer(initialState, {
   [setAllReports]: (state, action) => {
     state.reports = action.payload;
   },
+
   [setIndividualReport]: (state, action) => {
     state.individualReport = action.payload;
+  },
+
+  [setDeletedReport]: (state, action) => {
+    const newReportsList = state.reports.filter(
+      (report) => report._id !== action.payload._id
+    );
+    state.reports = newReportsList;
   },
 });

@@ -9,40 +9,67 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 import { axiosGetUrl } from "../../../services/api";
+import { image } from "@tensorflow/tfjs";
+import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 const ObjectDetectionComponent = () => {
   const Navigate = useNavigate();
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const dispatch = useDispatch();
-  const [url, setUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [objectInCamera, setObjectInCamera] = useState("");
   const [detectedObject, setDetectedObject] = useState(null);
+  const [modelStart, setModelStart] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
   const { damaged_equipment } = useSelector((state) => state.issue);
   const issue = useSelector((state) => state.issue);
 
   const devices = useSelector((state) => state.devices);
+
+  useEffect(() => {
+    dispatch(
+      updateIssue({
+        damaged_equipment: {
+          ...damaged_equipment,
+          name: detectedObject,
+          image: imageUrl,
+        },
+      })
+    );
+  }, [imageUrl]);
+
   useEffect(() => {
     const runObjectDetection = async () => {
       const model = await cocoSsd.load();
+      setModelStart(true);
 
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" },
-        });
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" },
+          });
 
-        videoRef.current.srcObject = stream;
+          videoRef.current.srcObject = stream;
+        } catch (error) {
+          Navigate("/device-list");
+        }
       }
 
       const detectObjects = async () => {
         if (model && videoRef.current.readyState === 4) {
           const predictions = await model.detect(videoRef.current);
+
+          console.log("predictions", predictions[0]);
+          if (predictions[0] !== undefined)
+            setObjectInCamera(predictions[0].class);
+
           const detectedOfficeObject = predictions.find((prediction) =>
             devices.includes(prediction.class)
           );
 
           if (detectedOfficeObject) {
-            setDetectedObject(detectedOfficeObject);
+            setDetectedObject(detectedOfficeObject.class);
 
             captureImage();
           }
@@ -89,20 +116,11 @@ const ObjectDetectionComponent = () => {
       ""
     );
 
-    const url = await axiosGetUrl(base64WithoutPrefix);
-    setUrl(url);
+    const imgurUrl = await axiosGetUrl(base64WithoutPrefix);
+    setImageUrl(imgurUrl);
   };
 
   const handleSelectFromList = () => {
-    dispatch(
-      updateIssue({
-        damaged_equipment: {
-          ...damaged_equipment,
-
-          image: url,
-        },
-      })
-    );
     Navigate("/device-list");
   };
 
@@ -112,23 +130,15 @@ const ObjectDetectionComponent = () => {
   };
 
   const handleConfirmObject = () => {
-    dispatch(
-      updateIssue({
-        damaged_equipment: {
-          ...damaged_equipment,
-          name: detectedObject.class,
-          image: "test",
-        },
-      })
-    );
-
-    console.log("issue post dispatch", issue);
-
     Navigate("/description");
   };
 
+  const handleGoBack = () => {
+    Navigate("/device-list");
+  };
+
   return (
-    <MainLayout title="Scanner" inLoginOrRegister={true}>
+    <PrincipalFlowLayout title="Scanner" inLoginOrRegister={true}>
       <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
         <Box
           display="flex"
@@ -152,6 +162,9 @@ const ObjectDetectionComponent = () => {
                 autoPlay
               ></video>
             )}
+            <div style={{ fontFamily: "Heebo, sans-serif" }}>
+              {objectInCamera ? `We detect a ${objectInCamera}` : ""}
+            </div>
             <canvas
               ref={canvasRef}
               style={{ display: "none" }}
@@ -168,10 +181,40 @@ const ObjectDetectionComponent = () => {
               paddingTop={2}
               width="75%"
             >
-              {!detectedObject && (
+              {!modelStart && (
                 <Typography variant="body1" marginBottom={2} fontWeight="bold">
-                  scaning on course...
+                  {
+                    <h2 style={{ fontFamily: "Heebo, sans-serif" }}>
+                      {" "}
+                      Please wait for the scanner to start...
+                    </h2>
+                  }{" "}
+                  {<br />}
+                  {
+                    <h3 style={{ fontFamily: "Heebo, sans-serif" }}>
+                      This process can take a few seconds.
+                    </h3>
+                  }
                 </Typography>
+              )}
+            </Box>
+            <Box
+              position="relative"
+              top={5}
+              left={0}
+              right={0}
+              textAlign="center"
+              margin="0 auto"
+              paddingTop={2}
+              width="75%"
+            >
+              {!detectedObject && (
+                <ButtonGlobant
+                  type={"pending"}
+                  props={{ onClick: handleGoBack }}
+                >
+                  SKIP and select from list
+                </ButtonGlobant>
               )}
             </Box>
           </Box>
@@ -188,7 +231,7 @@ const ObjectDetectionComponent = () => {
               width="75%"
             >
               <Typography variant="body1" marginBottom={2} fontWeight="bold">
-                Are you trying to report damage to your {detectedObject.class}?
+                Are you trying to report damage to your {detectedObject}?
               </Typography>
             </Box>
           )}
@@ -234,7 +277,7 @@ const ObjectDetectionComponent = () => {
           )}
         </Box>
       </div>
-    </MainLayout>
+    </PrincipalFlowLayout>
   );
 };
 
