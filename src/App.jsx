@@ -46,13 +46,6 @@ function App() {
     }
   }, [token]);
 
-  const persintence = async () => {
-    const data = await axiosSecret();
-    const devices = await axiosAllDevices();
-    dispatch(setUser(data));
-    dispatch(setDevices(devices));
-  };
-
   return (
     <>
       {actualUser.email ? (
