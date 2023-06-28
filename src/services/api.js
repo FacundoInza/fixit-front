@@ -25,9 +25,14 @@ export const axiosSignUp = async (value) => {
 
 export const axiosSecret = async () => {
   try {
-    const { data } = await axios.get(`${apiUrl}users/secret`, {
-      withCredentials: true,
-    });
+    const token = localStorage.getItem("token");
+    const { data } = await axios.post(
+      `${apiUrl}users/secret`,
+      { token: token },
+      {
+        withCredentials: true,
+      }
+    );
 
     return data;
   } catch (error) {

@@ -30,7 +30,7 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    axiosLogout();
+    localStorage.removeItem("token");
     setDrawerOpen(!isDrawerOpen);
     navigate("/");
     window.location.reload();
@@ -162,17 +162,25 @@ function Navbar() {
 
         {actualUser.email ? (
           <List>
-            <ListItemButton href="/profile" onClick={toggleDrawer}>
-              <ListItemText primary="My Profile" />
-            </ListItemButton>
+            <Link to={"/profile"} style={{ textDecoration: "none" }}>
+              <ListItemButton onClick={toggleDrawer}>
+                <ListItemText primary="My Profile" />
+              </ListItemButton>
+            </Link>
+
             <Divider />
-            <ListItemButton href="/reports" onClick={toggleDrawer}>
-              <ListItemText primary="My Reports" />
-            </ListItemButton>
+            <Link to={"/reports"} style={{ textDecoration: "none" }}>
+              <ListItemButton onClick={toggleDrawer}>
+                <ListItemText primary="My Reports" />
+              </ListItemButton>
+            </Link>
+
             <Divider />
-            <ListItemButton href="/work-options" onClick={toggleDrawer}>
-              <ListItemText primary="Create Report" />
-            </ListItemButton>
+            <Link to={"/work-options"} style={{ textDecoration: "none" }}>
+              <ListItemButton onClick={toggleDrawer}>
+                <ListItemText primary="Create Report" />
+              </ListItemButton>
+            </Link>
           </List>
         ) : (
           <List>

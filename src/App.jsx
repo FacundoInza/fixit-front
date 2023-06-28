@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { axiosAllDevices, axiosSecret } from "./services/api";
 import { setUser } from "./store/users";
 
@@ -29,21 +29,22 @@ import Error404View from "./components/commons/Error404View";
 
 function App() {
   const actualUser = useSelector((state) => state.user);
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const dispatch = useDispatch();
 
-  const cookieCheck = document.cookie;
-
   useEffect(() => {
-    const persintence = async () => {
-      const data = await axiosSecret();
-      const devices = await axiosAllDevices();
-      dispatch(setUser(data));
-      dispatch(setDevices(devices));
-    };
-    if (document.cookie) {
+    setToken(localStorage.getItem("token"));
+    if (localStorage.getItem("token")) {
       persintence();
     }
-  }, [cookieCheck]);
+  }, [token]);
+
+  const persintence = async () => {
+    const data = await axiosSecret();
+    const devices = await axiosAllDevices();
+    dispatch(setUser(data));
+    dispatch(setDevices(devices));
+  };
 
   return (
     <>
