@@ -1,11 +1,10 @@
 .svg-container {
   width: 100vw;
-  height: 100vh;
+  height: 82vh;
   margin: 0;
   padding: 0;
   overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
 }
