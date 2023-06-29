@@ -27,6 +27,7 @@ export const axiosSignUp = async (value) => {
 export const axiosSecret = async () => {
   try {
     const token = localStorage.getItem("token");
+
     const { data } = await axios.post(
       `${apiUrl}users/secret`,
       { token: token },
@@ -62,7 +63,8 @@ export const axiosCasesUser = async (id, filterAds) => {
 export const axiosUpdateUser = async (update, id) => {
   try {
     const { data } = await axios.put(`${apiUrl}users/update/${id}`, update);
-    localStorage.setItem("token", data);
+
+    localStorage.setItem("token", data.data);
     return { message: data };
   } catch (error) {
     throw new Error({ message: "The user was not updated" });
