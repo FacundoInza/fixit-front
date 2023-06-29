@@ -7,14 +7,27 @@ import newReportImg from "../../../assets/newReport.png";
 import { Link } from "react-router-dom";
 import { resetIssue } from "../../../store/issue";
 import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
+import { getLocation } from "../../../utils";
+import { updateUser } from "../../../store/users";
+import { axiosUpdateUser } from "../../../services/api";
 
 function NewReport() {
+  const { id } = useSelector((state) => state.user);
   const actualUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(resetIssue());
+    setUserLocation();
   }, []);
+
+  const setUserLocation = async () => {
+    const { error, data } = await getLocation();
+    const lat = data.coords.latitude;
+    const lng = data.coords.longitude;
+    dispatch(updateUser({ location: [lat, lng] }));
+    await axiosUpdateUser({ location: [lat, lng] }, id);
+  };
 
   function removeSpecialCharactersWithSpaces(str) {
     return str.replace(/[^a-zA-Z.\s]/g, "");

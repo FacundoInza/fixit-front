@@ -6,7 +6,7 @@ import { Box, Container, Grid, Rating, Typography } from "@mui/material";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 //LOCAL COMPONENTS
-import { MainLayout } from "../../layout/MainLayout";
+
 import ButtonGlobant from "../../commons/ButtonGlobant";
 import CardOffice from "../../commons/Cards/CardOffice";
 
@@ -14,11 +14,10 @@ import CardOffice from "../../commons/Cards/CardOffice";
 import {
   axiosGetNearbyOffice,
   axiosSendNewOffices,
-  axiosUpdateUser,
 } from "../../../services/api";
-import { getLocation } from "../../../utils";
+
 //ACTIONS
-import { updateUser } from "../../../store/users";
+
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { deleteStepIssue, updateIssue } from "../../../store/issue";
 import { Scanner } from "@mui/icons-material";
@@ -26,7 +25,7 @@ import Map from "../../commons/Map";
 import { PrincipalFlowLayout } from "../../layout/PrincipalFlowLayout";
 
 function Location() {
-  const { id, location } = useSelector((state) => state.user);
+  const { location } = useSelector((state) => state.user);
   const issue = useSelector((state) => state.issue);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,39 +36,22 @@ function Location() {
   useEffect(() => {
     locationUpdate();
     dispatch(deleteStepIssue("closest_office"));
-  }, []);
-
-  useEffect(() => {
-    setOfficesLocation();
   }, [location]);
 
+  const locationUpdate = async () => {
+    await setOfficesLocation();
+  };
+
   const setOfficesLocation = async () => {
-    console.log("loc", location);
     const offices = await axiosGetNearbyOffice({
       lat: location[0],
       lng: location[1],
     });
 
+    console.log({ lat: location[0], lng: location[1] });
     const officesWithId = await axiosSendNewOffices(offices);
     setNearbyOffices(officesWithId);
     setSelectedOffice(officesWithId[0]);
-  };
-
-  const locationUpdate = async () => {
-    await setUserLocation();
-    // await setOfficesLocation();
-  };
-
-  const setUserLocation = async () => {
-    const { error, data } = await getLocation();
-    console.log("data en geoloc:", data);
-    if (data == "User denied Geolocation") navigate("/select-office");
-
-    const lat = data.coords.latitude;
-    const lng = data.coords.longitude;
-
-    await axiosUpdateUser({ location: [lat, lng] }, id);
-    dispatch(updateUser({ location: [lat, lng] }));
   };
 
   const handleConfirmOffice = () => {
