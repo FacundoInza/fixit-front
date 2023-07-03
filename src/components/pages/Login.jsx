@@ -43,7 +43,6 @@ const Login = () => {
     const { error, message, token, data } = await axiosLogin(value);
     localStorage.setItem("token", token);
     if (error) {
-      console.log(message);
       setMessage(message);
       setOpenSnackbar(true);
     } else {
