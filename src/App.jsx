@@ -34,12 +34,16 @@ function App() {
 
   const persintence = async () => {
     const data = await axiosSecret();
-    const devices = await axiosAllDevices();
     dispatch(setUser(data));
+  };
+
+  const setAllDevices = async () => {
+    const devices = await axiosAllDevices();
     dispatch(setDevices(devices));
   };
 
   useEffect(() => {
+    setAllDevices();
     setToken(localStorage.getItem("token"));
     if (localStorage.getItem("token")) {
       persintence();

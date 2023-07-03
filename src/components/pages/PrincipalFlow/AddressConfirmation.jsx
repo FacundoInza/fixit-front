@@ -88,7 +88,7 @@ const AddressConfirmation = () => {
       </Box>
 
       <Box display={"center"} justifyContent={"center"} mt={50}>
-        <ButtonGlobant props={{ onClick: handleSubmit }}>
+        <ButtonGlobant type={"success"} props={{ onClick: handleSubmit }}>
           Confirm Address
         </ButtonGlobant>
       </Box>
