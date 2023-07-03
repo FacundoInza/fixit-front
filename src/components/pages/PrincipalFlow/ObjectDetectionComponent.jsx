@@ -139,144 +139,139 @@ const ObjectDetectionComponent = () => {
 
   return (
     <PrincipalFlowLayout title="Scanner" inLoginOrRegister={true}>
-      <div style={{ maxHeight: "calc(100vh - 250px)", overflowY: "auto" }}>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          flexDirection="column"
-          overflow="overflow"
-          mt={-5}
-        >
-          <Box>
-            {capturedImage ? (
-              <img
-                src={capturedImage.src}
-                alt="Captured"
-                style={{ maxWidth: "100%", maxHeight: "100%" }}
-              />
-            ) : (
-              <video
-                ref={videoRef}
-                style={{ maxWidth: "100%", maxHeight: "100%" }}
-                autoPlay
-              ></video>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="column"
+        overflow="overflow"
+        mt={-5}
+      >
+        <Box>
+          {capturedImage ? (
+            <img
+              src={capturedImage.src}
+              alt="Captured"
+              style={{ maxWidth: "100%", maxHeight: "100%" }}
+            />
+          ) : (
+            <video
+              ref={videoRef}
+              style={{ maxWidth: "100%", maxHeight: "100%" }}
+              autoPlay
+            ></video>
+          )}
+          <div style={{ fontFamily: "Heebo, sans-serif" }}>
+            {objectInCamera ? `We detect a ${objectInCamera}` : ""}
+          </div>
+          <canvas
+            ref={canvasRef}
+            style={{ display: "none" }}
+            width={videoRef.current ? videoRef.current.videoWidth : 640}
+            height={videoRef.current ? videoRef.current.videoHeight : 480}
+          ></canvas>
+          <Box
+            position="relative"
+            top={5}
+            left={0}
+            right={0}
+            textAlign="center"
+            margin="0 auto"
+            paddingTop={2}
+            width="75%"
+          >
+            {!modelStart && (
+              <Typography variant="body1" marginBottom={2} fontWeight="bold">
+                {
+                  <h2 style={{ fontFamily: "Heebo, sans-serif" }}>
+                    {" "}
+                    Please wait for the scanner to start...
+                  </h2>
+                }{" "}
+                {<br />}
+                {
+                  <h3 style={{ fontFamily: "Heebo, sans-serif" }}>
+                    This process can take a few seconds.
+                  </h3>
+                }
+              </Typography>
             )}
-            <div style={{ fontFamily: "Heebo, sans-serif" }}>
-              {objectInCamera ? `We detect a ${objectInCamera}` : ""}
-            </div>
-            <canvas
-              ref={canvasRef}
-              style={{ display: "none" }}
-              width={videoRef.current ? videoRef.current.videoWidth : 640}
-              height={videoRef.current ? videoRef.current.videoHeight : 480}
-            ></canvas>
+          </Box>
+          <Box
+            position="relative"
+            top={5}
+            left={0}
+            right={0}
+            textAlign="center"
+            margin="0 auto"
+            paddingTop={2}
+            width="75%"
+          >
+            {!detectedObject && (
+              <ButtonGlobant type={"pending"} props={{ onClick: handleGoBack }}>
+                SKIP and select from list
+              </ButtonGlobant>
+            )}
+          </Box>
+        </Box>
+
+        {detectedObject && (
+          <Box
+            position="relative"
+            top={5}
+            left={0}
+            right={0}
+            textAlign="center"
+            margin="0 auto"
+            paddingTop={2}
+            width="75%"
+          >
+            <Typography variant="body1" marginBottom={2} fontWeight="bold">
+              Are you trying to report damage to your {detectedObject}?
+            </Typography>
+          </Box>
+        )}
+
+        {detectedObject && (
+          <Box
+            position="relative"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            margin={"0 auto"}
+            marginTop={3}
+            width="75%"
+          >
             <Box
-              position="relative"
-              top={5}
-              left={0}
-              right={0}
-              textAlign="center"
-              margin="0 auto"
-              paddingTop={2}
-              width="75%"
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
             >
-              {!modelStart && (
-                <Typography variant="body1" marginBottom={2} fontWeight="bold">
-                  {
-                    <h2 style={{ fontFamily: "Heebo, sans-serif" }}>
-                      {" "}
-                      Please wait for the scanner to start...
-                    </h2>
-                  }{" "}
-                  {<br />}
-                  {
-                    <h3 style={{ fontFamily: "Heebo, sans-serif" }}>
-                      This process can take a few seconds.
-                    </h3>
-                  }
-                </Typography>
-              )}
-            </Box>
-            <Box
-              position="relative"
-              top={5}
-              left={0}
-              right={0}
-              textAlign="center"
-              margin="0 auto"
-              paddingTop={2}
-              width="75%"
-            >
-              {!detectedObject && (
-                <ButtonGlobant
-                  type={"pending"}
-                  props={{ onClick: handleGoBack }}
-                >
-                  SKIP and select from list
-                </ButtonGlobant>
-              )}
+              <ButtonGlobant
+                type={"success"}
+                props={{ onClick: handleConfirmObject, width: "100%" }}
+              >
+                Confirm
+              </ButtonGlobant>
+
+              <ButtonGlobant
+                type={"error"}
+                props={{ onClick: handleScanAgain }}
+                width="100%"
+              >
+                No, scan again
+              </ButtonGlobant>
+
+              <ButtonGlobant
+                type={"pending"}
+                props={{ onClick: handleSelectFromList }}
+              >
+                No, select item from a list
+              </ButtonGlobant>
             </Box>
           </Box>
-
-          {detectedObject && (
-            <Box
-              position="relative"
-              top={5}
-              left={0}
-              right={0}
-              textAlign="center"
-              margin="0 auto"
-              paddingTop={2}
-              width="75%"
-            >
-              <Typography variant="body1" marginBottom={2} fontWeight="bold">
-                Are you trying to report damage to your {detectedObject}?
-              </Typography>
-            </Box>
-          )}
-
-          {detectedObject && (
-            <Box
-              position="relative"
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              margin={"0 auto"}
-              marginTop={3}
-              width="75%"
-            >
-              <Box
-                display={"flex"}
-                flexDirection={"column"}
-                alignItems={"center"}
-              >
-                <ButtonGlobant
-                  type={"success"}
-                  props={{ onClick: handleConfirmObject, width: "100%" }}
-                >
-                  Confirm
-                </ButtonGlobant>
-
-                <ButtonGlobant
-                  type={"error"}
-                  props={{ onClick: handleScanAgain }}
-                  width="100%"
-                >
-                  No, scan again
-                </ButtonGlobant>
-
-                <ButtonGlobant
-                  type={"pending"}
-                  props={{ onClick: handleSelectFromList }}
-                >
-                  No, select item from a list
-                </ButtonGlobant>
-              </Box>
-            </Box>
-          )}
-        </Box>
-      </div>
+        )}
+      </Box>
     </PrincipalFlowLayout>
   );
 };
