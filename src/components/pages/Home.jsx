@@ -53,7 +53,7 @@ const Home = () => {
             alignItems={"center"}
           >
             <Link to="/login">
-              <ButtonGlobant>Log in</ButtonGlobant>
+              <ButtonGlobant type={"success"}>Log in</ButtonGlobant>
             </Link>
 
             <Link to="/signUp">
